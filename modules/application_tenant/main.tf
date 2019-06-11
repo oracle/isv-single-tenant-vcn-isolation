@@ -28,12 +28,6 @@ resource oci_identity_compartment tenant_compartment {
   enable_delete  = true
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
-
-  # TODO - TEMPORARY BLOCK DURING TESTING
-  # !Compartments can take a long time to destroy!
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 /*

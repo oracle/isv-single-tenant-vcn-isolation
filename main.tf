@@ -3,6 +3,11 @@ terraform {
 }
 
 locals {
+  region_map = {
+    for r in data.oci_identity_regions.regions.regions:
+    r.key => r.name
+  }
+  home_region             = lookup(local.region_map, data.oci_identity_tenancy.tenancy.home_region_key)
   availability_domain     = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
   root_tenant_compartment = var.compartment_ocid
 }
@@ -33,17 +38,17 @@ module tenant_peering_vcn {
   # List of Tenant VCNs and their Local Peering Gateways
   # TODO change to a map of tenant vcn -> lpg
   tenant_lpgs = [
-    module.application_tenant.lpg
+    module.tenant_one.lpg
   ]
 
   tenant_vcns = [
-    module.application_tenant.vcn
+    module.tenant_one.vcn
   ]
 
 }
 
 # Single Tenant VCN
-module application_tenant {
+module tenant_one {
   source = "./modules/application_tenant"
 
   providers = {
@@ -65,6 +70,32 @@ module application_tenant {
 
   freeform_tags = {
     "Tenant" = "tenantone"
+  }
+}
+
+# Single Tenant VCN
+module tenant_two {
+  source = "./modules/application_tenant"
+
+  providers = {
+    oci.home = "oci.home"
+  }
+
+  root_compartment_id = local.root_tenant_compartment
+  tenant_name         = "Tenant Two"
+  tenant_label        = "tenanttwo"
+  vcn_cidr_block      = "10.1.4.0/22" # TODO could be a /23 is only two /24 subnets are needed
+  public_subnet_cidr  = "10.1.4.0/24"
+  private_subnet_cidr = "10.1.5.0/24"
+
+  # The tenant peering VCN this tenant VCN is connected through (used for route config)
+  tenant_peering_subnet_cidr = "10.253.0.0/30" # TODO get from var
+
+  # The ISV peering VCN this tenant VCN is connected through (used for route config)
+  isv_peering_subnet_cidr = "10.254.0.0/24" # TODO get from var
+
+  freeform_tags = {
+    "Tenant" = "tenanttwo"
   }
 }
 

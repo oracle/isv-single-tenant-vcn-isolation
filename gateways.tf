@@ -12,7 +12,7 @@ resource oci_core_instance gateway1 {
   shape = "VM.Standard2.1"
 
   metadata = {
-    ssh_authorized_keys = file("./id_rsa.pub")
+    ssh_authorized_keys = file("./.ssh/id_rsa.pub")
   }
 
   create_vnic_details {
@@ -25,7 +25,7 @@ resource oci_core_instance gateway1 {
     type        = "ssh"
     host        = oci_core_instance.gateway1.private_ip
     user        = "opc"
-    private_key = file("./id_rsa")
+    private_key = file("./.ssh/id_rsa")
 
     bastion_host        = oci_core_instance.bastion1.public_ip
     bastion_user        = "opc"
@@ -34,12 +34,12 @@ resource oci_core_instance gateway1 {
 
   # upload the SSH keys
   provisioner file {
-    source      = "./id_rsa"
+    source      = "./.ssh/id_rsa"
     destination = ".ssh/id_rsa"
   }
 
   provisioner file {
-    source      = "./id_rsa.pub"
+    source      = "./.ssh/id_rsa.pub"
     destination = ".ssh/id_rsa.pub"
   }
 
@@ -74,7 +74,7 @@ resource oci_core_vnic_attachment peer1 {
     type        = "ssh"
     host        = oci_core_instance.gateway1.private_ip
     user        = "opc"
-    private_key = file("./id_rsa")
+    private_key = file("./.ssh/id_rsa")
 
     bastion_host        = oci_core_instance.bastion1.public_ip
     bastion_user        = "opc"
@@ -87,6 +87,7 @@ resource oci_core_vnic_attachment peer1 {
     destination = "secondary_vnic_all_configure.sh"
   }
 
+  # TODO need to dynamically add the ip routes per tenant vcn
   provisioner remote-exec {
     inline = [
       "set -x",
@@ -94,7 +95,8 @@ resource oci_core_vnic_attachment peer1 {
       "chmod a+x secondary_vnic_all_configure.sh",
       "sudo ./secondary_vnic_all_configure.sh -c",
       "# add a route to the tenant network via the peer vnic",
-      "sudo ip route add ${module.application_tenant.vcn.cidr_block} via ${self.create_vnic_details[0].private_ip}",
+      "sudo ip route add ${module.tenant_one.vcn.cidr_block} via ${self.create_vnic_details[0].private_ip}",
+      "sudo ip route add ${module.tenant_two.vcn.cidr_block} via ${self.create_vnic_details[0].private_ip}",
     ]
   }
 }

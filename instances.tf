@@ -1,8 +1,8 @@
 
 
-resource oci_core_instance appserver1 {
+resource oci_core_instance tenantone_appserver1 {
   availability_domain = local.availability_domain
-  compartment_id      = module.application_tenant.compartment_id
+  compartment_id      = module.tenant_one.compartment_id
   display_name        = "appserver1"
   hostname_label      = "appserver1"
 
@@ -14,11 +14,11 @@ resource oci_core_instance appserver1 {
   shape = "VM.Standard2.1"
 
   metadata = {
-    ssh_authorized_keys = file("./id_rsa.pub")
+    ssh_authorized_keys = file("./.ssh/id_rsa.pub")
   }
 
   create_vnic_details {
-    subnet_id        = module.application_tenant.private_subnet.id
+    subnet_id        = module.tenant_one.private_subnet.id
     assign_public_ip = false
     hostname_label   = "appserver1"
   }
@@ -26,5 +26,5 @@ resource oci_core_instance appserver1 {
 }
 
 output appserver1 {
-  value = oci_core_instance.appserver1.private_ip
+  value = oci_core_instance.tenantone_appserver1.private_ip
 }

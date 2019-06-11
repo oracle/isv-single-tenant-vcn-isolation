@@ -1,5 +1,12 @@
 # COMMON DATA SOURCES
 
+data oci_identity_tenancy tenancy {
+  tenancy_id = var.tenancy_ocid
+}
+
+data oci_identity_regions regions {
+}
+
 # Availability Domains
 data oci_identity_availability_domains ADs {
   compartment_id = var.tenancy_ocid
