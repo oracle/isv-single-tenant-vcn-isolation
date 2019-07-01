@@ -12,7 +12,7 @@ resource oci_core_instance gateway1 {
   shape = "VM.Standard2.1"
 
   metadata = {
-    ssh_authorized_keys = file("./.ssh/id_rsa.pub")
+    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
   }
 
   create_vnic_details {
@@ -25,7 +25,7 @@ resource oci_core_instance gateway1 {
     type        = "ssh"
     host        = oci_core_instance.gateway1.private_ip
     user        = "opc"
-    private_key = file("./.ssh/id_rsa")
+    private_key = file("~/.ssh/id_rsa")
 
     bastion_host        = oci_core_instance.bastion1.public_ip
     bastion_user        = "opc"
@@ -34,12 +34,12 @@ resource oci_core_instance gateway1 {
 
   # upload the SSH keys
   provisioner file {
-    source      = "./.ssh/id_rsa"
+    source      = "~/.ssh/id_rsa"
     destination = ".ssh/id_rsa"
   }
 
   provisioner file {
-    source      = "./.ssh/id_rsa.pub"
+    source      = "~/.ssh/id_rsa.pub"
     destination = ".ssh/id_rsa.pub"
   }
 
@@ -74,7 +74,7 @@ resource oci_core_vnic_attachment peer1 {
     type        = "ssh"
     host        = oci_core_instance.gateway1.private_ip
     user        = "opc"
-    private_key = file("./.ssh/id_rsa")
+    private_key = file("~/.ssh/id_rsa")
 
     bastion_host        = oci_core_instance.bastion1.public_ip
     bastion_user        = "opc"

@@ -56,8 +56,8 @@ module tenant_one {
   }
 
   root_compartment_id = local.root_tenant_compartment
-  tenant_name         = "Tenant One"
-  tenant_label        = "tenantone"
+  tenant_name         = "Tenant 1"
+  tenant_label        = "tenant1"
   vcn_cidr_block      = "10.1.0.0/22" # TODO could be a /23 is only two /24 subnets are needed
   public_subnet_cidr  = "10.1.0.0/24"
   private_subnet_cidr = "10.1.1.0/24"
@@ -69,7 +69,7 @@ module tenant_one {
   isv_peering_subnet_cidr = "10.254.0.0/24" # TODO get from var
 
   freeform_tags = {
-    "Tenant" = "tenantone"
+    "Tenant" = "tenant1"
   }
 }
 
@@ -82,8 +82,8 @@ module tenant_two {
   }
 
   root_compartment_id = local.root_tenant_compartment
-  tenant_name         = "Tenant Two"
-  tenant_label        = "tenanttwo"
+  tenant_name         = "Tenant 2"
+  tenant_label        = "tenant2"
   vcn_cidr_block      = "10.1.4.0/22" # TODO could be a /23 is only two /24 subnets are needed
   public_subnet_cidr  = "10.1.4.0/24"
   private_subnet_cidr = "10.1.5.0/24"
@@ -95,7 +95,7 @@ module tenant_two {
   isv_peering_subnet_cidr = "10.254.0.0/24" # TODO get from var
 
   freeform_tags = {
-    "Tenant" = "tenanttwo"
+    "Tenant" = "tenant2"
   }
 }
 

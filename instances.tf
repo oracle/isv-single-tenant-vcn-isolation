@@ -14,7 +14,7 @@ resource oci_core_instance tenantone_appserver1 {
   shape = "VM.Standard2.1"
 
   metadata = {
-    ssh_authorized_keys = file("./.ssh/id_rsa.pub")
+    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
   }
 
   create_vnic_details {

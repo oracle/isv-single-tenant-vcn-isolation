@@ -29,12 +29,12 @@ resource oci_core_instance bastion1 {
 
   # upload the SSH keys
   provisioner file {
-    source      = "./.ssh/id_rsa"
+    source      = "~/.ssh/id_rsa"
     destination = ".ssh/id_rsa"
   }
 
   provisioner file {
-    source      = "./.ssh/id_rsa.pub"
+    source      = "~/.ssh/id_rsa.pub"
     destination = ".ssh/id_rsa.pub"
   }
 
