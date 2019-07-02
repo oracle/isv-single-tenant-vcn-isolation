@@ -94,6 +94,23 @@ resource oci_core_route_table public_route_table {
 resource oci_core_security_list public_security_list {
   compartment_id = oci_identity_compartment.tenant_compartment.id
   vcn_id         = oci_core_vcn.tenant_vcn.id
+  display_name   = "public_security_list"
+
+  // allow outbound tcp traffic on all ports
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    protocol    = "6"
+  }
+
+  // allow inbound http traffic
+  ingress_security_rules {
+      tcp_options {
+        min = "80"
+        max = "80"
+      }
+      protocol = "6"
+      source   = "0.0.0.0/0"
+  }
 }
 
 resource "oci_core_subnet" "public_subnet" {
@@ -138,6 +155,23 @@ resource oci_core_route_table private_route_table {
 resource oci_core_security_list private_security_list {
   compartment_id = oci_identity_compartment.tenant_compartment.id
   vcn_id         = oci_core_vcn.tenant_vcn.id
+  display_name   = "private_security_list"
+
+  // allow outbound tcp traffic on all ports
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    protocol    = "6"
+  }
+
+  // allow inbound http traffic
+  ingress_security_rules {
+      tcp_options {
+        min = "5666"
+        max = "5666"
+      }
+      protocol = "6"
+      source   = "0.0.0.0/0"
+  }
 }
 
 resource "oci_core_subnet" "private_subnet" {

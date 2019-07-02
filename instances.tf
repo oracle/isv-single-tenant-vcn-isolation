@@ -1,5 +1,3 @@
-
-
 resource oci_core_instance tenantone_appserver1 {
   availability_domain = local.availability_domain
   compartment_id      = module.tenant_one.compartment_id
@@ -15,6 +13,12 @@ resource oci_core_instance tenantone_appserver1 {
 
   metadata = {
     ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+    user_data = "${base64encode(file("./nrpe_bootscript.sh"))}"
+  }
+
+  extended_metadata = {
+    some_string = "stringA"
+    lb_ip = "${oci_load_balancer.lb1.ip_addresses[0]}"
   }
 
   create_vnic_details {
@@ -22,6 +26,21 @@ resource oci_core_instance tenantone_appserver1 {
     assign_public_ip = false
     hostname_label   = "appserver1"
   }
+
+  #upload nrpe bootstrap file 
+  #provisioner file {
+  #  source      = "./nrpe_bootscript.sh"
+  #  destination = "nrpe_bootscript.sh"
+  #}
+
+  #provisioner remote-exec {
+  #  inline = [
+  #    "set -x",
+  #    "# run the nrpe installation script",
+  #    "chmod a+x nrpe_bootscript.sh",
+  #    "sudo ./nrpe_bootscript.sh -c ${oci_load_balancer.lb1.ip_addresses}",
+  #  ]
+  #}
 
 }
 
