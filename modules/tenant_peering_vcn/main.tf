@@ -45,6 +45,28 @@ resource oci_core_security_list peering_security_list {
   vcn_id         = oci_core_vcn.peering_vcn.id
   defined_tags  = var.defined_tags
   freeform_tags = var.freeform_tags
+
+  // allow outbound tcp traffic on all ports
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    protocol    = "6"
+  }
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
+  }
+
+  // allow inbound http traffic
+  ingress_security_rules {
+      tcp_options {
+        min = "5666"
+        max = "5666"
+      }
+      protocol = "6"
+      source   = "0.0.0.0/0"
+  }
 }
 
 resource oci_core_subnet peering_subnet {

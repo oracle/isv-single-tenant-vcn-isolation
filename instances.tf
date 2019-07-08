@@ -17,8 +17,7 @@ resource oci_core_instance tenantone_appserver1 {
   }
 
   extended_metadata = {
-    some_string = "stringA"
-    lb_ip = "${oci_load_balancer.lb1.ip_addresses[0]}"
+    nagios_server_ip = "${oci_core_instance.management1.private_ip}"
   }
 
   create_vnic_details {

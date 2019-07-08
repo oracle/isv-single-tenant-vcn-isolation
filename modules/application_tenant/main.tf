@@ -102,6 +102,12 @@ resource oci_core_security_list public_security_list {
     protocol    = "6"
   }
 
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
+  }
+
   // allow inbound http traffic
   ingress_security_rules {
       tcp_options {
@@ -161,6 +167,12 @@ resource oci_core_security_list private_security_list {
   egress_security_rules {
     destination = "0.0.0.0/0"
     protocol    = "6"
+  }
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
   }
 
   // allow inbound http traffic

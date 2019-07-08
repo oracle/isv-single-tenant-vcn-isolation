@@ -19,6 +19,7 @@ resource oci_core_instance gateway1 {
     subnet_id        = module.isv_vcn.peering_subnet.id
     assign_public_ip = false
     hostname_label   = "gateway1"
+    skip_source_dest_check = true
   }
 
   connection {
@@ -94,9 +95,15 @@ resource oci_core_vnic_attachment peer1 {
       "# run the vnic configuration script",
       "chmod a+x secondary_vnic_all_configure.sh",
       "sudo ./secondary_vnic_all_configure.sh -c",
+      "sleep 5",
+      "# IP FORWARDING",
+      "echo 'net.ipv4.ip_forward = 1' | sudo tee /etc/sysctl.d/98-ip-forward.conf",
+      "sudo sysctl -p /etc/sysctl.d/98-ip-forward.conf",
       "# add a route to the tenant network via the peer vnic",
-      "sudo ip route add ${module.tenant_one.vcn.cidr_block} via ${self.create_vnic_details[0].private_ip}",
-      "sudo ip route add ${module.tenant_two.vcn.cidr_block} via ${self.create_vnic_details[0].private_ip}",
+      "sudo ip route add ${module.tenant_one.vcn.cidr_block} via 10.253.0.1",
+      "sudo ip route add ${module.tenant_two.vcn.cidr_block} via 10.253.0.1",
+      "sudo firewall-offline-cmd --add-masquerade",
+      "sudo systemctl restart firewalld",
     ]
   }
 }

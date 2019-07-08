@@ -42,7 +42,7 @@ resource oci_core_route_table management_route_table {
   }
 }
 
-resource oci_core_route_table management_private_route_table {
+resource oci_core_route_table peering_private_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = "private_rte_table"
@@ -53,6 +53,22 @@ resource oci_core_route_table management_private_route_table {
   }
 }
 
+#resource oci_core_route_table management_private_route_table {
+#  compartment_id = var.compartment_id
+#  vcn_id         = oci_core_vcn.isv_vcn.id
+#  display_name   = "private_rte_table"
+#
+#  route_rules {
+#    destination       = "0.0.0.0/0"
+#    network_entity_id = oci_core_nat_gateway.management_nat.id
+#  }
+
+#  route_rules {
+#    destination       = "${oci_core_instance.tenantone_appserver1.private_ip}"
+#   n etwork_entity_id = "${oci_core_instance.gateway1.private_ip}"
+#  }
+#}
+
 resource oci_core_security_list management_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -62,6 +78,12 @@ resource oci_core_security_list management_security_list {
   egress_security_rules {
     destination = "0.0.0.0/0"
     protocol    = "6"
+  }
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
   }
 
   // allow inbound http traffic
@@ -87,6 +109,18 @@ resource oci_core_security_list peering_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = "peering_security_list"
+
+  // allow outbound tcp traffic on all ports
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    protocol    = "6"
+  }
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
+  }
 }
 
 resource oci_core_security_list access_security_list {
@@ -98,6 +132,12 @@ resource oci_core_security_list access_security_list {
   egress_security_rules {
     destination = "0.0.0.0/0"
     protocol    = "6"
+  }
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol  = 1
+    source    = "0.0.0.0/0"
   }
 
   // allow inbound http traffic
@@ -125,7 +165,7 @@ resource oci_core_subnet peering_subnet {
   display_name   = "Tenant Peering subnet"
   dns_label      = "peering"
   cidr_block     = var.peering_subnet_cidr
-  route_table_id = oci_core_route_table.management_private_route_table.id
+  route_table_id = oci_core_route_table.peering_private_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.peering_security_list.id
@@ -140,7 +180,7 @@ resource oci_core_subnet management_subnet {
   display_name   = "Management subnet"
   dns_label      = "management"
   cidr_block     = var.management_subnet_cidr
-  route_table_id = oci_core_route_table.management_private_route_table.id
+  route_table_id = oci_core_route_table.peering_private_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.management_security_list.id

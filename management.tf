@@ -12,7 +12,10 @@ resource oci_core_instance management1 {
 
   metadata = {
     ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
-    user_data = "${base64encode(file("./nagios_bootscript.sh"))}"
+  }
+
+  extended_metadata = {
+    tenant_one_ip = "oci_core_instance.tenantone_appserver1.private_ip"
   }
 
   create_vnic_details {
@@ -56,10 +59,10 @@ resource oci_core_instance management1 {
   }
 
   #upload network setup file 
-  provisioner file {
-    source      = "./network_setup.sh"
-    destination = "network_setup.sh"
-  }
+  #provisioner file {
+  #  source      = "./network_setup.sh"
+  #  destination = "network_setup.sh"
+  #}
 
   provisioner remote-exec {
     inline = [
