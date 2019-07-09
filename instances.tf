@@ -24,23 +24,8 @@ resource oci_core_instance tenantone_appserver1 {
     subnet_id        = module.tenant_one.private_subnet.id
     assign_public_ip = false
     hostname_label   = "appserver1"
+    private_ip       = local.tenant_one_private_ip
   }
-
-  #upload nrpe bootstrap file 
-  #provisioner file {
-  #  source      = "./nrpe_bootscript.sh"
-  #  destination = "nrpe_bootscript.sh"
-  #}
-
-  #provisioner remote-exec {
-  #  inline = [
-  #    "set -x",
-  #    "# run the nrpe installation script",
-  #    "chmod a+x nrpe_bootscript.sh",
-  #    "sudo ./nrpe_bootscript.sh -c ${oci_load_balancer.lb1.ip_addresses}",
-  #  ]
-  #}
-
 }
 
 output appserver1 {

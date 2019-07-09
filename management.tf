@@ -15,7 +15,7 @@ resource oci_core_instance management1 {
   }
 
   extended_metadata = {
-    tenant_one_ip = "oci_core_instance.tenantone_appserver1.private_ip"
+    tenant_one_private_ip = local.tenant_one_private_ip
   }
 
   create_vnic_details {
@@ -58,19 +58,11 @@ resource oci_core_instance management1 {
     destination = "nagios_bootscript.sh"
   }
 
-  #upload network setup file 
-  #provisioner file {
-  #  source      = "./network_setup.sh"
-  #  destination = "network_setup.sh"
-  #}
-
   provisioner remote-exec {
     inline = [
       "set -x",
       "# run the nagios installation script",
       "chmod a+x nagios_bootscript.sh",
-      "chmod a+x network_setup.sh",
-      "sudo ./network_setup.sh -c",
       "sudo ./nagios_bootscript.sh -c",   
     ]
   }

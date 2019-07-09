@@ -10,6 +10,8 @@ locals {
   home_region             = lookup(local.region_map, data.oci_identity_tenancy.tenancy.home_region_key)
   availability_domain     = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
   root_tenant_compartment = var.compartment_ocid
+  tenant_one_private_ip   = "10.1.1.2"
+  tenant_two_private_ip   = "10.1.1.3"
 }
 
 # Configure the ISV networks

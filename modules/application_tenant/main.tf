@@ -25,7 +25,7 @@ resource oci_identity_compartment tenant_compartment {
   compartment_id = var.root_compartment_id
   name           = var.tenant_label
   description    = "Application Tenant Compartment for ${var.tenant_name}"
-  enable_delete  = true
+  enable_delete  = false
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }

@@ -92,21 +92,21 @@ resource oci_core_vnic_attachment peer1 {
   provisioner remote-exec {
     inline = [
       "set -x",
+      "sleep 15",
       "# run the vnic configuration script",
       "chmod a+x secondary_vnic_all_configure.sh",
       "sudo ./secondary_vnic_all_configure.sh -c",
-      "sleep 5",
       "# IP FORWARDING",
       "echo 'net.ipv4.ip_forward = 1' | sudo tee /etc/sysctl.d/98-ip-forward.conf",
       "sudo sysctl -p /etc/sysctl.d/98-ip-forward.conf",
       "# add a route to the tenant network via the peer vnic",
-      "sudo ip route add ${module.tenant_one.vcn.cidr_block} via 10.253.0.1",
-      "sudo ip route add ${module.tenant_two.vcn.cidr_block} via 10.253.0.1",
+      "sudo ip route add ${module.tenant_one.vcn.cidr_block} via ${cidrhost(module.tenant_peering_vcn.subnet_cidr, 1)}",
+      "sudo ip route add ${module.tenant_two.vcn.cidr_block} via ${cidrhost(module.tenant_peering_vcn.subnet_cidr, 1)}",
       "sudo firewall-offline-cmd --add-masquerade",
       "sudo systemctl restart firewalld",
     ]
   }
-}
+}        
 
 output gateway1 {
   value = oci_core_instance.gateway1.private_ip

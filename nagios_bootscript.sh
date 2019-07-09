@@ -30,11 +30,7 @@ echo
 tar zxvf download
 tar zxvf nagios-plugins-2.2.1.tar.gz
 echo
-echo "PWD == > "
-pwd
 cd nagios-4.3.4
-echo "PWD < == "
-pwd
 echo
 sleep 5
 ./configure --with-command-group=nagcmd
@@ -74,7 +70,8 @@ echo
 cd /usr/local/nagios/etc/servers
 echo
 sudo touch client.cfg
-echo -e "define host {\n\tuse\t\tlinux-server\n\thost_name\tappserver1\n\talias\t\tappserver1\n\taddress\t\t${tenant_one_ip}\n}" | sudo tee  client.cfg
+tenant_one_private_ip=`oci-metadata | grep tenant_one_private_ip | cut -d':' -f2 | tr -d ' '`
+echo -e "define host {\n\tuse\t\tlinux-server\n\thost_name\tappserver1\n\talias\t\tappserver1\n\taddress\t\t${tenant_one_private_ip}\n}" | sudo tee  client.cfg
 echo
 systemctl start nagios.service
 echo
