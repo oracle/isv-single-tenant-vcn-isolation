@@ -1,6 +1,8 @@
+examples/*/state
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
 .ssh/
 .DS_Store
+

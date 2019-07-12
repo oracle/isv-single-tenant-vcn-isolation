@@ -1,0 +1,15 @@
+output vcn {
+  value = oci_core_vcn.isv_vcn
+}
+
+output management_subnet {
+	value = oci_core_subnet.management_subnet
+}
+
+output access_subnet {
+	value = oci_core_subnet.access_subnet
+}
+
+output peering_subnet {
+	value = oci_core_subnet.peering_subnet
+}
