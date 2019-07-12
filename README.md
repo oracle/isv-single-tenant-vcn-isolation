@@ -7,3 +7,21 @@ Steps: [ perform terraform init/plan/deploy in directories in following order]
 	3.	Tenant
 		a.	Network  -- cd examples/tenant/network
 		b.	Servers    -- cd examples/tenant/servers
+
+
+
+
+## Deploy with Terragrunt
+
+`terragrunt` can be used deploy the complete configuration in a single command.  `terraform init` must have been run in each sub confguration first.
+
+```
+$ cd examples
+$ (cd peering/network && terraform init)
+$ (cd management/network && terraform init)
+$ (cd management/servers && terraform init)
+$ (cd tenant/network && terraform init)
+$ (cd tenant/servers && terraform init)
+
+$ terragrunt apply-all
+```
