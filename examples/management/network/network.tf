@@ -2,10 +2,6 @@
 module management_network {
   source = "../../../modules/management_network"
 
-  providers = {
-    oci.home = "oci.home"
-  }
-  
   compartment_id		= "${module.management_compartment.compartment_id}"
   vcn_name				= "isv management"		
   dns_label				= "isv"

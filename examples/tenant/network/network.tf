@@ -2,10 +2,6 @@
 module tenant_network {
   source = "../../../modules/tenant_network"
 
-  providers = {
-    oci.home = "oci.home"
-  }
-  
   compartment_id		= "${module.tenant_compartment.compartment_id}"
   vcn_name				  = "tenant1"		
   dns_label				  = "tenant1"

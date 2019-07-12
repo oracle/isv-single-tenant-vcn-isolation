@@ -2,10 +2,6 @@
 module peering_network {
   source = "../../../modules/peering_network"
 
-  providers = {
-    oci.home = "oci.home"
-  }
-  
   compartment_id		= "${module.peering_compartment.compartment_id}"
   vcn_name				  = "peering"		
   dns_label				  = "peering"

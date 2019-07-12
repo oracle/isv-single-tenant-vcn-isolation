@@ -2,10 +2,6 @@
 module routing_instance {
   source = "../../../modules/routing_instance"
 
-  providers = {
-    oci.home = "oci.home"
-  }
-
   compartment_id = 	"${data.terraform_remote_state.management_network.outputs.management_compartment_id}"
   source_id		 = 	"${data.oci_core_images.oraclelinux.images.0.id}"
   subnet_id		 =	"${data.terraform_remote_state.management_network.outputs.peering_subnet_id}"
