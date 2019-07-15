@@ -35,7 +35,7 @@ resource oci_core_default_route_table default {
 
   route_rules {
     destination       = "0.0.0.0/0"
-    network_entity_id = oci_core_nat_gateway.management_nat.id
+    network_entity_id = oci_core_internet_gateway.management_igw.id
   }
 }
 
@@ -162,7 +162,7 @@ resource oci_core_subnet access_subnet {
   display_name   = var.access_subnet_name
   dns_label      = var.access_subnet_dns_label
   cidr_block     = var.access_subnet_cidr
-  route_table_id = oci_core_route_table.public_route_table.id
+  # route_table_id = oci_core_route_table.public_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.access_security_list.id
@@ -192,7 +192,7 @@ resource oci_core_subnet management_subnet {
   display_name   = var.management_subnet_name
   dns_label      = var.management_subnet_dns_label
   cidr_block     = var.management_subnet_cidr
-  route_table_id = oci_core_route_table.private_route_table.id
+  # route_table_id = oci_core_route_table.private_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.management_security_list.id
