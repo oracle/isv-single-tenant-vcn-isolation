@@ -39,7 +39,7 @@ $ go test -v -timeout 90m -run=TestTerragruntApplyAll
 Individual test stages can be skipped using the `SKIP_<stage_name>` environment variables. e.g. to skip the teardown stage
 
 ```
-$ SKIP_teardown go test -v -timeout 90m -run=TestTerragruntApplyAll
+$ SKIP_teardown=true go test -v -timeout 90m -run=TestTerragruntApplyAll
 ```
 
 
