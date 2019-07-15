@@ -19,12 +19,20 @@ output "management_subnet_id" {
 	value = "${module.management_network.management_subnet.id}"
 }
 
+output "management_nat_id" {
+  value = "${module.management_network.nat_id}"
+}
+
 output "access_subnet_id" {
   value = "${module.management_network.access_subnet.id}"
 }
 
 output "peering_subnet_id" {
   value = "${module.management_network.peering_subnet.id}"
+}
+
+output "peering_subnet_cidr" {
+  value = "${module.management_network.peering_subnet.cidr_block}"
 }
 
 output "management_subnet_cidr" {

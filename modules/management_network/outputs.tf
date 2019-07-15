@@ -13,3 +13,7 @@ output access_subnet {
 output peering_subnet {
 	value = oci_core_subnet.peering_subnet
 }
+
+output nat_id {
+	value = oci_core_nat_gateway.management_nat.id
+}

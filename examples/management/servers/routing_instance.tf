@@ -9,7 +9,10 @@ module routing_instance {
   bastion_ip	 =	"${module.bastion_instance.instance_ip}"
 }
 
-
 output "routing_ip" {
-  value = "${module.routing_instance.instance_ip}"
+  value = "${module.routing_instance.instance.private_ip}"
+}
+
+output "routing_id" {
+  value = "${module.routing_instance.instance.id}"
 }

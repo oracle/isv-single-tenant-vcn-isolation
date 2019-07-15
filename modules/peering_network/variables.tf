@@ -46,7 +46,6 @@ variable peering_sec_list {
 variable tenant_vcn_cidr_block {
   type        = string
   description = "seclist to open ICMP ports"
-  default     = "10.1.0.0/16"
 }
 
 variable peering_subnet_name {

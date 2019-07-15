@@ -8,7 +8,7 @@ module peering_network {
   vcn_cidr_block		= "10.253.0.0/30"
 
   peering_subnet_cidr   = "10.253.0.0/30"
-  tenant_vcn_cidr_block = "10.1.0.0/16" # TODO get from var
+  tenant_vcn_cidr_block = "192.168.0.0/16"
 }
 
 output "peering_vcn_id" {

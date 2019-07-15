@@ -1,0 +1,6 @@
+{
+	"run_list":[
+		"recipe[apps]",
+		"recipe[apps::nrpe]"
+	]
+}

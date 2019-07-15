@@ -23,3 +23,7 @@ output "tenant_vcn_id" {
 output "tenant_private_subnet_id" {
 	value = "${module.tenant_network.tenant_subnet.id}"
 }
+
+output "tenant_vcn_cidr" {
+  value = "${module.tenant_network.tenant_vcn.cidr_block}"
+}

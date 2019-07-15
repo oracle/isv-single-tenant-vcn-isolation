@@ -19,13 +19,18 @@ resource oci_core_instance routing_server {
     subnet_id        = var.subnet_id
     assign_public_ip = false
     hostname_label   = var.hostname_label
+    skip_source_dest_check = true
   }
 
   connection {
     type        = "ssh"
-    host        = var.bastion_ip
+    host        = oci_core_instance.routing_server.private_ip
     user        = "opc"
     private_key = file("~/.ssh/id_rsa")
+
+    bastion_host        = var.bastion_ip
+    bastion_user        = "opc"
+    bastion_private_key = file("~/.ssh/id_rsa")
   }
 
   # upload the SSH keys
