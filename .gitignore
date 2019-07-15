@@ -1,3 +1,4 @@
+examples/terraform.tfvars
 examples/*/state
 terraform.tfvars
 terraform.tfstate
