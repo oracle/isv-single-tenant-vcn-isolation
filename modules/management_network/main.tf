@@ -29,6 +29,16 @@ resource oci_core_nat_gateway management_nat {
 
 #### Route Tables ################################
 #
+
+resource oci_core_default_route_table default {
+  manage_default_resource_id = oci_core_vcn.isv_vcn.default_route_table_id
+
+  route_rules {
+    destination       = "0.0.0.0/0"
+    network_entity_id = oci_core_nat_gateway.management_nat.id
+  }
+}
+
 resource oci_core_route_table public_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -167,7 +177,6 @@ resource oci_core_subnet peering_subnet {
   display_name   = var.peering_subnet_name
   dns_label      = var.peering_subnet_dns_label
   cidr_block     = var.peering_subnet_cidr
-  route_table_id = oci_core_route_table.private_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.peering_security_list.id
