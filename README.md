@@ -27,3 +27,8 @@ $ (cd tenant/servers && terraform init)
 
 $ terragrunt apply-all
 ```
+
+
+## Testing
+
+Automated tests are provided in the test directory, see [`test/README`](test/README.md) 
