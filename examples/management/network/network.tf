@@ -23,6 +23,10 @@ output "management_nat_id" {
   value = "${module.management_network.nat_id}"
 }
 
+output "management_igw_id" {
+  value = "${module.management_network.igw_id}"
+}
+
 output "access_subnet_id" {
   value = "${module.management_network.access_subnet.id}"
 }

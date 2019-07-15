@@ -10,6 +10,8 @@ module management_rte_attachement {
   management_vcn_id 	=	"${data.terraform_remote_state.management_network.outputs.management_vcn_id}"
   management_subnet_id	=	"${data.terraform_remote_state.management_network.outputs.management_subnet_id}"
   management_nat_id     =	"${data.terraform_remote_state.management_network.outputs.management_nat_id}"
+  management_igw_id     =	"${data.terraform_remote_state.management_network.outputs.management_igw_id}"
+  access_subnet_id    = "${data.terraform_remote_state.management_network.outputs.access_subnet_id}"
 }
 
 output routing_id {

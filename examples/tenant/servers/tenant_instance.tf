@@ -11,6 +11,7 @@ module tenant_instance {
   subnet_id      =  "${data.terraform_remote_state.tenant_network.outputs.tenant_private_subnet_id}"
   tenant_private_ip		=	  "192.168.2.2"
   availability_domain	=	  local.availability_domain
+  bastion_ip     =  "${data.terraform_remote_state.mgmt_servers.outputs.bastion_ip}"
 }
 
 output "tenant_private_ip" {

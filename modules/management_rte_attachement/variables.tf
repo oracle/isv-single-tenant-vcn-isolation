@@ -4,6 +4,12 @@ variable display_name {
   default     = "private_tenant_rte_table"
 }
 
+variable display_name_public {
+  type        = string
+  description = "name of routing instance"
+  default     = "public_tenant_rte_table"
+}
+
 variable hostname_label {
   type        = string
   description = "hostname label"
@@ -26,6 +32,8 @@ variable compartment_id {}
 variable management_vcn_id {}
 variable management_subnet_id {}
 variable management_nat_id {}
+variable management_igw_id {}
+variable access_subnet_id {}
 variable tenant_one_vcn_cidr_block {}
 variable routing_ip {}
 variable peering_subnet_id {}

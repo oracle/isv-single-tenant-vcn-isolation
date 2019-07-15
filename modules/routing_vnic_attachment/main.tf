@@ -28,7 +28,7 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
 
   # see https://docs.cloud.oracle.com/iaas/Content/Network/Tasks/managingVNICs.htm
   provisioner file {
-    source      = "../../../downloads/secondary_vnic_all_configure.sh"
+    source      = "../../../scripts/secondary_vnic_all_configure.sh"
     destination = "secondary_vnic_all_configure.sh"
   }
 

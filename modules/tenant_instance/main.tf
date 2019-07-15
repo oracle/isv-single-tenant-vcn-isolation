@@ -16,16 +16,21 @@ resource oci_core_instance tenant_appserver {
     user_data = "${base64encode(file("../../../scripts/nrpe_bootscript.sh"))}"
   }
 
-  extended_metadata = {
-    #TO DO -- remove the hardcoded values
-    #nagios_server_ip = "${oci_core_instance.management1.private_ip}"
-    nagios_server_ip = "10.254.100.2"
-  }
-
   create_vnic_details {
     subnet_id        = var.subnet_id
     assign_public_ip = false
     hostname_label   = var.hostname_label
     private_ip       = var.tenant_private_ip
+  }
+
+  connection {
+    type        = "ssh"
+    host        = oci_core_instance.tenant_appserver.private_ip
+    user        = "opc"
+    private_key = file("~/.ssh/id_rsa")
+
+    bastion_host        = var.bastion_ip
+    bastion_user        = "opc"
+    bastion_private_key = file("~/.ssh/id_rsa")
   }
 }
