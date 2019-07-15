@@ -2,7 +2,11 @@ examples/*/state
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
+*.auto.tfvars
 .terraform/
 .ssh/
 .DS_Store
 
+# terratest
+test/vendor
+test/Gopkg.lock
