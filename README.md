@@ -15,6 +15,8 @@ Steps: [ perform terraform init/plan/deploy in directories in following order]
 
 `terragrunt` can be used deploy the complete configuration in a single command.  `terraform init` must have been run in each sub confguration first.
 
+At single `terraform.tfvars` file can be created in the `examples` directory which will be applied to all configs.
+
 ```
 $ cd examples
 $ (cd peering/network && terraform init)
