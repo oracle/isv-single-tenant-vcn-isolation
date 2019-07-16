@@ -3,5 +3,5 @@ output tenant_vcn {
 }
 
 output tenant_subnet {
-	value = oci_core_subnet.private_subnet
+  value = oci_core_subnet.private_subnet
 }

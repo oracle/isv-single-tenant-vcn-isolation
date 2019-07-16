@@ -1,7 +1,7 @@
 /*
  * Create a single VCN for resource deployments
  */
- ###### VCN #################
+###### VCN #################
 resource oci_core_vcn peering_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -50,18 +50,18 @@ resource oci_core_security_list peering_security_list {
 
   // allow inbound icmp traffic of a specific type
   ingress_security_rules {
-    protocol  = 1
-    source    = "0.0.0.0/0"
+    protocol = 1
+    source   = "0.0.0.0/0"
   }
 
   // allow inbound http traffic
   ingress_security_rules {
-      tcp_options {
-        min = "5666"
-        max = "5666"
-      }
-      protocol = "6"
-      source   = "0.0.0.0/0"
+    tcp_options {
+      min = "5666"
+      max = "5666"
+    }
+    protocol = "6"
+    source   = "0.0.0.0/0"
   }
 }
 

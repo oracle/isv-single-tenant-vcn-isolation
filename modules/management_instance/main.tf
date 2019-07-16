@@ -1,8 +1,8 @@
 resource oci_core_instance management_server {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
-  display_name        = var.display_name 
-  hostname_label      = var.hostname_label 
+  display_name        = var.display_name
+  hostname_label      = var.hostname_label
 
   source_details {
     source_type = "image"

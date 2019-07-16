@@ -1,7 +1,7 @@
 /*
  * Create a single VCN for resource deployments
  */
- ###### VCN #################
+###### VCN #################
 resource oci_core_vcn tenant_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -91,18 +91,18 @@ resource oci_core_security_list public_security_list {
 
   // allow inbound icmp traffic of a specific type
   ingress_security_rules {
-    protocol  = 1
-    source    = "0.0.0.0/0"
+    protocol = 1
+    source   = "0.0.0.0/0"
   }
 
   // allow inbound http traffic
   ingress_security_rules {
-      tcp_options {
-        min = "80"
-        max = "80"
-      }
-      protocol = "6"
-      source   = "0.0.0.0/0"
+    tcp_options {
+      min = "80"
+      max = "80"
+    }
+    protocol = "6"
+    source   = "0.0.0.0/0"
   }
 }
 
@@ -119,18 +119,18 @@ resource oci_core_security_list private_security_list {
 
   // allow inbound icmp traffic of a specific type
   ingress_security_rules {
-    protocol  = 1
-    source    = "0.0.0.0/0"
+    protocol = 1
+    source   = "0.0.0.0/0"
   }
 
   // allow inbound NRPE traffic
   ingress_security_rules {
-      tcp_options {
-        min = "5666"
-        max = "5666"
-      }
-      protocol = "6"
-      source   = "0.0.0.0/0"
+    tcp_options {
+      min = "5666"
+      max = "5666"
+    }
+    protocol = "6"
+    source   = "0.0.0.0/0"
   }
 }
 
@@ -163,6 +163,6 @@ resource oci_core_subnet private_subnet {
     oci_core_security_list.private_security_list.id
   ]
   prohibit_public_ip_on_vnic = true
-  defined_tags  = var.defined_tags
-  freeform_tags = var.freeform_tags
+  defined_tags               = var.defined_tags
+  freeform_tags              = var.freeform_tags
 }

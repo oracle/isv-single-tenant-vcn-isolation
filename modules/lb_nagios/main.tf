@@ -4,7 +4,7 @@ resource "oci_load_balancer" "lb1" {
   shape          = var.shape
   compartment_id = "${var.compartment_id}"
 
-  subnet_ids = [ var.subnet_id ]
+  subnet_ids = [var.subnet_id]
 
   display_name = var.display_name
 }
@@ -15,10 +15,10 @@ resource "oci_load_balancer_backend_set" "lb-bes1" {
   policy           = "ROUND_ROBIN"
 
   health_checker {
-    port                = "80"
-    protocol            = "HTTP"
-    url_path            = "/"
-    return_code         = "200"
+    port        = "80"
+    protocol    = "HTTP"
+    url_path    = "/"
+    return_code = "200"
   }
 }
 

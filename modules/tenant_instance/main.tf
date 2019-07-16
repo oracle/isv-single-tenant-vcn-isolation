@@ -1,8 +1,8 @@
 resource oci_core_instance tenant_appserver {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
-  display_name        = var.display_name 
-  hostname_label      = var.hostname_label 
+  display_name        = var.display_name
+  hostname_label      = var.hostname_label
 
   source_details {
     source_type = "image"
@@ -13,7 +13,7 @@ resource oci_core_instance tenant_appserver {
 
   metadata = {
     ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
-    user_data = "${base64encode(file("../../../scripts/nrpe_bootscript.sh"))}"
+    user_data           = "${base64encode(file("../../../scripts/nrpe_bootscript.sh"))}"
   }
 
   create_vnic_details {
