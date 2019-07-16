@@ -5,9 +5,9 @@ module management_compartment {
   providers = {
     oci.home = "oci.home"
   }
-  
-  root_compartment_id	= local.root_compartment_id
-  compartment_name		= var.compartment_name		
+
+  root_compartment_id = local.root_compartment_id
+  compartment_name    = var.compartment_name
 }
 
 output "management_compartment_id" {

@@ -6,8 +6,8 @@ module tenant_compartment {
     oci.home = "oci.home"
   }
 
-  root_compartment_id	= local.root_compartment_id
-  compartment_name		= var.compartment_name	
+  root_compartment_id = local.root_compartment_id
+  compartment_name    = var.compartment_name
 }
 
 output "tenant_compartment_id" {

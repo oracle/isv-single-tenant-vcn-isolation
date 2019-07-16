@@ -2,13 +2,13 @@
 module management_network {
   source = "../../../modules/management_network"
 
-  compartment_id		= "${module.management_compartment.compartment_id}"
-  vcn_name				= "isv management"		
-  dns_label				= "isv"
-  vcn_cidr_block		= "10.254.0.0/16"
+  compartment_id         = "${module.management_compartment.compartment_id}"
+  vcn_name               = "isv management"
+  dns_label              = "isv"
+  vcn_cidr_block         = "10.254.0.0/16"
   management_subnet_cidr = "10.254.100.0/24"
-  access_subnet_cidr	= "10.254.99.0/24"
-  peering_subnet_cidr	= "10.254.254.0/24"
+  access_subnet_cidr     = "10.254.99.0/24"
+  peering_subnet_cidr    = "10.254.254.0/24"
 }
 
 output "management_vcn_id" {
@@ -16,7 +16,7 @@ output "management_vcn_id" {
 }
 
 output "management_subnet_id" {
-	value = "${module.management_network.management_subnet.id}"
+  value = "${module.management_network.management_subnet.id}"
 }
 
 output "management_nat_id" {

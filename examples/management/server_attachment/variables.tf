@@ -6,7 +6,7 @@ variable "region" {}
 variable "compartment_ocid" {}
 
 variable "compartment_name" {
-	type        = string
-  	description = "Compartment name for Management layer"
-  	default		= "management"
+  type        = string
+  description = "Compartment name for Management layer"
+  default     = "management"
 }
