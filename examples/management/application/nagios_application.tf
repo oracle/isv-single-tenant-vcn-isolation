@@ -2,10 +2,10 @@
 module nagios_application {
   source = "../../../modules/nagios_application"
   
-  compartment_id 	= 	"${data.terraform_remote_state.management_network.outputs.management_compartment_id}"
-  management_host_ip	=	"${data.terraform_remote_state.management_servers.outputs.management_ip}"
-  bastion_host_ip	=	"${data.terraform_remote_state.management_servers.outputs.bastion_ip}"
-  tenant_host_ip 	=	"${data.terraform_remote_state.tenant_servers.outputs.tenant_private_ip}"
+  compartment_id 	= 	lookup(data.terraform_remote_state.management_network.outputs, "management_compartment_id", null)
+  management_host_ip	=	lookup(data.terraform_remote_state.management_servers.outputs, "management_ip", null)
+  bastion_host_ip	=	lookup(data.terraform_remote_state.management_servers.outputs, "bastion_ip", null)
+  tenant_host_ip 	=	lookup(data.terraform_remote_state.tenant_servers.outputs, "tenant_private_ip", null)
 }
 
 output "nagios_ran" {
