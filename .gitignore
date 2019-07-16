@@ -11,3 +11,4 @@ terraform.tfstate.backup
 # terratest
 test/vendor
 test/Gopkg.lock
+.test-data
