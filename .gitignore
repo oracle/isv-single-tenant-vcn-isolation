@@ -1,5 +1,21 @@
+.ssh/
+
+#terraform
+examples/terraform.tfvars
+examples/*/state
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
+*.auto.tfvars
 .terraform/
-.ssh/
+
+# terratest
+test/vendor
+test/Gopkg.lock
+.test-data
+
+# vscode
+.vscode
+
+# MacOS
+.DS_Store
