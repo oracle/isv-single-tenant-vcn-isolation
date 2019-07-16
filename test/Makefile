@@ -8,3 +8,6 @@ test:
 
 test-no-teardown:
 	SKIP_teardown=true go test -v -timeout 90m .
+
+
+.PHONY: all dep test test-no-teardown
