@@ -1,7 +1,7 @@
 variable display_name {
   type        = string
   description = "root compartment for the individual tenant compartments"
-  default     = "bastion"
+  default     = "lb1"
 }
 
 variable hostname_label {
@@ -22,7 +22,12 @@ variable defined_tags {
   default     = {}
 }
 
+variable shape {
+  type        = string
+  description = "shape of load balancer"
+  default     = "100Mbps"
+}
 variable compartment_id {}
-variable bastion_host_ip {}
-variable management_host_ip {}
-variable tenant_host_ip {}
+variable subnet_id {}
+variable availability_domain {}
+variable management_private_ip {}

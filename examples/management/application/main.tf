@@ -14,3 +14,19 @@ data "terraform_remote_state" "management_network" {
     path = "../state/management/network/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "management_servers" {
+  backend = "local"
+
+  config = {
+    path = "../state/management/servers/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "tenant_servers" {
+  backend = "local"
+
+  config = {
+    path = "../../tenant/state/tenant/servers/terraform.tfstate"
+  }
+}
