@@ -14,5 +14,5 @@ module routing_vnic_attachement {
 
 
 output routing_secondary_vnic_id {
-  value = "${module.routing_vnic_attachement.routing_secondary_vnic_id}"
+  value = module.routing_vnic_attachement.routing_secondary_vnic_id
 }

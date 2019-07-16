@@ -7,7 +7,7 @@ module tenant_instance {
   }
 
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_compartment_id", null)
-  source_id           = "${data.oci_core_images.oraclelinux.images.0.id}"
+  source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_private_subnet_id", null)
   tenant_private_ip   = "192.168.2.2"
   availability_domain = local.availability_domain
@@ -15,5 +15,5 @@ module tenant_instance {
 }
 
 output "tenant_private_ip" {
-  value = "${module.tenant_instance.instance_ip}"
+  value = module.tenant_instance.instance_ip
 }

@@ -2,7 +2,7 @@
 module peering_network {
   source = "../../../modules/peering_network"
 
-  compartment_id = "${module.peering_compartment.compartment_id}"
+  compartment_id = module.peering_compartment.compartment_id
   vcn_name       = "peering"
   dns_label      = "peering"
   vcn_cidr_block = "10.253.0.0/30"
@@ -12,17 +12,17 @@ module peering_network {
 }
 
 output "peering_vcn_id" {
-  value = "${module.peering_network.peering_vcn.id}"
+  value = module.peering_network.peering_vcn.id
 }
 
 output "peering_subnet_id" {
-  value = "${module.peering_network.peering_subnet.id}"
+  value = module.peering_network.peering_subnet.id
 }
 
 output "peering_lpg_id" {
-  value = "${module.peering_network.peering_gateway.id}"
+  value = module.peering_network.peering_gateway.id
 }
 
 output "peering_subnet_cidr" {
-  value = "${module.peering_network.peering_subnet.cidr_block}"
+  value = module.peering_network.peering_subnet.cidr_block
 }

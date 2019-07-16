@@ -30,7 +30,7 @@ resource oci_core_nat_gateway management_nat {
 #### Route Tables ################################
 #
 resource oci_core_default_route_table isv_default_rte_table {
-  manage_default_resource_id = "${oci_core_vcn.isv_vcn.default_route_table_id}"
+  manage_default_resource_id = oci_core_vcn.isv_vcn.default_route_table_id
 
   route_rules {
     destination       = "0.0.0.0/0"

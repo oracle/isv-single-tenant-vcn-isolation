@@ -15,5 +15,5 @@ module management_rte_attachement {
 }
 
 output routing_id {
-  value = "${module.management_rte_attachement.routing_id}"
+  value = module.management_rte_attachement.routing_id
 }

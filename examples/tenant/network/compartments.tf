@@ -11,5 +11,5 @@ module tenant_compartment {
 }
 
 output "tenant_compartment_id" {
-  value = "${module.tenant_compartment.compartment_id}"
+  value = module.tenant_compartment.compartment_id
 }

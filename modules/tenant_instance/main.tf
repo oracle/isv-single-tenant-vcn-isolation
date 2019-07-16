@@ -13,7 +13,7 @@ resource oci_core_instance tenant_appserver {
 
   metadata = {
     ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
-    user_data           = "${base64encode(file("../../../scripts/nrpe_bootscript.sh"))}"
+    user_data           = base64encode(file("../../../scripts/nrpe_bootscript.sh"))
   }
 
   create_vnic_details {

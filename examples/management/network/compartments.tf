@@ -11,5 +11,5 @@ module management_compartment {
 }
 
 output "management_compartment_id" {
-  value = "${module.management_compartment.compartment_id}"
+  value = module.management_compartment.compartment_id
 }

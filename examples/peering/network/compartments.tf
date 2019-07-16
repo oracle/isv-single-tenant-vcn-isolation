@@ -11,5 +11,5 @@ module peering_compartment {
 }
 
 output "peering_compartment_id" {
-  value = "${module.peering_compartment.compartment_id}"
+  value = module.peering_compartment.compartment_id
 }
