@@ -14,10 +14,19 @@ terraform.tfvars:
 	@echo "./terraform.tfvars not found. Exiting."
 	@exit 1
 
+fmt:
+	# run terraform fmt across all configs
+	@for c in $(TF_CONFIGS); \
+	do \
+		echo $$c; \
+		(cd $$c && terraform fmt); \
+	done
+
 init:
 	# run terraform init across all configs
 	@for c in $(TF_CONFIGS); \
 	do \
+		echo $$c; \
 		(cd $$c && terraform init); \
 	done
 
@@ -25,7 +34,16 @@ upgrade:
 	# run terraform init -upgrade across all configs
 	@for c in $(TF_CONFIGS); \
 	do \
-		(cd $$c && terraform init -upgrade); \
+		echo $$c; \
+		(&& cd $$c && terraform init -upgrade); \
+	done
+
+validate:
+	# run terraform validate across all configs
+	@for c in $(TF_CONFIGS); \
+	do \
+		echo $$c; \
+		(cd $$c && terraform validate); \
 	done
 
 apply: terraform.tfvars
@@ -36,4 +54,4 @@ destroy: terraform.tfvars
 	# use terragrunt to destroy all configurations
 	@echo y | terragrunt destroy-all
 
-.PHONY: init upgrade apply destroy
+.PHONY: fmt init upgrade validate apply destroy
