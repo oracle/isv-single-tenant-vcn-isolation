@@ -1,17 +1,21 @@
 resource null_resource nagios_application {
 
+  triggers = {
+    management_host_ip = var.management_host_ip
+  }
+
   connection {
     type        = "ssh"
     host        = var.management_host_ip
     user        = "opc"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file(var.ssh_private_key_file)
 
     bastion_host        = var.bastion_host_ip
     bastion_user        = "opc"
-    bastion_private_key = file("~/.ssh/id_rsa")
+    bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 
-  #upload the chef-solo binary
+  # upload the chef-solo scripts
   provisioner file {
     source      = "../../../chef"
     destination = "/home/opc"

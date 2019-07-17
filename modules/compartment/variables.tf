@@ -19,3 +19,9 @@ variable defined_tags {
   description = "map of defined tags to apply to all resources created by this module"
   default     = {}
 }
+
+variable enable_delete {
+  type        = bool
+  description = "fully delete the compartment on destroy, by default compartments as retained for reuse"
+  default     = false
+}
