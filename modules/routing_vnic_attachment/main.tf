@@ -28,17 +28,11 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 
-  # see https://docs.cloud.oracle.com/iaas/Content/Network/Tasks/managingVNICs.htm
-  provisioner file {
-    source      = "../../../scripts/secondary_vnic_all_configure.sh"
-    destination = "secondary_vnic_all_configure.sh"
-  }
-
-  # TODO need to dynamically add the ip routes per tenant vcn
   provisioner remote-exec {
     inline = [
       "set -x",
       "# run the vnic configuration script",
+      "curl -o secondary_vnic_all_configure.sh ${var.secondary_vnic_configuration_script_url}",
       "chmod a+x secondary_vnic_all_configure.sh",
       "while [ \"$(curl --silent -L http://169.254.169.254/opc/v1/vnics | jq '.[] | select(.vnicId==\"${self.vnic_id}\") != null')\" != \"true\" ]",
       "do",

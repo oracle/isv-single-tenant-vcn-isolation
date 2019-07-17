@@ -41,3 +41,11 @@ variable ssh_private_key_file {
   description = "the private ssh key to access the instance for provisioning"
   default     = "~/.ssh/id_rsa"
 }
+
+
+variable secondary_vnic_configuration_script_url {
+  type        = string
+  description = "location of the secondary_vnic_all_configure.sh script to be run when attaching a new secondary vnic to an instance"
+  default     = "https://docs.cloud.oracle.com/iaas/Content/Resources/Assets/secondary_vnic_all_configure.sh"
+  # see https://docs.cloud.oracle.com/iaas/Content/Network/Tasks/managingVNICs.htm#linux
+}
