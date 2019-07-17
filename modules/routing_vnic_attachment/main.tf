@@ -1,6 +1,8 @@
 /*
-TODO
-For failover: If your target instance is terminated before you can move the secondary private IP to a standby, you must update the route rule to use the OCID of the new target private IP on the standby. The rule uses the target's OCID and not the private IP address itself.
+TODO For failover: If your target instance is terminated before you can move the secondary 
+private IP to a standby, you must update the route rule to use the OCID of the new target 
+private IP on the standby. The rule uses the target's OCID and not the private IP address
+itself.
 */
 resource oci_core_vnic_attachment routing_vnic_attachmment {
   instance_id  = var.routing_instance_id
@@ -19,11 +21,11 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     type        = "ssh"
     host        = var.routing_ip
     user        = "opc"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file(var.ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"
-    bastion_private_key = file("~/.ssh/id_rsa")
+    bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 
   # see https://docs.cloud.oracle.com/iaas/Content/Network/Tasks/managingVNICs.htm

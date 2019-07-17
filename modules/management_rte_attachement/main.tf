@@ -1,6 +1,5 @@
 
 data "oci_core_private_ips" "tenant_private_ip" {
-  #Required
   ip_address = var.routing_ip
   subnet_id  = var.peering_subnet_id
 }
@@ -24,7 +23,6 @@ resource oci_core_route_table management_private_rt_table {
 }
 
 resource "oci_core_route_table_attachment" "management_route_table_attachment" {
-  #Required 
   subnet_id      = var.management_subnet_id
   route_table_id = oci_core_route_table.management_private_rt_table.id
 }
@@ -48,7 +46,6 @@ resource oci_core_route_table access_public_rt_table {
 }
 
 resource "oci_core_route_table_attachment" "access_route_table_attachment" {
-  #Required 
   subnet_id      = var.access_subnet_id
   route_table_id = oci_core_route_table.access_public_rt_table.id
 }

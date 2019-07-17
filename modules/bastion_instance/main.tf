@@ -9,10 +9,10 @@ resource oci_core_instance bastion_server {
     source_id   = var.source_id
   }
 
-  shape = "VM.Standard2.1"
+  shape = var.shape
 
   metadata = {
-    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+    ssh_authorized_keys = file(var.bastion_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -25,17 +25,17 @@ resource oci_core_instance bastion_server {
     type        = "ssh"
     host        = oci_core_instance.bastion_server.public_ip
     user        = "opc"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file(var.bastion_ssh_private_key_file)
   }
 
-  # upload the SSH keys
+  # upload the SSH keys used to access remote instances
   provisioner file {
-    source      = "~/.ssh/id_rsa"
+    source      = var.remote_ssh_private_key_file
     destination = ".ssh/id_rsa"
   }
 
   provisioner file {
-    source      = "~/.ssh/id_rsa.pub"
+    source      = var.remote_ssh_public_key_file
     destination = ".ssh/id_rsa.pub"
   }
 

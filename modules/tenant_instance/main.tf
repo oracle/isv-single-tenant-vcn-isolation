@@ -9,10 +9,10 @@ resource oci_core_instance tenant_appserver {
     source_id   = var.source_id
   }
 
-  shape = "VM.Standard2.1"
+  shape = var.shape
 
   metadata = {
-    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+    ssh_authorized_keys = file(var.ssh_public_key_file)
     user_data           = base64encode(file("../../../scripts/nrpe_bootscript.sh"))
   }
 
@@ -25,12 +25,12 @@ resource oci_core_instance tenant_appserver {
 
   connection {
     type        = "ssh"
-    host        = oci_core_instance.tenant_appserver.private_ip
+    host        = oci_core_instance.routing_server.private_ip
     user        = "opc"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file(var.ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"
-    bastion_private_key = file("~/.ssh/id_rsa")
+    bastion_private_key = file(var.bastion_ssh_priate_key_file)
   }
 }
