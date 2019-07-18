@@ -6,12 +6,11 @@ itself.
 */
 resource oci_core_vnic_attachment routing_vnic_attachmment {
   instance_id  = var.routing_instance_id
-  display_name = var.display_name
 
   create_vnic_details {
     subnet_id      = var.peering_subnet_id
     display_name   = var.display_name
-    hostname_label = var.display_name
+    hostname_label = var.hostname_label
 
     assign_public_ip       = false
     skip_source_dest_check = true

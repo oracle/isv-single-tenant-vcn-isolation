@@ -6,22 +6,10 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "management_network" {
-  backend = "local"
-
-  config = {
-    path = "../../management/state/management/network/terraform.tfstate"
-  }
-}
-
-data "terraform_remote_state" "access" {
-  backend = "local"
-
-  config = {
-    path = "../../management/state/management/access/terraform.tfstate"
-  }
-}
-
 locals {
+  availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
+
+  compartment_id = lookup(data.terraform_remote_state.peering_network.outputs, "peering_compartment_id", null)
+
   bastion_ip = lookup(data.terraform_remote_state.access.outputs, "bastion_ip", null)
-}
+} 

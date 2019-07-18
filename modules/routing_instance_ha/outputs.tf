@@ -16,3 +16,7 @@ output instance_ids {
     oci_core_instance.routing_server2.id,
   ]
 }
+
+output hostname_label {
+  value = var.hostname_label
+}

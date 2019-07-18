@@ -1,13 +1,11 @@
 variable display_name {
   type        = string
   description = "name of routing instance"
-  default     = "gateway"
 }
 
 variable hostname_label {
   type        = string
   description = "hostname label"
-  default     = "gateway"
 }
 
 variable freeform_tags {

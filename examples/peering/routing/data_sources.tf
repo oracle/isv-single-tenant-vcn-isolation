@@ -18,6 +18,34 @@ data oci_core_images oraclelinux {
   }
 }
 
-locals {
-  availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
+data "terraform_remote_state" "management_network" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "peering_network" {
+  backend = "local"
+
+  config = {
+    path = "../../peering/state/peering/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "tenant_network" {
+  backend = "local"
+
+  config = {
+    path = "../../tenant/state/tenant/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "access" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/access/terraform.tfstate"
+  }
 }

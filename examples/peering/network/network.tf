@@ -5,9 +5,9 @@ module peering_network {
   compartment_id = module.peering_compartment.compartment_id
   vcn_name       = "peering"
   dns_label      = "peering"
-  vcn_cidr_block = "10.253.0.0/30"
+  vcn_cidr_block = "10.253.0.0/16"
 
-  peering_subnet_cidr   = "10.253.0.0/30"
+  peering_subnet_cidr   = "10.253.0.0/29"
   tenant_vcn_cidr_block = "192.168.0.0/16"
 }
 
