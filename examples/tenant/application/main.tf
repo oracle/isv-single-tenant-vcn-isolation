@@ -30,3 +30,11 @@ data "terraform_remote_state" "mgmt_servers" {
     path = "../../management/state/management/servers/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "access" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/access/terraform.tfstate"
+  }
+}

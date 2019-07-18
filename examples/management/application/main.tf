@@ -15,6 +15,15 @@ data "terraform_remote_state" "management_network" {
   }
 }
 
+data "terraform_remote_state" "access" {
+  backend = "local"
+
+  config = {
+    path = "../state/management/access/terraform.tfstate"
+  }
+}
+
+
 data "terraform_remote_state" "management_servers" {
   backend = "local"
 
