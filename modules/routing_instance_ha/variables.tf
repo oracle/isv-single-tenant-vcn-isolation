@@ -20,6 +20,8 @@ variable defined_tags {
   default     = {}
 }
 
+variable tenancy_id {}
+variable region {}
 variable compartment_id {}
 variable source_id {}
 variable subnet_id {}

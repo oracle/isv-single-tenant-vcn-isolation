@@ -1,15 +1,20 @@
 
 /*
 TODO
-[-] instance priciples
-[-] fault domains
-[-] install scripts
-[-] optimize scripts
 [-] use secrets server to generate password?
-[-] use fixed ip addresses
-[-] security rules for pacemaker
 */
 
+locals {
+  oci_cli_install = [
+    "curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh | bash -s -- --accept-all-defaults",
+    "sudo ln ~/bin/oci /usr/local/bin/oci",
+    "mkdir ~/.oci",
+    "echo '[DEFAULT]' > ~/.oci/config",
+    "echo 'tenancy=${var.tenancy_id}' >> ~/.oci/config",
+    "echo 'region=${var.region}' >> ~/.oci/config",
+    "chmod 600 ~/.oci/config",
+  ]
+}
 
 data "oci_core_private_ips" "routing_server1_private_ip" {
   ip_address = oci_core_instance.routing_server1.create_vnic_details[0].private_ip
@@ -43,7 +48,8 @@ resource oci_core_instance routing_server1 {
     source_id   = var.source_id
   }
 
-  shape = var.shape
+  shape        = var.shape
+  fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[0].name
 
   metadata = {
     ssh_authorized_keys = file(var.ssh_public_key_file)
@@ -58,7 +64,7 @@ resource oci_core_instance routing_server1 {
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
-  }
+  } 
 
   connection {
     type        = "ssh"
@@ -71,6 +77,12 @@ resource oci_core_instance routing_server1 {
     bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 
+  # install and configure oci cli tool
+  provisioner remote-exec {
+    inline = local.oci_cli_install
+  }
+
+  # install pacemaker
   provisioner remote-exec {
     inline = local.pacemaker_install
   }
@@ -86,7 +98,8 @@ resource oci_core_instance routing_server2 {
     source_id   = var.source_id
   }
 
-  shape = var.shape
+  shape        = var.shape
+  fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[1].name
 
   metadata = {
     ssh_authorized_keys = file(var.ssh_public_key_file)
@@ -114,6 +127,12 @@ resource oci_core_instance routing_server2 {
     bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 
+  # install and configure oci cli tool
+  provisioner remote-exec {
+    inline = local.oci_cli_install
+  }
+
+  # install pacemaker
   provisioner remote-exec {
     inline = local.pacemaker_install
   }
