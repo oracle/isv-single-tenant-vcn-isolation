@@ -23,11 +23,7 @@ variable defined_tags {
 }
 
 variable compartment_id {}
-variable bastion_ip {}
 variable routing_instance_id {}
-variable routing_ip {}
-variable tenant_one_vcn_cidr_block {}
-variable peering_subnet_cidr {}
 variable peering_subnet_id {}
 
 variable bastion_ssh_private_key_file {

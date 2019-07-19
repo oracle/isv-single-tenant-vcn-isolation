@@ -44,7 +44,7 @@ variable peering_sec_list {
 }
 
 variable tenant_vcn_cidr_block {
-  type        = string
+  type        = list
   description = "seclist to open ICMP ports"
 }
 

@@ -25,7 +25,10 @@ variable defined_tags {
 variable compartment_id {}
 variable bastion_host_ip {}
 variable management_host_ip {}
-variable tenant_host_ip {}
+variable tenant_host_ips {
+  type        = string
+  description = "list of tenant host ips"
+}
 
 variable bastion_ssh_private_key_file {
   type        = string
