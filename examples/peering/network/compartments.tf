@@ -1,4 +1,6 @@
 # Configure the main compartment
+###
+### Compartment for peering gateway 1 ##########################################
 module peering_compartment {
   source = "../../../modules/compartment"
 

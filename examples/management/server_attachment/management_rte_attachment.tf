@@ -5,7 +5,10 @@ module management_rte_attachement {
   compartment_id            = lookup(data.terraform_remote_state.management_network.outputs, "management_compartment_id", null)
   routing_ip                = lookup(data.terraform_remote_state.management_servers.outputs, "routing_ip", null)
   peering_subnet_id         = lookup(data.terraform_remote_state.management_network.outputs, "peering_subnet_id", null)
-  tenant_one_vcn_cidr_block = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_vcn_cidr", null)
+  tenant_1_vcn_cidr_block = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_1_vcn_cidr", null)
+  tenant_2_vcn_cidr_block = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_2_vcn_cidr", null)
+  tenant_3_vcn_cidr_block = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_3_vcn_cidr", null)
+  tenant_4_vcn_cidr_block = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_4_vcn_cidr", null)
 
   management_vcn_id    = lookup(data.terraform_remote_state.management_network.outputs, "management_vcn_id", null)
   management_subnet_id = lookup(data.terraform_remote_state.management_network.outputs, "management_subnet_id", null)
