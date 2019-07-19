@@ -17,6 +17,13 @@ output instance_ids {
   ]
 }
 
+output instance_vnics {
+  value = [
+    data.oci_core_private_ips.routing_server1_private_ip.private_ips[0].vnic_id,
+    data.oci_core_private_ips.routing_server2_private_ip.private_ips[0].vnic_id,
+  ]
+}
+
 output hostname_label {
   value = var.hostname_label
 }
