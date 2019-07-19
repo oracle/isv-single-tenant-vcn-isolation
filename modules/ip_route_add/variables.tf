@@ -1,13 +1,7 @@
 variable display_name {
   type        = string
   description = "name of routing instance"
-  default     = "private_tenant_rte_table"
-}
-
-variable display_name_public {
-  type        = string
-  description = "name of routing instance"
-  default     = "public_tenant_rte_table"
+  default     = "gw1peer1"
 }
 
 variable hostname_label {
@@ -29,14 +23,25 @@ variable defined_tags {
 }
 
 variable compartment_id {}
-variable management_vcn_id {}
-variable management_subnet_id {}
-variable management_nat_id {}
-variable management_igw_id {}
-variable access_subnet_id {}
+variable bastion_ip {}
+variable routing_ip {}
 variable tenant_1_vcn_cidr_block {}
 variable tenant_2_vcn_cidr_block {}
 variable tenant_3_vcn_cidr_block {}
 variable tenant_4_vcn_cidr_block {}
-variable routing_ip {}
-variable peering_subnet_id {}
+variable peering_1_subnet_cidr {}
+variable peering_2_subnet_cidr {}
+variable peering_1_vnic_id {}
+variable peering_2_vnic_id {}
+
+variable bastion_ssh_private_key_file {
+  type        = string
+  description = "the private ssh key file to access the bastion instance"
+  default     = "~/.ssh/id_rsa"
+}
+
+variable ssh_private_key_file {
+  type        = string
+  description = "the private ssh key to access the instance for provisioning"
+  default     = "~/.ssh/id_rsa"
+}

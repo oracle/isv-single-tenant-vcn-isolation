@@ -7,9 +7,27 @@ variable "compartment_ocid" {}
 
 variable "compartment_name" {
   type        = string
-  description = "Compartment name for Management layer"
+  description = "Compartment name for Peering layer"
   default     = "peering"
 }
+
+variable "display_name_1" {
+  type        = string
+  default     = "peering1"
+}
+variable "display_name_2" {
+  type        = string
+  default     = "peering2"
+}
+variable "vcn_cidr_block_1" {
+  type        = string
+  default     = "10.253.1.0/30"
+}
+variable "vcn_cidr_block_2" {
+  type        = string
+  default     = "10.253.2.0/30"
+}
+
 
 locals {
   region_map = {

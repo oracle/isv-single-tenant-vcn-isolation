@@ -31,7 +31,7 @@ variable bastion_ip {}
 variable shape {
   type = string
   description = "oci instance shape"
-  default = "VM.Standard2.1"
+  default = "VM.Standard2.4"
 }
 
 variable bastion_ssh_private_key_file {
