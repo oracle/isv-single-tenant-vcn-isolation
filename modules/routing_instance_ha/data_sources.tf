@@ -4,7 +4,7 @@ data oci_core_subnet subnet {
 
 data "oci_identity_fault_domains" "fault_domains" {
   availability_domain = var.availability_domain
-  compartment_id = var.compartment_id
+  compartment_id      = var.compartment_id
 }
 
 locals {

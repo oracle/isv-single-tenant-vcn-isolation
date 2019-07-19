@@ -22,7 +22,7 @@ data "terraform_remote_state" "management_network" {
   backend = "local"
 
   config = {
-    path = "../state/management/network/terraform.tfstate"
+    path = "../../management/state/management/network/terraform.tfstate"
   }
 }
 
@@ -46,6 +46,14 @@ data "terraform_remote_state" "management_servers" {
   backend = "local"
 
   config = {
-    path = "../state/management/servers/terraform.tfstate"
+    path = "../../management/state/management/servers/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "peering_servers" {
+  backend = "local"
+
+  config = {
+    path = "../../peering/state/peering/routing/terraform.tfstate"
   }
 }

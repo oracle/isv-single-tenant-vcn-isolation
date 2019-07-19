@@ -64,7 +64,7 @@ resource oci_core_instance routing_server1 {
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
-  } 
+  }
 
   connection {
     type        = "ssh"

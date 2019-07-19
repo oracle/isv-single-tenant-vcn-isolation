@@ -29,9 +29,9 @@ variable availability_domain {}
 variable bastion_ip {}
 
 variable shape {
-  type = string
+  type        = string
   description = "oci instance shape"
-  default = "VM.Standard2.1"
+  default     = "VM.Standard2.1"
 }
 
 variable bastion_ssh_private_key_file {

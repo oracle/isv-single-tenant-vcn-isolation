@@ -1,7 +1,7 @@
 resource null_resource nrpe_application {
 
   triggers = {
-    tenant_ip = var.tenant_ip
+    tenant_ip        = var.tenant_ip
     nagios_server_ip = var.nagios_server_ip
   }
 

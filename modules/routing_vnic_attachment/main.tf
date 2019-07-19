@@ -5,7 +5,7 @@ private IP on the standby. The rule uses the target's OCID and not the private I
 itself.
 */
 resource oci_core_vnic_attachment routing_vnic_attachmment {
-  instance_id  = var.routing_instance_id
+  instance_id = var.routing_instance_id
 
   create_vnic_details {
     subnet_id      = var.peering_subnet_id
