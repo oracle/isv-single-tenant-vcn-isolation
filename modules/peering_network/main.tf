@@ -13,7 +13,15 @@ resource oci_core_vcn peering_vcn {
 
 ##### Local Peering Gateway ######################
 #
-resource oci_core_local_peering_gateway peering_gateway {
+resource oci_core_local_peering_gateway peering_gateway_1 {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.peering_vcn.id
+  display_name   = var.vcn_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
+}
+
+resource oci_core_local_peering_gateway peering_gateway_2 {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.vcn_name
@@ -30,8 +38,14 @@ resource oci_core_route_table peering_route_table {
 
   route_rules {
     destination_type  = "CIDR_BLOCK"
-    destination       = var.tenant_vcn_cidr_block
-    network_entity_id = oci_core_local_peering_gateway.peering_gateway.id
+    destination       = "${var.tenant_vcn_cidr_block[0]}"
+    network_entity_id = oci_core_local_peering_gateway.peering_gateway_1.id
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = "${var.tenant_vcn_cidr_block[1]}"
+    network_entity_id = oci_core_local_peering_gateway.peering_gateway_2.id
   }
 }
 

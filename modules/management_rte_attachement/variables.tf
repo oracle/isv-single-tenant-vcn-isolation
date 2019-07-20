@@ -34,6 +34,9 @@ variable management_subnet_id {}
 variable management_nat_id {}
 variable management_igw_id {}
 variable access_subnet_id {}
-variable tenant_one_vcn_cidr_block {}
+variable tenant_1_vcn_cidr_block {}
+variable tenant_2_vcn_cidr_block {}
+variable tenant_3_vcn_cidr_block {}
+variable tenant_4_vcn_cidr_block {}
 variable routing_ip {}
 variable peering_subnet_id {}

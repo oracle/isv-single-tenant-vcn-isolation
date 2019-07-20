@@ -5,10 +5,10 @@ private IP on the standby. The rule uses the target's OCID and not the private I
 itself.
 */
 resource oci_core_vnic_attachment routing_vnic_attachmment {
-  instance_id = var.routing_instance_id
+  instance_id = var.instance_id
 
   create_vnic_details {
-    subnet_id      = var.peering_subnet_id
+    subnet_id      = var.subnet_id
     display_name   = var.display_name
     hostname_label = var.hostname_label
 
@@ -18,11 +18,11 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
 
   connection {
     type        = "ssh"
-    host        = var.routing_ip
+    host        = var.ssh_host
     user        = "opc"
     private_key = file(var.ssh_private_key_file)
 
-    bastion_host        = var.bastion_ip
+    bastion_host        = var.bastion_host
     bastion_user        = "opc"
     bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
@@ -33,7 +33,6 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     destination = "secondary_vnic_all_configure.sh"
   }
 
-  # TODO need to dynamically add the ip routes per tenant vcn
   provisioner remote-exec {
     inline = [
       "set -x",
@@ -45,11 +44,10 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
       "  sleep 1",
       "done",
       "sudo ./secondary_vnic_all_configure.sh -c",
-      "# IP FORWARDING",
+      "# ENABLE IP FORWARDING",
       "echo 'net.ipv4.ip_forward = 1' | sudo tee /etc/sysctl.d/98-ip-forward.conf",
       "sudo sysctl -p /etc/sysctl.d/98-ip-forward.conf",
-      "# add a route to the tenant network via the peer vnic",
-      "sudo ip route add ${var.tenant_one_vcn_cidr_block} via ${cidrhost(var.peering_subnet_cidr, 1)}",
+      "# ENABLE NAT",
       "sudo firewall-offline-cmd --add-masquerade",
       "sudo systemctl restart firewalld",
     ]

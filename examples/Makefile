@@ -1,8 +1,10 @@
-TF_CONFIGS = management/application \
+TF_CONFIGS = management/access \
+			 management/application \
 			 management/network \
 			 management/server_attachment \
 			 management/servers \
 			 peering/network \
+			 peering/routing \
 			 tenant/application \
 			 tenant/network \
 			 tenant/servers

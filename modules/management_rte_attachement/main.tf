@@ -1,5 +1,10 @@
 
-data "oci_core_private_ips" "tenant_private_ip" {
+data "oci_core_private_ips" "tenant_1_private_ip" {
+  ip_address = var.routing_ip
+  subnet_id  = var.peering_subnet_id
+}
+
+data "oci_core_private_ips" "tenant_2_private_ip" {
   ip_address = var.routing_ip
   subnet_id  = var.peering_subnet_id
 }
@@ -17,8 +22,26 @@ resource oci_core_route_table management_private_rt_table {
 
   route_rules {
     destination_type  = "CIDR_BLOCK"
-    destination       = var.tenant_one_vcn_cidr_block
-    network_entity_id = lookup(data.oci_core_private_ips.tenant_private_ip.private_ips[0], "id")
+    destination       = var.tenant_1_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_1_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_2_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_1_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_3_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_2_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_4_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_2_private_ip.private_ips[0], "id")
   }
 }
 
@@ -40,8 +63,26 @@ resource oci_core_route_table access_public_rt_table {
 
   route_rules {
     destination_type  = "CIDR_BLOCK"
-    destination       = var.tenant_one_vcn_cidr_block
-    network_entity_id = lookup(data.oci_core_private_ips.tenant_private_ip.private_ips[0], "id")
+    destination       = var.tenant_1_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_1_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_2_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_1_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_3_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_2_private_ip.private_ips[0], "id")
+  }
+
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_4_vcn_cidr_block
+    network_entity_id = lookup(data.oci_core_private_ips.tenant_2_private_ip.private_ips[0], "id")
   }
 }
 
