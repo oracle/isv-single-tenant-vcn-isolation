@@ -2,7 +2,7 @@
 ###### secondary routing vnic attachment for Peering VCN 1. ########
 ###
 module routing_1_vnic_attachement {
-  source = "../../../modules/routing_vnic_attachment"
+  source = "../../../../modules/routing_vnic_attachment"
 
   compartment_id = lookup(data.terraform_remote_state.management_network.outputs, "management_compartment_id", null)
 
@@ -17,7 +17,7 @@ output routing_1_secondary_vnic_id {
 ###### secondary routing vnic attachment for Peering VCN 2. ########
 ###
 module routing_2_vnic_attachement {
-  source = "../../../modules/routing_vnic_attachment"
+  source = "../../../../modules/routing_vnic_attachment"
 
   compartment_id = lookup(data.terraform_remote_state.management_network.outputs, "management_compartment_id", null)
 
@@ -33,7 +33,7 @@ output routing_2_secondary_vnic_id {
 ########## IP Route Add ###########################
 ##########
 module ip_route_add {
-  source = "../../../modules/ip_route_add"
+  source = "../../../../modules/ip_route_add"
 
   compartment_id = lookup(data.terraform_remote_state.management_network.outputs, "management_compartment_id", null)
 

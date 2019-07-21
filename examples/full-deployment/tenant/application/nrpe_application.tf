@@ -2,7 +2,7 @@
 ####### nrpe deployment for tenant 1 #############
 ###
 module nrpe_application_1 {
-  source = "../../../modules/nrpe_application"
+  source = "../../../../modules/nrpe_application"
 
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_1_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -21,7 +21,7 @@ output "tenant_1_private_ip" {
 ####### nrpe deployment for tenant 2 #############
 ###
 module nrpe_application_2 {
-  source = "../../../modules/nrpe_application"
+  source = "../../../../modules/nrpe_application"
 
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_2_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -40,7 +40,7 @@ output "tenant_2_private_ip" {
 ####### nrpe deployment for tenant 3 #############
 ###
 module nrpe_application_3 {
-  source = "../../../modules/nrpe_application"
+  source = "../../../../modules/nrpe_application"
 
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_3_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -60,7 +60,7 @@ output "tenant_3_private_ip" {
 ####### nrpe deployment for tenant 4 #############
 ###
 module nrpe_application_4 {
-  source = "../../../modules/nrpe_application"
+  source = "../../../../modules/nrpe_application"
 
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_4_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id

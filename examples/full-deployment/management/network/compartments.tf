@@ -1,6 +1,6 @@
 # Configure the main compartment
 module management_compartment {
-  source = "../../../modules/compartment"
+  source = "../../../../modules/compartment"
 
   providers = {
     oci.home = "oci.home"
