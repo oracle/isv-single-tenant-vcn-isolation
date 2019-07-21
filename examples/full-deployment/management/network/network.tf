@@ -1,6 +1,6 @@
 # Configure the main netowrk including VPC, Subnet, Seclist
 module management_network {
-  source = "../../../modules/management_network"
+  source = "../../../../modules/management_network"
 
   compartment_id         = module.management_compartment.compartment_id
   vcn_name               = "isv management"

@@ -2,7 +2,7 @@
 ######### tenant 1 instance provisioning
 ###
 module tenant_instance_1 {
-  source = "../../../modules/tenant_instance"
+  source = "../../../../modules/tenant_instance"
 
   providers = {
     oci.home = "oci.home"
@@ -23,7 +23,7 @@ output "tenant_1_private_ip" {
 ######### tenant 2 instance provisioning
 #
 module tenant_instance_2 {
-  source = "../../../modules/tenant_instance"
+  source = "../../../../modules/tenant_instance"
 
   providers = {
     oci.home = "oci.home"
@@ -45,7 +45,7 @@ output "tenant_2_private_ip" {
 ######### tenant 3 instance provisioning
 #
 module tenant_instance_3 {
-  source = "../../../modules/tenant_instance"
+  source = "../../../../modules/tenant_instance"
 
   providers = {
     oci.home = "oci.home"
@@ -67,7 +67,7 @@ output "tenant_3_private_ip" {
 ######### tenant 4 instance provisioning
 #
 module tenant_instance_4 {
-  source = "../../../modules/tenant_instance"
+  source = "../../../../modules/tenant_instance"
 
   providers = {
     oci.home = "oci.home"

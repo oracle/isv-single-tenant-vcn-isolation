@@ -2,7 +2,7 @@
 ###
 ### Network for peering 1 ##########################################
 module peering_1_network {
-  source = "../../../modules/peering_network"
+  source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
   vcn_name       = var.display_name_1
@@ -37,7 +37,7 @@ output "peering_1_subnet_cidr" {
 ###
 ### Network for peering 2 ##########################################
 module peering_2_network {
-  source = "../../../modules/peering_network"
+  source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
   vcn_name       = var.display_name_2

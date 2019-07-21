@@ -2,7 +2,7 @@
 ###
 ### Network for tenant 1 ##########################################
 module tenant_1_network {
-  source = "../../../modules/tenant_network"
+  source = "../../../../modules/tenant_network"
 
   compartment_id = module.tenant_1_compartment.compartment_id
   vcn_name       = var.display_name_1
@@ -37,7 +37,7 @@ output "tenant_1_private_subnet_cidr" {
 ###
 ### Network for tenant 2 ##########################################
 module tenant_2_network {
-  source = "../../../modules/tenant_network"
+  source = "../../../../modules/tenant_network"
 
   compartment_id = module.tenant_2_compartment.compartment_id
   vcn_name       = var.display_name_2
@@ -72,7 +72,7 @@ output "tenant_2_private_subnet_cidr" {
 ###
 ### Network for tenant 3 ##########################################
 module tenant_3_network {
-  source = "../../../modules/tenant_network"
+  source = "../../../../modules/tenant_network"
 
   compartment_id = module.tenant_3_compartment.compartment_id
   vcn_name       = var.display_name_3
@@ -107,7 +107,7 @@ output "tenant_3_private_subnet_cidr" {
 ###
 ### Network for tenant 4 ##########################################
 module tenant_4_network {
-  source = "../../../modules/tenant_network"
+  source = "../../../../modules/tenant_network"
 
   compartment_id = module.tenant_4_compartment.compartment_id
   vcn_name       = var.display_name_4
