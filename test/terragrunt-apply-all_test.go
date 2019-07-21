@@ -12,7 +12,7 @@ import (
 func TestTerragruntApplyAll(t *testing.T) {
 	t.Parallel()
 
-	terraformDirectory := "../examples"
+	terraformDirectory := "../examples/full-deployment"
 
 	// At the end of the test, run `terragrunt destry-all` to clean up any resources that were created
 	defer test_structure.RunTestStage(t, "teardown", func() {
