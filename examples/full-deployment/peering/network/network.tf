@@ -1,17 +1,18 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
+
+# TODO dynamically create required number of peering networks
+
 ###
 ### Network for peering 1 ##########################################
 module peering_1_network {
   source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
-  vcn_name       = var.display_name_1
-  dns_label      = var.display_name_1
-  vcn_cidr_block = var.vcn_cidr_block_1
+  vcn_name  = "peering01"
+  dns_label = "peering01"
 
-  peering_subnet_cidr   = var.vcn_cidr_block_1
-  #TODO -- substitute hardcoded values with variable (manage dependency with tenant vcn creation)
-  tenant_vcn_cidr_block = [ "10.1.0.0/16", "10.2.0.0/16" ]
+  vcn_cidr_block         = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
+  peering_subnet_cidr    = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
+  tenant_vcn_cidr_blocks = data.terraform_remote_state.configuration.outputs.tenant_vcns_per_peering_vcn[0]
 }
 
 output "peering_1_vcn_id" {
@@ -23,11 +24,11 @@ output "peering_1_subnet_id" {
 }
 
 output "peering_1_lpg_1_id" {
-  value = module.peering_1_network.peering_gateway_1.id
+  value = module.peering_1_network.peering_gateway_ids[0]
 }
 
 output "peering_1_lpg_2_id" {
-  value = module.peering_1_network.peering_gateway_2.id
+  value = module.peering_1_network.peering_gateway_ids[1]
 }
 
 output "peering_1_subnet_cidr" {
@@ -40,13 +41,12 @@ module peering_2_network {
   source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
-  vcn_name       = var.display_name_2
-  dns_label      = var.display_name_2
-  vcn_cidr_block = var.vcn_cidr_block_2
+  vcn_name  = "peering02"
+  dns_label = "peering02"
 
-  peering_subnet_cidr   = var.vcn_cidr_block_2
-  #TODO -- substitute hardcoded values with variable (manage dependency with tenant vcn creation)
-  tenant_vcn_cidr_block = [ "10.3.0.0/16", "10.4.0.0/16" ]
+  vcn_cidr_block         = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
+  peering_subnet_cidr    = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
+  tenant_vcn_cidr_blocks = data.terraform_remote_state.configuration.outputs.tenant_vcns_per_peering_vcn[1]
 }
 
 output "peering_2_vcn_id" {
@@ -58,11 +58,11 @@ output "peering_2_subnet_id" {
 }
 
 output "peering_2_lpg_1_id" {
-  value = module.peering_2_network.peering_gateway_1.id
+  value = module.peering_2_network.peering_gateway_ids[0]
 }
 
 output "peering_2_lpg_2_id" {
-  value = module.peering_2_network.peering_gateway_2.id
+  value = module.peering_2_network.peering_gateway_ids[1]
 }
 
 output "peering_2_subnet_cidr" {

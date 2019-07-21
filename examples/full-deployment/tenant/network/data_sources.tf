@@ -26,3 +26,27 @@ data oci_core_images oraclelinux {
     regex  = true
   }
 }
+
+data "terraform_remote_state" "configuration" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/configuration/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "peering_network" {
+  backend = "local"
+
+  config = {
+    path = "../../peering/state/peering/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "mgmt_network" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/network/terraform.tfstate"
+  }
+}

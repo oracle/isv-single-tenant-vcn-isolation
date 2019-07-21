@@ -43,9 +43,9 @@ variable peering_sec_list {
   default     = "peering_sec_list"
 }
 
-variable tenant_vcn_cidr_block {
+variable tenant_vcn_cidr_blocks {
   type        = list
-  description = "seclist to open ICMP ports"
+  description = "list of tenancy vcn cidr blocks, used for seclist to open ICMP ports"
 }
 
 variable peering_subnet_name {
@@ -63,6 +63,12 @@ variable peering_subnet_dns_label {
 variable peering_subnet_cidr {
   type        = string
   description = "CIDR range for the peering subnet"
+}
+
+variable local_peering_gateways_per_vcn {
+  type = number
+  description = "number of local peering gateways per peering vcn"
+  default = 10
 }
 
 

@@ -13,18 +13,11 @@ resource oci_core_vcn peering_vcn {
 
 ##### Local Peering Gateway ######################
 #
-resource oci_core_local_peering_gateway peering_gateway_1 {
+resource oci_core_local_peering_gateway peering_gateways {
+  count          = var.local_peering_gateways_per_vcn
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
-  display_name   = var.vcn_name
-  defined_tags   = var.defined_tags
-  freeform_tags  = var.freeform_tags
-}
-
-resource oci_core_local_peering_gateway peering_gateway_2 {
-  compartment_id = var.compartment_id
-  vcn_id         = oci_core_vcn.peering_vcn.id
-  display_name   = var.vcn_name
+  display_name   = "${var.vcn_name} local peering gateway ${count.index+1}" 
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }
@@ -36,16 +29,17 @@ resource oci_core_route_table peering_route_table {
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.peering_rte_name
 
+  # TODO use dynamic nested block with for_each to create route_rules
   route_rules {
     destination_type  = "CIDR_BLOCK"
-    destination       = "${var.tenant_vcn_cidr_block[0]}"
-    network_entity_id = oci_core_local_peering_gateway.peering_gateway_1.id
+    destination       = var.tenant_vcn_cidr_blocks[0]
+    network_entity_id = oci_core_local_peering_gateway.peering_gateways[0].id
   }
 
   route_rules {
     destination_type  = "CIDR_BLOCK"
-    destination       = "${var.tenant_vcn_cidr_block[1]}"
-    network_entity_id = oci_core_local_peering_gateway.peering_gateway_2.id
+    destination       = var.tenant_vcn_cidr_blocks[1]
+    network_entity_id = oci_core_local_peering_gateway.peering_gateways[1].id
   }
 }
 
@@ -68,7 +62,8 @@ resource oci_core_security_list peering_security_list {
     source   = "0.0.0.0/0"
   }
 
-  // allow inbound http traffic
+  // allow inbound nagios traffic
+  # TODO move to a nagios network security group
   ingress_security_rules {
     tcp_options {
       min = "5666"

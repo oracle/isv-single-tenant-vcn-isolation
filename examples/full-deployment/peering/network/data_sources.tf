@@ -26,3 +26,11 @@ data oci_core_images oraclelinux {
     regex  = true
   }
 }
+
+data "terraform_remote_state" "configuration" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/configuration/terraform.tfstate"
+  }
+}
