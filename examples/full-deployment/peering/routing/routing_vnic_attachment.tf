@@ -1,7 +1,7 @@
 
 
 module routing_vnic_attachement1 {
-  source         = "../../../modules/routing_vnic_attachment"
+  source         = "../../../../modules/routing_vnic_attachment"
   hostname_label = "gateway1vnic1"
   display_name   = "${module.routing_instance.instance1.hostname_label} peering interface"
   compartment_id = local.compartment_id
@@ -14,7 +14,7 @@ module routing_vnic_attachement1 {
 }
 
 module routing_vnic_attachement2 {
-  source         = "../../../modules/routing_vnic_attachment"
+  source         = "../../../../modules/routing_vnic_attachment"
   hostname_label = "gateway1vnic2"
   display_name   = "${module.routing_instance.instance1.hostname_label} peering interface"
   compartment_id = local.compartment_id
@@ -51,7 +51,7 @@ output routing_secondary_vnic_ids {
 ########## IP Route Add ###########################
 ##########
 module ip_route_add_instance1 {
-  source = "../../../modules/ip_route_add"
+  source = "../../../../modules/ip_route_add"
 
   compartment_id = local.compartment_id
 
@@ -74,7 +74,7 @@ module ip_route_add_instance1 {
 }
 
 module ip_route_add_instance2 {
-  source = "../../../modules/ip_route_add"
+  source = "../../../../modules/ip_route_add"
 
   compartment_id = local.compartment_id
 

@@ -1,6 +1,6 @@
 
 module routing_instance {
-  source = "../../../modules/routing_instance_ha"
+  source = "../../../../modules/routing_instance_ha"
 
   hostname_label = "gateway"
   display_name   = "gateway"
