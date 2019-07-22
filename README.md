@@ -5,18 +5,15 @@ Create the necessary network resources to deploy multiple single-tenant applicat
 
 ## Terminology
 
-SaaS ISV: An independent software vendor that provides software as a service.
-
-Tenancy: An Oracle Cloud Infrastructure account, owned by an ISV.
-
-Tenant: A distinct end-customer of the ISV.
+* **SaaS ISV**: An independent software vendor that provides software as a service.
+* **Tenancy**: An Oracle Cloud Infrastructure account, owned by an ISV.
+* **Tenant**: A distinct end-customer of the ISV.
 
 ## Architecture
 
-The architecture is a scalable network topology, with a separate VCN for each tenant application, isolated in a tenant-specific compartment.
+The architecture consists of a scalable network topology, with a separate VCN for each tenant application, isolated in a tenant-specific compartment.
 
 (placeholder for architecture diagram)
-
 
 ## Example deployment
 
