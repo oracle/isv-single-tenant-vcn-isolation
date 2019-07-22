@@ -17,7 +17,7 @@ resource null_resource nagios_application {
 
   # upload the chef-solo scripts
   provisioner file {
-    source      = "../../../chef"
+    source      = "../../../../chef"
     destination = "/home/opc"
   }
 

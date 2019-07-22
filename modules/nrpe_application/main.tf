@@ -18,7 +18,7 @@ resource null_resource nrpe_application {
 
   # upload the chef-solo scripts
   provisioner file {
-    source      = "../../../chef"
+    source      = "../../../../chef"
     destination = "/home/opc"
   }
 
