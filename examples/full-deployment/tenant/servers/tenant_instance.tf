@@ -19,7 +19,6 @@ output "tenant_1_private_ip" {
   value = module.tenant_instance_1.instance_ip
 }
 
-/* FIXME
 ######### tenant 2 instance provisioning
 #
 module tenant_instance_2 {
@@ -39,7 +38,6 @@ module tenant_instance_2 {
 output "tenant_2_private_ip" {
   value = module.tenant_instance_2.instance_ip
 }
-
 
 ######### tenant 3 instance provisioning
 #
@@ -81,4 +79,3 @@ module tenant_instance_4 {
 output "tenant_4_private_ip" {
   value = module.tenant_instance_4.instance_ip
 }
-*/

@@ -1,4 +1,6 @@
 
+# Routing Instance 1
+
 module routing_instance_1 {
   source = "../../../../modules/routing_instance"
 
@@ -14,16 +16,18 @@ module routing_instance_1 {
   tenancy_id = var.tenancy_ocid
   region     = var.region
 
-  shape = "VM.Standard2.1"
+  shape = "VM.Standard2.1" # TODO
 }
 
 output "routing_instance_1_ip" {
   value = module.routing_instance_1.routing_ip
 }
 
-/* FIXME
+
+# Routing Instance 2
+
 module routing_instance_2 {
-  source = "../../../../modules/routing_instance_ha"
+  source = "../../../../modules/routing_instance"
 
   hostname_label = "gateway2"
   display_name   = "gateway2"
@@ -36,9 +40,10 @@ module routing_instance_2 {
 
   tenancy_id = var.tenancy_ocid
   region     = var.region
+
+  shape = "VM.Standard2.1"  # TODO
 }
 
 output "routing_instance_2_ip" {
   value = module.routing_instance_2.routing_ip
 }
-*/
