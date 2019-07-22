@@ -1,11 +1,21 @@
 Set Up the Infrastructure to Run Multiple Single-Tenant SaaS Applications
 =========================================================================
 
-Use this Terraform configuration to create the necessary network resources to deploy multiple single-tenant applications that are isolated in separate VCNs.
+Create the necessary network resources to deploy multiple single-tenant applications, isolated in separate VCNs in a single ISV-owned tenancy.
+
+## Terminology
+
+SaaS ISV: An independent software vendor that provides software as a service.
+
+Tenancy: An Oracle Cloud Infrastructure account, owned by an ISV.
+
+Tenant: A distinct end-customer of the ISV.
 
 ## Architecture
 
-placeholder for architecture diagram
+The architecture is a scalable network topology, with a separate VCN for each tenant application, isolated in a tenant-specific compartment.
+
+(placeholder for architecture diagram)
 
 
 ## Example deployment
