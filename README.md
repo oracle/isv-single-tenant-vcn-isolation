@@ -13,48 +13,69 @@ Create the necessary network resources to deploy multiple single-tenant applicat
 
 The architecture consists of a scalable network topology, with a separate VCN for each tenant application, isolated in a tenant-specific compartment.
 
-(placeholder for architecture diagram)
+The following diagram shows the target topology:
 
-## Example deployment
+(placeholder for diagram)
 
-The `examples` directory contains multiple Terraform configurations that can be deployed separately to build up the complete example solution deployment.   
+This topology consists of the following components:
 
-The complete solution can be deploy using `terragrunt` (see [Deploy with Terragruny)[#deploy-with-terragrunt]), or manually perform a Terraform init/plan/apply in each example directory in following order to layer the configuations.
+### Peering Network
+(placeholder for the description of the peering network)
 
-1. Peering Network
+### Management Infrastructure
+(placeholder for the description of the management network & servers)
+
+### Tenant Infrastructure
+(placeholder for the description of the tenant network & servers)
+
+### Application
+(placeholder for the description of the application resources)
+
+## Deploying the Sample Topology
+
+The `examples` directory contains the Terraform configurations for a sample topology based on the architecture described earlier. 
+
+You can build the entire solution by using `terragrunt` (see [Deploy Using Terragrunt)[#deploy-with-terragrunt]).
+
+Alternatively, deploy the configuration in each subdirectory by running the Terraform `init`, `plan`, and `apply` commands in the following order:
+
+1. Deploy the peering network.
 	- `examples/peering/network`
-2. Management Network and Servers
+2. Deploy the management network and servers.
 	- `examples/management/network`
 	- `examples/management/servers`
-3. Tenant Network and Servers
+3. Deploy the tenant Network and Servers.
 	- `examples/tenant/network`
 	- `examples/management/server_attachment`
 	- `examples/tenant/servers`
-4. Applications
+4. Deploy the applications.
 	- `examples/management/application`
 	- `examples/tenant/application`
 
+### Deploy Using Terragrunt
 
-### Deploy with Terragrunt
+You can use `terragrunt` to deploy the entire configuration with a single command.
 
-`terragrunt` can be used deploy the complete configuration in a single command.  `terraform init` must have been run in each sub confguration first.
-
-At single `terraform.tfvars` file can be created in the `examples` directory which will be applied to all configs.
-
-```
-$ cd examples
-$ make init
-
-$ terragrunt apply-all
-```
-
-To fully destroy the the deployed example
+1. Install Terraform. See https://learn.hashicorp.com/terraform/getting-started/install.html.
+2. Install Terragrunt. See https://github.com/gruntwork-io/terragrunt#install-terragrunt.
+3. Clone this repository to your local host.
+4. Open `examples\terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file.
+5. In each subdirectory under the `examples` directory, run the command `terraform init`.
+6. Go to the `examples` directory, and run the following commands:
 
 ```
-$ terragrunt destroy-all
+make init
+terragrunt apply-all
+```
+All the resources defined in the configuration are deployed.
+7. (Optional) To remove all the resources, run the following command:
+```
+terragrunt destroy-all
 ```
 
+### Deploy Using Terraform
+(placeholder)
 
-## Testing
+## Test the Sample Topology
 
-Automated tests are provided in the test directory, see [`test/README`](test/README.md) for details.
+Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
