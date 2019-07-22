@@ -1,10 +1,10 @@
 variable hostname {}
-variable instance_a_primary_vnic_id {} // module.routing_instance.instance_vnics[0]
-variable instance_a_secondary_vnic_id {} // module.routing_vnic_attachement1.routing_secondary_vnic_id
-variable instance_b_primary_vnic_id {} // module.routing_instance.instance_vnics[1]
-variable instance_b_secondary_vnic_id {} // module.routing_vnic_attachement2.routing_secondary_vnic_id
-variable floating_ip {} // module.routing_instance.floating_ip
-variable floating_secondary_ip {} // oci_core_private_ip.floating_peering_ip.ip_address
+variable instance_a_primary_vnic_id {} 
+variable instance_a_secondary_vnic_id {} 
+variable instance_b_primary_vnic_id {} 
+variable instance_b_secondary_vnic_id {} 
+variable floating_ip {} 
+variable floating_secondary_ip {} 
 
 
 locals {
