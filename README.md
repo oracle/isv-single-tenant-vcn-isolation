@@ -14,22 +14,21 @@ Create the necessary network resources to deploy multiple single-tenant applicat
 The architecture consists of a scalable network topology, with a separate VCN for each tenant application, isolated in a tenant-specific compartment.
 
 The following diagram shows the target topology:
-
-(placeholder for diagram)
+*(placeholder for diagram)*
 
 This topology consists of the following components:
 
 ### Peering Network
-(placeholder for the description of the peering network)
+*(placeholder for the description of the peering network)*
 
 ### Management Infrastructure
-(placeholder for the description of the management network & servers)
+*(placeholder for the description of the management network & servers)*
 
 ### Tenant Infrastructure
-(placeholder for the description of the tenant network & servers)
+*(placeholder for the description of the tenant network & servers)*
 
 ### Application Resources
-(placeholder for the description of the application resources)
+*(placeholder for the description of the application resources)*
 
 ## Prepare to Deploy the Topology
 
@@ -40,13 +39,11 @@ This topology consists of the following components:
 
 ## Deploy the Topology
 
-You can deploy the entire topology with a single command by using `terragrunt`. See [Deploy Using Terragrunt)[#deploy-with-terragrunt]. Alternatively, deploy the configuration in each subdirectory.
+You can deploy the entire topology with a single command by using `terragrunt`. See [Deploy Using Terragrunt](#deploy-using-terragrunt). Alternatively, deploy the configuration in each subdirectory.
 
 ### Deploy Using Terraform
 
-(placeholder: explain the pros and cons of either approach)
-
-by running the Terraform `init`, `plan`, and `apply` commands in :
+*(placeholder: explain the pros and cons of either approach)*
 
 1. Go to the `examples/peering/network` directory.
 2. Run the following commands:
@@ -78,9 +75,6 @@ All the resources defined in the configuration are deployed.
 ```
 terragrunt destroy-all
 ```
-
-### Deploy Using Terraform
-(placeholder)
 
 ## Test the Sample Topology
 
