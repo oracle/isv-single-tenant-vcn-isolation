@@ -1,8 +1,9 @@
 
 # Routing Instance 1
+# HA ROUTING INSTANCE
 
 module routing_instance_1 {
-  source = "../../../../modules/routing_instance"
+  source = "../../../../modules/routing_instance_ha"
 
   hostname_label = "gateway1"
   display_name   = "gateway1"
@@ -29,6 +30,7 @@ output "routing_instance_1_ip_id" {
 
 
 # Routing Instance 2
+# SINGLE ROUTING INSTANCE
 
 module routing_instance_2 {
   source = "../../../../modules/routing_instance"

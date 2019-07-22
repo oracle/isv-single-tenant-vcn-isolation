@@ -11,14 +11,7 @@ output instance_b {
 }
 
 output routing_ip {
-  value = oci_core_private_ip.floating_ip.ip_address
-}
-
-output instance_ids {
-  value = [
-    oci_core_instance.routing_server_a.id,
-    oci_core_instance.routing_server_b.id,
-  ]
+  value = oci_core_private_ip.floating_ip
 }
 
 output instance_vnics {

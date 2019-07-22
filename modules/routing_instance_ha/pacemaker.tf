@@ -18,7 +18,7 @@ locals {
 resource null_resource pacemaker_bootstrap {
 
   triggers = {
-    host_id            = oci_core_instance.routing_server1.id
+    host_id            = oci_core_instance.routing_server_a.id
     hostname_label     = var.hostname_label
     hacluster_password = var.hacluster_password
     ip_address         = oci_core_private_ip.floating_ip.ip_address
@@ -27,7 +27,7 @@ resource null_resource pacemaker_bootstrap {
 
   connection {
     type        = "ssh"
-    host        = oci_core_instance.routing_server1.private_ip
+    host        = oci_core_instance.routing_server_a.private_ip
     user        = "opc"
     private_key = file(var.ssh_private_key_file)
 
