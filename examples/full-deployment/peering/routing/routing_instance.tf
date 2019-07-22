@@ -20,7 +20,11 @@ module routing_instance_1 {
 }
 
 output "routing_instance_1_ip" {
-  value = module.routing_instance_1.routing_ip
+  value = module.routing_instance_1.routing_ip.ip_address
+}
+
+output "routing_instance_1_ip_id" {
+  value = module.routing_instance_1.routing_ip.id
 }
 
 
@@ -45,5 +49,9 @@ module routing_instance_2 {
 }
 
 output "routing_instance_2_ip" {
-  value = module.routing_instance_2.routing_ip
+  value = module.routing_instance_2.routing_ip.ip_address
+}
+
+output "routing_instance_2_ip_id" {
+  value = module.routing_instance_2.routing_ip.id
 }

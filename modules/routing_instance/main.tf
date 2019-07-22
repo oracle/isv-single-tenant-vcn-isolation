@@ -33,3 +33,8 @@ resource oci_core_instance routing_server {
     bastion_private_key = file(var.bastion_ssh_private_key_file)
   }
 }
+
+data "oci_core_private_ips" "routing_ip" {
+    ip_address = oci_core_instance.routing_server.private_ip
+    subnet_id = var.subnet_id
+} 

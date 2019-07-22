@@ -26,3 +26,51 @@ data oci_core_images oraclelinux {
     regex  = true
   }
 }
+
+data "terraform_remote_state" "configuration" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/configuration/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "management_network" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "tenant_network" {
+  backend = "local"
+
+  config = {
+    path = "../../tenant/state/tenant/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "peering_network" {
+  backend = "local"
+
+  config = {
+    path = "../../peering/state/peering/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "management_servers" {
+  backend = "local"
+
+  config = {
+    path = "../../management/state/management/servers/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "peering_servers" {
+  backend = "local"
+
+  config = {
+    path = "../../peering/state/peering/routing/terraform.tfstate"
+  }
+}
