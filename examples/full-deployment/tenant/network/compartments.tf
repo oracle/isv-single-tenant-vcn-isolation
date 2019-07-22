@@ -9,7 +9,7 @@ module tenant_1_compartment {
   }
 
   root_compartment_id = local.root_compartment_id
-  compartment_name    = var.display_name_1
+  compartment_name    = "tenant1"
 }
 
 output "tenant_1_compartment_id" {
@@ -26,7 +26,7 @@ module tenant_2_compartment {
   }
 
   root_compartment_id = local.root_compartment_id
-  compartment_name    = var.display_name_2
+  compartment_name    = "tenant2"
 }
 
 output "tenant_2_compartment_id" {
@@ -43,7 +43,7 @@ module tenant_3_compartment {
   }
 
   root_compartment_id = local.root_compartment_id
-  compartment_name    = var.display_name_3
+  compartment_name    = "tenant3"
 }
 
 output "tenant_3_compartment_id" {
@@ -60,7 +60,7 @@ module tenant_4_compartment {
   }
 
   root_compartment_id = local.root_compartment_id
-  compartment_name    = var.display_name_4
+  compartment_name    = "tenant4"
 }
 
 output "tenant_4_compartment_id" {
