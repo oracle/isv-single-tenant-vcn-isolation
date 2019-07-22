@@ -26,7 +26,6 @@ variable compartment_id {}
 variable source_id {}
 variable subnet_id {}
 variable availability_domain {}
-variable tenant_private_ip {}
 variable bastion_ip {}
 
 variable shape {

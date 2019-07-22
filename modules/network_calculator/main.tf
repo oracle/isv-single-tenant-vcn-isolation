@@ -31,7 +31,7 @@ resource null_resource "tenant_vcns" {
   count = var.number_of_tenants
 
   triggers = {
-    network_cidr = cidrsubnet(var.tenant_vcn_meta_cidr, local.tenant_vcn_newbits, count.index)
+    network_cidr = cidrsubnet(var.tenant_vcn_meta_cidr, local.tenant_vcn_newbits, var.tenant_vcn_starting_block + count.index)
   }
 }
 

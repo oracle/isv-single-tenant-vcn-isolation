@@ -11,7 +11,6 @@ module tenant_instance_1 {
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_1_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_1_private_subnet_id", null)
-  tenant_private_ip   = "${cidrhost(lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_1_private_subnet_cidr", null), 2)}"
   availability_domain = local.availability_domain
   bastion_ip          = lookup(data.terraform_remote_state.mgmt_servers.outputs, "bastion_ip", null)
 }
@@ -20,6 +19,7 @@ output "tenant_1_private_ip" {
   value = module.tenant_instance_1.instance_ip
 }
 
+/* FIXME
 ######### tenant 2 instance provisioning
 #
 module tenant_instance_2 {
@@ -32,7 +32,6 @@ module tenant_instance_2 {
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_2_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_2_private_subnet_id", null)
-  tenant_private_ip   = "${cidrhost(lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_2_private_subnet_cidr", null), 2)}"
   availability_domain = local.availability_domain
   bastion_ip          = lookup(data.terraform_remote_state.mgmt_servers.outputs, "bastion_ip", null)
 }
@@ -54,7 +53,6 @@ module tenant_instance_3 {
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_3_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_3_private_subnet_id", null)
-  tenant_private_ip   = "${cidrhost(lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_3_private_subnet_cidr", null), 2)}"
   availability_domain = local.availability_domain
   bastion_ip          = lookup(data.terraform_remote_state.mgmt_servers.outputs, "bastion_ip", null)
 }
@@ -76,7 +74,6 @@ module tenant_instance_4 {
   compartment_id      = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_4_compartment_id", null)
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_4_private_subnet_id", null)
-  tenant_private_ip   = "${cidrhost(lookup(data.terraform_remote_state.tenant_network.outputs, "tenant_4_private_subnet_cidr", null), 2)}"
   availability_domain = local.availability_domain
   bastion_ip          = lookup(data.terraform_remote_state.mgmt_servers.outputs, "bastion_ip", null)
 }
@@ -84,3 +81,4 @@ module tenant_instance_4 {
 output "tenant_4_private_ip" {
   value = module.tenant_instance_4.instance_ip
 }
+*/

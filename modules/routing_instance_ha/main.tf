@@ -16,18 +16,18 @@ locals {
   ]
 }
 
-data "oci_core_private_ips" "routing_server1_private_ip" {
-  ip_address = oci_core_instance.routing_server1.create_vnic_details[0].private_ip
-  subnet_id  = oci_core_instance.routing_server1.create_vnic_details[0].subnet_id
+data "oci_core_private_ips" "routing_server_a_private_ip" {
+  ip_address = oci_core_instance.routing_server_a.create_vnic_details[0].private_ip
+  subnet_id  = oci_core_instance.routing_server_a.create_vnic_details[0].subnet_id
 }
 
-data "oci_core_private_ips" "routing_server2_private_ip" {
-  ip_address = oci_core_instance.routing_server2.create_vnic_details[0].private_ip
-  subnet_id  = oci_core_instance.routing_server2.create_vnic_details[0].subnet_id
+data "oci_core_private_ips" "routing_server_b_private_ip" {
+  ip_address = oci_core_instance.routing_server_b.create_vnic_details[0].private_ip
+  subnet_id  = oci_core_instance.routing_server_b.create_vnic_details[0].subnet_id
 }
 
 resource "oci_core_private_ip" "floating_ip" {
-  vnic_id        = data.oci_core_private_ips.routing_server1_private_ip.private_ips[0].vnic_id
+  vnic_id        = data.oci_core_private_ips.routing_server_a_private_ip.private_ips[0].vnic_id
   hostname_label = var.hostname_label
 
   lifecycle {
@@ -38,10 +38,10 @@ resource "oci_core_private_ip" "floating_ip" {
   }
 }
 
-resource oci_core_instance routing_server1 {
+resource oci_core_instance routing_server_a {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
-  display_name        = "${var.display_name} 1"
+  display_name        = "${var.display_name}a"
 
   source_details {
     source_type = "image"
@@ -58,7 +58,7 @@ resource oci_core_instance routing_server1 {
   create_vnic_details {
     subnet_id              = var.subnet_id
     assign_public_ip       = false
-    hostname_label         = "${var.hostname_label}1"
+    hostname_label         = "${var.hostname_label}a"
     skip_source_dest_check = true
 
     nsg_ids = [
@@ -88,10 +88,10 @@ resource oci_core_instance routing_server1 {
   }
 }
 
-resource oci_core_instance routing_server2 {
+resource oci_core_instance routing_server_b {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
-  display_name        = "${var.display_name} 2"
+  display_name        = "${var.display_name}b"
 
   source_details {
     source_type = "image"
@@ -108,7 +108,7 @@ resource oci_core_instance routing_server2 {
   create_vnic_details {
     subnet_id              = var.subnet_id
     assign_public_ip       = false
-    hostname_label         = "${var.hostname_label}2"
+    hostname_label         = "${var.hostname_label}b"
     skip_source_dest_check = true
 
     nsg_ids = [

@@ -19,7 +19,6 @@ resource oci_core_instance tenant_appserver {
     subnet_id        = var.subnet_id
     assign_public_ip = false
     hostname_label   = var.hostname_label
-    private_ip       = var.tenant_private_ip
   }
 
   connection {

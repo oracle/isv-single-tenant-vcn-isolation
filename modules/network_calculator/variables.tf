@@ -25,6 +25,13 @@ variable tenant_vcn_mask {
   description = "network mask for each tenant vcn"
 }
 
+variable tenant_vcn_starting_block {
+  type        = number
+  description = "first subnet cidr block in the meta range to allocate"
+  default     = 0
+}
+
+
 variable peering_vcns_per_routing_instance {
   type        = number
   description = "number of tenany peering VCNs per routing instance. i.e. number of secondard vnic attachments per instance"

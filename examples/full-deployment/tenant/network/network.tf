@@ -9,13 +9,14 @@ module tenant_1_network {
   dns_label      = var.display_name_1
   vcn_cidr_block = var.vcn_cidr_block_1
 
-  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_1, 8, 1)}"
-  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_1, 8, 2)}"
+  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_1, 8, 0)}"
+  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_1, 8, 1)}"
 
-  tenant_peering_subnet_cidr     = data.terraform_remote_state.peering_network.outputs.peering_1_subnet_cidr
+  tenant_peering_subnet_cidr     = (length(data.terraform_remote_state.configuration.outputs) == 0 ? null : data.terraform_remote_state.configuration.outputs.peering_vcns[0])
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  peering_lpg_id = data.terraform_remote_state.peering_network.outputs.peering_1_lpg_1_id
+  # TODO calculate index 
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null :  data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[0])
 }
 
 output "tenant_1_vcn_id" {
@@ -44,13 +45,14 @@ module tenant_2_network {
   dns_label      = var.display_name_2
   vcn_cidr_block = var.vcn_cidr_block_2
 
-  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_2, 8, 1)}"
-  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_2, 8, 2)}"
+  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_2, 8, 0)}"
+  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_2, 8, 1)}"
 
-  tenant_peering_subnet_cidr     = data.terraform_remote_state.peering_network.outputs.peering_1_subnet_cidr
+  tenant_peering_subnet_cidr     = (length(data.terraform_remote_state.configuration.outputs) == 0 ? null : data.terraform_remote_state.configuration.outputs.peering_vcns[0])
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  peering_lpg_id = data.terraform_remote_state.peering_network.outputs.peering_1_lpg_2_id
+  # TODO calculate index 
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[1])
 }
 
 output "tenant_2_vcn_id" {
@@ -79,13 +81,14 @@ module tenant_3_network {
   dns_label      = var.display_name_3
   vcn_cidr_block = var.vcn_cidr_block_3
 
-  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_3, 8, 1)}"
-  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_3, 8, 2)}"
+  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_3, 8, 0)}"
+  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_3, 8, 1)}"
 
-  tenant_peering_subnet_cidr     = data.terraform_remote_state.peering_network.outputs.peering_2_subnet_cidr
+  tenant_peering_subnet_cidr     = (length(data.terraform_remote_state.configuration.outputs) == 0 ? null : data.terraform_remote_state.configuration.outputs.peering_vcns[1])
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  peering_lpg_id = data.terraform_remote_state.peering_network.outputs.peering_2_lpg_1_id
+  # TODO calculate index 
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_gateway_ids[0])
 }
 
 output "tenant_3_vcn_id" {
@@ -114,13 +117,14 @@ module tenant_4_network {
   dns_label      = var.display_name_4
   vcn_cidr_block = var.vcn_cidr_block_4
 
-  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_4, 8, 1)}"
-  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_4, 8, 2)}"
+  tenant_public_subnet_cidr  = "${cidrsubnet(var.vcn_cidr_block_4, 8, 0)}"
+  tenant_private_subnet_cidr = "${cidrsubnet(var.vcn_cidr_block_4, 8, 1)}"
 
-  tenant_peering_subnet_cidr     = data.terraform_remote_state.peering_network.outputs.peering_2_subnet_cidr
+  tenant_peering_subnet_cidr     = (length(data.terraform_remote_state.configuration.outputs) == 0 ? null : data.terraform_remote_state.configuration.outputs.peering_vcns[1])
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  peering_lpg_id = data.terraform_remote_state.peering_network.outputs.peering_2_lpg_2_id
+  # TODO calculate index 
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_gateway_ids[1])
 }
 
 output "tenant_4_vcn_id" {

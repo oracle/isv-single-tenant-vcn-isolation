@@ -39,8 +39,8 @@ resource null_resource pacemaker_bootstrap {
   provisioner remote-exec {
     inline = [
       "set -x",
-      "sudo pcs cluster auth ${var.hostname_label}1 ${var.hostname_label}2 -u hacluster -p '${var.hacluster_password}' --force",
-      "sudo pcs cluster setup --force --name pacemaker1  ${var.hostname_label}1 ${var.hostname_label}2",
+      "sudo pcs cluster auth ${var.hostname_label}a ${var.hostname_label}b -u hacluster -p '${var.hacluster_password}' --force",
+      "sudo pcs cluster setup --force --name pacemaker1  ${var.hostname_label}a ${var.hostname_label}b",
       "sudo pcs cluster start --all",
       "sudo pcs property set stonith-enabled=false",
       "sudo pcs property set no-quorum-policy=ignore",

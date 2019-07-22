@@ -1,26 +1,30 @@
-output instance1 {
-  value = oci_core_instance.routing_server1
+output instance {
+  value = oci_core_instance.routing_server_a
 }
 
-output instance2 {
-  value = oci_core_instance.routing_server2
+output instance_a {
+  value = oci_core_instance.routing_server_a
 }
 
-output floating_ip {
+output instance_b {
+  value = oci_core_instance.routing_server_b
+}
+
+output routing_ip {
   value = oci_core_private_ip.floating_ip.ip_address
 }
 
 output instance_ids {
   value = [
-    oci_core_instance.routing_server1.id,
-    oci_core_instance.routing_server2.id,
+    oci_core_instance.routing_server_a.id,
+    oci_core_instance.routing_server_b.id,
   ]
 }
 
 output instance_vnics {
   value = [
-    data.oci_core_private_ips.routing_server1_private_ip.private_ips[0].vnic_id,
-    data.oci_core_private_ips.routing_server2_private_ip.private_ips[0].vnic_id,
+    data.oci_core_private_ips.routing_server_a_private_ip.private_ips[0].vnic_id,
+    data.oci_core_private_ips.routing_server_b_private_ip.private_ips[0].vnic_id,
   ]
 }
 

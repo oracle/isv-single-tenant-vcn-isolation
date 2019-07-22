@@ -18,6 +18,14 @@ data oci_core_images oraclelinux {
   }
 }
 
+data "terraform_remote_state" "configuration" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/configuration/terraform.tfstate"
+  }
+}
+
 data "terraform_remote_state" "management_network" {
   backend = "local"
 
