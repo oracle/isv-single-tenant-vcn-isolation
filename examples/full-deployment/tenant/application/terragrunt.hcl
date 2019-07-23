@@ -9,5 +9,6 @@ dependencies {
     "../../management/access",
     "../../management/network",
     "../../management/servers",
+    "../../management/server_attachment"
   ]
 }
