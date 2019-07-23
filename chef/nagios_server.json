@@ -1,5 +1,5 @@
 {
 	"run_list":[
-		"recipe[apps::nagios]"
+		"recipe[apps::main]"
 	]
 }
