@@ -3,5 +3,9 @@ include {
 }
 
 dependencies {
-  paths = ["../../common/configuration", "../../peering/network", "../../management/network"]
+  paths = [
+    "../../common/configuration",
+    "../../management/network",
+    "../../peering/network",
+  ]
 }
