@@ -35,5 +35,5 @@ data "terraform_remote_state" "access" {
 }
 
 locals {
-  bastion_ip = lookup(data.terraform_remote_state.access.outputs, "bastion_ip", null)
+  bastion_ip = data.terraform_remote_state.access.outputs.bastion_ip
 }
