@@ -1,0 +1,23 @@
+
+module management_rte_attachement {
+  source = "../../../../modules/management_rte_attachement"
+
+  compartment_id            = data.terraform_remote_state.management_network.outputs.management_compartment_id
+
+  routing_ip_ids = [
+    data.terraform_remote_state.peering_servers.outputs.routing_instance_1_ip_id,
+    data.terraform_remote_state.peering_servers.outputs.routing_instance_2_ip_id,
+  ]
+
+  tenant_vcn_cidr_blocks = data.terraform_remote_state.configuration.outputs.tenant_vcns
+
+  management_vcn_id    = data.terraform_remote_state.management_network.outputs.management_vcn_id
+  management_subnet_id = data.terraform_remote_state.management_network.outputs.management_subnet_id
+  management_nat_id    = data.terraform_remote_state.management_network.outputs.management_nat_id
+  management_igw_id    = data.terraform_remote_state.management_network.outputs.management_igw_id
+  access_subnet_id     = data.terraform_remote_state.management_network.outputs.access_subnet_id
+}
+
+output routing_id {
+  value = module.management_rte_attachement.routing_id
+}
