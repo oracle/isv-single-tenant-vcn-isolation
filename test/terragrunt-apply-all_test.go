@@ -77,6 +77,7 @@ func TestTerragruntApplyAll(t *testing.T) {
 		response := ssh.CheckSshCommand(t, bastionHost, command)
 		assert.Equal(t, expectedText, response)
 
+
 		// TEST
 		logger.Log(t, "TEST - private ssh connecton to management server via bastion.")
 		{
@@ -192,7 +193,7 @@ func TestTerragruntApplyAll(t *testing.T) {
 		}
 
 		// TEST NRPE agent on tenant server is configured with Nagios Host server as allowed host
-		logger.Log(t, "TEST - file /etc/nagios/nrpe.cfg exists on nagios server")
+		logger.Log(t, "TEST - file /etc/nagios/nrpe.cfg exists and configured on tenant servers")
 		{
 			tenantIP := getOutput(t, terraformDirectory+"/tenant/servers", "tenant_4_private_ip")
 			managementIP := getOutput(t, terraformDirectory+"/management/servers", "management_ip")
@@ -209,6 +210,67 @@ func TestTerragruntApplyAll(t *testing.T) {
 			retry.DoWithRetry(t, description, maxRetries, timeBetweenRetries, func() (string, error) {
 			    actualText, err := ssh.CheckPrivateSshConnectionE(t, bastionHost, tenantHost, command)
 			    assert.Equal(t, managementIP, actualText)
+			    return "", err
+			})
+		}
+
+		// TEST
+		logger.Log(t, "TEST - Find out that NAGIOS process is running successfully")
+		{
+			managementIP := getOutput(t, terraformDirectory+"/management/servers", "management_ip")
+			managementHost := ssh.Host{
+				Hostname:    managementIP,
+				SshUserName: "opc",
+				SshKeyPair:  keyPair,
+			}
+			
+			expectedStatus := "active"
+			command := fmt.Sprintf("systemctl is-active nagios | tr -d '\n'")
+			maxRetries := 30
+			timeBetweenRetries := 5 * time.Second
+			description := fmt.Sprintf("Check nagios process on management host %s", managementIP)
+			retry.DoWithRetry(t, description, maxRetries, timeBetweenRetries, func() (string, error) {
+			    actualStatus, err := ssh.CheckPrivateSshConnectionE(t, bastionHost, managementHost, command)
+			    assert.Equal(t, expectedStatus, actualStatus)
+			    return "", err
+			})
+		}
+
+		// TEST
+		logger.Log(t, "TEST - Find out that NRPE process is running successfully on tenant server")
+		{
+			tenantIP := getOutput(t, terraformDirectory+"/tenant/servers", "tenant_4_private_ip")
+			tenantHost := ssh.Host{
+				Hostname:    tenantIP,
+				SshUserName: "opc",
+				SshKeyPair:  keyPair,
+			}
+			
+			expectedStatus := "active"
+			command := fmt.Sprintf("systemctl is-active nrpe | tr -d '\n'")
+			maxRetries := 30
+			timeBetweenRetries := 5 * time.Second
+			description := fmt.Sprintf("Check NRPE process on tenant host %s", tenantIP)
+			retry.DoWithRetry(t, description, maxRetries, timeBetweenRetries, func() (string, error) {
+			    actualStatus, err := ssh.CheckPrivateSshConnectionE(t, bastionHost, tenantHost, command)
+			    assert.Equal(t, expectedStatus, actualStatus)
+			    return "", err
+			})
+		}
+
+		// TEST
+		logger.Log(t, "TEST - Curl to nagios instanceURL is working thru bastionHost.")
+		{
+			managementIP := getOutput(t, terraformDirectory+"/management/servers", "management_ip")
+			command := fmt.Sprintf("curl -s http://%s", managementIP)
+			
+			expectedText := "<html>This is a placeholder for the home page.</html>"
+			maxRetries := 30
+			timeBetweenRetries := 5 * time.Second
+			description := fmt.Sprintf("Curl to Nagios website on management host %s", managementIP)
+			retry.DoWithRetry(t, description, maxRetries, timeBetweenRetries, func() (string, error) {
+			    actualText, err := ssh.CheckSshCommandE(t, bastionHost, command)
+			    assert.Equal(t, expectedText, actualText)
 			    return "", err
 			})
 		}
