@@ -47,7 +47,7 @@ module routing_instance_2 {
   tenancy_id = var.tenancy_ocid
   region     = var.region
 
-  shape = "VM.Standard2.1"  # TODO
+  shape = "VM.Standard2.1" # TODO
 }
 
 output "routing_instance_2_ip" {

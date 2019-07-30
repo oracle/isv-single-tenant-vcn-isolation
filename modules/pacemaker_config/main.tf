@@ -1,10 +1,10 @@
 variable hostname {}
-variable instance_a_primary_vnic_id {} 
-variable instance_a_secondary_vnic_id {} 
-variable instance_b_primary_vnic_id {} 
-variable instance_b_secondary_vnic_id {} 
-variable floating_ip {} 
-variable floating_secondary_ip {} 
+variable instance_a_primary_vnic_id {}
+variable instance_a_secondary_vnic_id {}
+variable instance_b_primary_vnic_id {}
+variable instance_b_secondary_vnic_id {}
+variable floating_ip {}
+variable floating_secondary_ip {}
 
 
 locals {

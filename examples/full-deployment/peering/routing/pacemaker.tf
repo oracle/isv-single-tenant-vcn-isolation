@@ -10,14 +10,14 @@ locals {
 # Routing Instance 1
 
 module router_instance_1_pacemaker_config {
-  source = "../../../../modules/pacemaker_config"
-  hostname = "gateway1"
-  instance_a_primary_vnic_id = module.routing_instance_1.instance_vnics[0]
+  source                       = "../../../../modules/pacemaker_config"
+  hostname                     = "gateway1"
+  instance_a_primary_vnic_id   = module.routing_instance_1.instance_vnics[0]
   instance_a_secondary_vnic_id = module.routing_instance_1_peering_1_vnic_attachement.routing_secondary_vnic_id
-  instance_b_primary_vnic_id = module.routing_instance_1.instance_vnics[1]
+  instance_b_primary_vnic_id   = module.routing_instance_1.instance_vnics[1]
   instance_b_secondary_vnic_id = module.routing_instance_1b_peering_1_vnic_attachement.routing_secondary_vnic_id
-  floating_ip = module.routing_instance_1.routing_ip.ip_address
-  floating_secondary_ip = oci_core_private_ip.routing_instance_1_peering_1_floating_ip.ip_address
+  floating_ip                  = module.routing_instance_1.routing_ip.ip_address
+  floating_secondary_ip        = oci_core_private_ip.routing_instance_1_peering_1_floating_ip.ip_address
 }
 
 
@@ -27,12 +27,12 @@ resource null_resource pacemaker_config {
   count = length(local.instances)
 
   triggers = {
-    instance_a_primary_vnic_id = module.routing_instance_1.instance_vnics[0]
+    instance_a_primary_vnic_id   = module.routing_instance_1.instance_vnics[0]
     instance_a_secondary_vnic_id = module.routing_instance_1_peering_1_vnic_attachement.routing_secondary_vnic_id
-    instance_b_primary_vnic_id = module.routing_instance_1.instance_vnics[1]
+    instance_b_primary_vnic_id   = module.routing_instance_1.instance_vnics[1]
     instance_b_secondary_vnic_id = module.routing_instance_1b_peering_1_vnic_attachement.routing_secondary_vnic_id
-    floating_ip = module.routing_instance_1.routing_ip.ip_address
-    floating_secondary_ip = oci_core_private_ip.routing_instance_1_peering_1_floating_ip.ip_address
+    floating_ip                  = module.routing_instance_1.routing_ip.ip_address
+    floating_secondary_ip        = oci_core_private_ip.routing_instance_1_peering_1_floating_ip.ip_address
   }
 
   connection {

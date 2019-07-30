@@ -20,5 +20,5 @@ locals {
   home_region         = lookup(local.region_map, data.oci_identity_tenancy.tenancy.home_region_key)
   availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
 
-  root_compartment_id   = var.compartment_ocid
+  root_compartment_id = var.compartment_ocid
 }

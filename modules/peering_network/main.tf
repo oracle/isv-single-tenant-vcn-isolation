@@ -17,7 +17,7 @@ resource oci_core_local_peering_gateway peering_gateways {
   count          = var.local_peering_gateways_per_vcn
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
-  display_name   = "${var.vcn_name} local peering gateway ${count.index+1}" 
+  display_name   = "${var.vcn_name} local peering gateway ${count.index + 1}"
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }

@@ -32,7 +32,7 @@ variable subnet_id {
 variable instance_id {
   description = "the instance to attach the vnic to"
 }
- 
+
 variable secondary_vnic_configuration_script_url {
   type        = string
   description = "location of the secondary_vnic_all_configure.sh script to be run when attaching a new secondary vnic to an instance"
