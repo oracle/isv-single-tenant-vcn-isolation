@@ -35,6 +35,6 @@ resource oci_core_instance routing_server {
 }
 
 data "oci_core_private_ips" "routing_ip" {
-    ip_address = oci_core_instance.routing_server.private_ip
-    subnet_id = var.subnet_id
+  ip_address = oci_core_instance.routing_server.private_ip
+  subnet_id  = var.subnet_id
 } 

@@ -16,7 +16,7 @@ module tenant_1_network {
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
   # TODO calculate index 
-  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null :  data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[0])
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[0])
 }
 
 output "tenant_1_vcn_id" {

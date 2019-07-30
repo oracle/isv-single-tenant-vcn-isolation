@@ -7,5 +7,5 @@ output peering_subnet {
 }
 
 output peering_gateway_ids {
-  value = [for lpg in oci_core_local_peering_gateway.peering_gateways : lpg.id ]
+  value = [for lpg in oci_core_local_peering_gateway.peering_gateways : lpg.id]
 }
