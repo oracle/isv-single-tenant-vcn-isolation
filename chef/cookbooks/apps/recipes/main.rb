@@ -33,7 +33,7 @@ end
 
 ##add the service to run nagios on boot.
 execute 'add nagios service' do 
-	command 'chkconfig --add nagios && chkconfig --level 35 nagios on'
+	command 'chkconfig nagios on'
 	action :run
 end
 
