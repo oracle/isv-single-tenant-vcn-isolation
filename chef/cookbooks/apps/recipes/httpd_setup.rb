@@ -1,6 +1,6 @@
 # add http service to firewalld
 execute 'firewalld_add_http' do
-  command 'firewall-cmd --zone=public --add-service=http'
+  command 'firewall-cmd --zone=public --permanent --add-service=http'
 end
 
 #health check for backend server thru load balancer
@@ -14,4 +14,8 @@ end
 #start httpd service
 service 'httpd' do
   action [ :enable, :restart]
+end
+
+execute 'firewalld_restart' do
+  command 'systemctl restart firewalld'
 end
