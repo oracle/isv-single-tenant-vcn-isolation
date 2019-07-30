@@ -31,7 +31,7 @@ variable access_subnet_id {}
 
 variable routing_ip_ids {
   description = "ordered list of private ip address resource ocids for the routing instances"
-  type = list(string)
+  type        = list(string)
 }
 
 variable tenant_vcn_cidr_blocks {

@@ -10,7 +10,7 @@ module network_topology {
 
   tenant_vcn_meta_cidr      = "10.0.0.0/8"
   tenant_vcn_mask           = 16
-  tenant_vcn_starting_block = 1   # first tenant is 10.1.0.0/16
+  tenant_vcn_starting_block = 1 # first tenant is 10.1.0.0/16
 
   peering_vcns_per_routing_instance             = 1
   local_peering_gateways_per_tenany_peering_vcn = 2

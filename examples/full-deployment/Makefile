@@ -1,4 +1,5 @@
-TF_CONFIGS = management/access \
+TF_CONFIGS = common/configuration \
+			 management/access \
 			 management/application \
 			 management/network \
 			 management/server_attachment \

@@ -66,9 +66,9 @@ variable peering_subnet_cidr {
 }
 
 variable local_peering_gateways_per_vcn {
-  type = number
+  type        = number
   description = "number of local peering gateways per peering vcn"
-  default = 10
+  default     = 10
 }
 
 

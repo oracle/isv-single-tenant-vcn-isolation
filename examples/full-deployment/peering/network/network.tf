@@ -7,8 +7,8 @@ module peering_1_network {
   source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
-  vcn_name  = "peering01"
-  dns_label = "peering01"
+  vcn_name       = "peering01"
+  dns_label      = "peering01"
 
   local_peering_gateways_per_vcn = 2
 
@@ -27,8 +27,8 @@ module peering_2_network {
   source = "../../../../modules/peering_network"
 
   compartment_id = module.peering_compartment.compartment_id
-  vcn_name  = "peering02"
-  dns_label = "peering02"
+  vcn_name       = "peering02"
+  dns_label      = "peering02"
 
   local_peering_gateways_per_vcn = 2
 

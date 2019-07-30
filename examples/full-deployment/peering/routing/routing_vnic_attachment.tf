@@ -9,7 +9,7 @@ module routing_instance_1_peering_1_vnic_attachement {
   compartment_id = local.compartment_id
 
   instance_id = module.routing_instance_1.instance.id
-  subnet_id = data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_subnet.id
+  subnet_id   = data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_subnet.id
 
   ssh_host     = module.routing_instance_1.instance.private_ip
   bastion_host = local.bastion_ip
@@ -22,7 +22,7 @@ module routing_instance_1b_peering_1_vnic_attachement {
   compartment_id = local.compartment_id
 
   instance_id = module.routing_instance_1.instance_b.id
-  subnet_id = data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_subnet.id 
+  subnet_id   = data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_subnet.id
 
   ssh_host     = module.routing_instance_1.instance_b.private_ip
   bastion_host = local.bastion_ip
@@ -94,7 +94,7 @@ module routing_instance_2_peering_1_vnic_attachement {
   compartment_id = local.compartment_id
 
   instance_id = module.routing_instance_2.instance.id
-  subnet_id = data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_subnet.id
+  subnet_id   = data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_subnet.id
 
   ssh_host     = module.routing_instance_2.instance.private_ip
   bastion_host = local.bastion_ip
