@@ -1,3 +1,8 @@
+/*
+ * Example for deploying Nagios Core on the management instance.
+ * Application provisioning is delegated to Chef running on the target instance
+ */
+
 resource null_resource nagios_application {
 
   triggers = {

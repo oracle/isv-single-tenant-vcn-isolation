@@ -1,3 +1,6 @@
+/*
+ * Configure the routing for the peering routing instances 
+ */
 
 module management_rte_attachement {
   source = "../../../../modules/management_rte_attachement"

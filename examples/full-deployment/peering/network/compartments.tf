@@ -1,6 +1,7 @@
-# Configure the main compartment
-###
-### Compartment for peering gateway 1 ##########################################
+/*
+ * Configure the peering compartment, and enable instance principles to modify routing rules
+ */
+
 module peering_compartment {
   source = "../../../../modules/compartment"
 

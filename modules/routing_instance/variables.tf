@@ -20,13 +20,31 @@ variable defined_tags {
   default     = {}
 }
 
-variable tenancy_id {}
-variable region {}
-variable compartment_id {}
-variable source_id {}
-variable subnet_id {}
-variable availability_domain {}
-variable bastion_ip {}
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
+
+variable source_id {
+  type        = string
+  description = "ocid of the image to provision the routing instance with"
+}
+
+variable subnet_id {
+  type        = string
+  description = "ocid of the subnet to provision the routing instance in"
+}
+
+variable availability_domain {
+  type        = string
+  description = "the availability downmain to provision the routing instance in"
+}
+
+# TODO rename to `bastion_host` for consistency
+variable bastion_ip {
+  type        = string
+  description = "host name or ip address of the bastion host for provisioning"
+}
 
 variable shape {
   type        = string

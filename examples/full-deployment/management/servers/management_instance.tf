@@ -1,4 +1,7 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
+/*
+ * Create the management server instance
+ */
+
 module management_instance {
   source = "../../../../modules/management_instance"
 

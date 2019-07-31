@@ -31,7 +31,6 @@ variable tenant_vcn_starting_block {
   default     = 0
 }
 
-
 variable peering_vcns_per_routing_instance {
   type        = number
   description = "number of tenany peering VCNs per routing instance. i.e. number of secondard vnic attachments per instance"

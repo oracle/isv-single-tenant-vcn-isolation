@@ -1,10 +1,13 @@
-
 /*
-TODO
-[-] use secrets server to generate password?
-*/
+ * Create a highly available routing instance cluster used to route traffic between the management
+ * and tenant peering networks with two instances and a floating ip. Pacemaker and Corosync are 
+ * used for clustering and failover.
+ * 
+ * The instance requires instance principles policy to enable routes to be updated using the oci cli
+ */
 
 locals {
+  # commands to install and configure the OCI cli on the instances
   oci_cli_install = [
     "curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh | bash -s -- --accept-all-defaults",
     "sudo ln ~/bin/oci /usr/local/bin/oci",
@@ -26,6 +29,7 @@ data "oci_core_private_ips" "routing_server_b_private_ip" {
   subnet_id  = oci_core_instance.routing_server_b.create_vnic_details[0].subnet_id
 }
 
+# floating ip assigned to the cluster
 resource "oci_core_private_ip" "floating_ip" {
   vnic_id        = data.oci_core_private_ips.routing_server_a_private_ip.private_ips[0].vnic_id
   hostname_label = var.hostname_label
@@ -38,6 +42,7 @@ resource "oci_core_private_ip" "floating_ip" {
   }
 }
 
+# the first instance in the HA cluster
 resource oci_core_instance routing_server_a {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
@@ -88,6 +93,7 @@ resource oci_core_instance routing_server_a {
   }
 }
 
+# the second instance in the HA cluster
 resource oci_core_instance routing_server_b {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id

@@ -1,6 +1,8 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
-###
-### Network for tenant 1 ##########################################
+/*
+ * Configure the tenant networks
+ */
+
+# Tenant 1
 module tenant_1_network {
   source = "../../../../modules/tenant_network"
 
@@ -35,8 +37,7 @@ output "tenant_1_private_subnet_cidr" {
   value = module.tenant_1_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 2 ##########################################
+# Tenant 2
 module tenant_2_network {
   source = "../../../../modules/tenant_network"
 
@@ -71,8 +72,7 @@ output "tenant_2_private_subnet_cidr" {
   value = module.tenant_2_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 3 ##########################################
+# Tenant 3
 module tenant_3_network {
   source = "../../../../modules/tenant_network"
 
@@ -107,8 +107,7 @@ output "tenant_3_private_subnet_cidr" {
   value = module.tenant_3_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 4 ##########################################
+# Tenant 4
 module tenant_4_network {
   source = "../../../../modules/tenant_network"
 

@@ -1,3 +1,7 @@
+/*
+ * Example tenant application instance
+ */
+
 resource oci_core_instance tenant_appserver {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id

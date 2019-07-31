@@ -1,8 +1,11 @@
 
-# TODO dynamically create required number of peering networks
+/*
+ * Configure all of the peering networks
+ *
+ * TODO: dynamically create required number of peering networks
+ */
 
-###
-### Network for peering 1 ##########################################
+# Peering Network 1
 module peering_1_network {
   source = "../../../../modules/peering_network"
 
@@ -21,8 +24,7 @@ output "peering_1_network" {
   value = module.peering_1_network
 }
 
-###
-### Network for peering 2 ##########################################
+# Peering Network 2
 module peering_2_network {
   source = "../../../../modules/peering_network"
 

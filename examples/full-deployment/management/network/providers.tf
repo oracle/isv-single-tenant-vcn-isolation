@@ -6,6 +6,7 @@ provider oci {
   region           = var.region
 }
 
+// provider for home region for IAM resource provisioning
 provider oci {
   alias            = "home"
   tenancy_ocid     = var.tenancy_ocid

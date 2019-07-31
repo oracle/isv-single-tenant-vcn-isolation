@@ -16,24 +16,6 @@ locals {
   availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
 
   root_compartment_id = var.compartment_ocid
-}
 
-data "terraform_remote_state" "management_network" {
-  backend = "local"
-
-  config = {
-    path = "../state/management/network/terraform.tfstate"
-  }
-}
-
-data "terraform_remote_state" "access" {
-  backend = "local"
-
-  config = {
-    path = "../state/management/access/terraform.tfstate"
-  }
-}
-
-locals {
   bastion_ip = data.terraform_remote_state.access.outputs.bastion_ip
 }

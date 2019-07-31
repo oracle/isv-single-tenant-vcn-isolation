@@ -1,12 +1,12 @@
+# OCI Provider variables
 variable "tenancy_ocid" {}
 variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "region" {}
-variable "compartment_ocid" {}
 
-variable "compartment_name" {
+# Deployment variables
+variable "compartment_ocid" {
   type        = string
-  description = "Compartment name for Management layer"
-  default     = "management"
+  description = "ocid of the compartment to deploy the resources in"
 }

@@ -1,7 +1,9 @@
 /*
- * Create a single VCN for resource deployments
+ * Create a tenant peering network used for routing between the management VCN and
+ * the locally peering tenant VCNs
  */
-###### VCN #################
+
+# Peering VCN
 resource oci_core_vcn peering_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -11,8 +13,7 @@ resource oci_core_vcn peering_vcn {
   freeform_tags  = var.freeform_tags
 }
 
-##### Local Peering Gateway ######################
-#
+# Local Peering Gateways (one per peering Tenant VCN)
 resource oci_core_local_peering_gateway peering_gateways {
   count          = var.local_peering_gateways_per_vcn
   compartment_id = var.compartment_id
@@ -22,8 +23,7 @@ resource oci_core_local_peering_gateway peering_gateways {
   freeform_tags  = var.freeform_tags
 }
 
-#### Route Tables ################################
-#
+# Peering Route Table
 resource oci_core_route_table peering_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
@@ -43,8 +43,7 @@ resource oci_core_route_table peering_route_table {
   }
 }
 
-#### Security Lists ####################################
-#
+# Peering Network Security List
 resource oci_core_security_list peering_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
@@ -74,9 +73,11 @@ resource oci_core_security_list peering_security_list {
   }
 }
 
+/*
+ * SUBNETS
+ */
 
-####### SUBNETS #####################################################
-#
+# Peering Subnet
 resource oci_core_subnet peering_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id

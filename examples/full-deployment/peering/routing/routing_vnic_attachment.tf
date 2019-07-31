@@ -1,7 +1,9 @@
+/*
+ * Create the secondary vNICs for routing through the peering subnets
+ */
 
 # Routing Instance 1
 # HA ROUTING INSTANCE - two vNIC attachments and floating IP
-
 module routing_instance_1_peering_1_vnic_attachement {
   source         = "../../../../modules/routing_vnic_attachment"
   hostname_label = "${module.routing_instance_1.instance.hostname_label}"
@@ -39,7 +41,6 @@ resource oci_core_private_ip routing_instance_1_peering_1_floating_ip {
     ]
   }
 }
-
 
 # TODO add additional interface on routing instance
 #  - disabled for now, using VM.Standard2.1 shape for testing with just one secondary vnic
@@ -83,10 +84,8 @@ resource oci_core_private_ip routing_instance_1_peering_2_floating_ip {
 }
 */
 
-
 # Routing Instance 2
 # SINGLE ROUTING INSTANCE - single vNIC
-
 module routing_instance_2_peering_1_vnic_attachement {
   source         = "../../../../modules/routing_vnic_attachment"
   hostname_label = "${module.routing_instance_2.instance.hostname_label}"

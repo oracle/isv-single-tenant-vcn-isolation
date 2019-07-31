@@ -1,3 +1,6 @@
+/*
+ * Configure the HA routing instances with Pacemaker
+ */
 
 locals {
   # TODO dynamically get the list of routing instances

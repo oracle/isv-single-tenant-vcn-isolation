@@ -1,4 +1,7 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
+/*
+ * Provision Nagios Core on the management instance
+ */
+
 module nagios_application {
   source = "../../../../modules/nagios_application"
 

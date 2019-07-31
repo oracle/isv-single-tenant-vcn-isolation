@@ -1,4 +1,7 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
+/*
+ * Configure the management network
+ */
+
 module management_network {
   source = "../../../../modules/management_network"
 

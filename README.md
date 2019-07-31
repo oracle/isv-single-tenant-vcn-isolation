@@ -46,7 +46,7 @@ You can deploy the entire topology with a single command by using `terragrunt`. 
 
 -   **Deploy Using Terraform**
 
-	1. Go to the `examples/peering/network` directory.
+	1. Go to the `full-deployment/common/configuration` directory.
 	2. Run the following commands:
     	```
     	terraform init
@@ -54,13 +54,17 @@ You can deploy the entire topology with a single command by using `terragrunt`. 
     	terraform apply
     	```
 	3. Run the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
-    	- `examples/management/network`
-    	- `examples/management/servers`
-    	- `examples/tenant/network`
-    	- `examples/management/server_attachment`
-    	- `examples/tenant/servers`
-    	- `examples/management/application`
-    	- `examples/tenant/application`
+	    - `examples/full-deployment/common/configuration
+    	- `examples/full-deployment/management/network`
+    	- `examples/full-deployment/management/access`
+    	- `examples/full-deployment/peering/network`
+    	- `examples/full-deployment/peering/routing`
+    	- `examples/full-deployment/tenant/network`
+    	- `examples/full-deployment/management/servers`
+    	- `examples/full-deployment/management/server_attachment`
+    	- `examples/full-deployment/tenant/servers`
+    	- `examples/full-deployment/management/application`
+    	- `examples/full-deployment/tenant/application`
 
 -   **Deploy Using Terragrunt**
 

@@ -22,12 +22,35 @@ variable defined_tags {
   default     = {}
 }
 
-variable compartment_id {}
-variable management_vcn_id {}
-variable management_subnet_id {}
-variable management_nat_id {}
-variable management_igw_id {}
-variable access_subnet_id {}
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
+
+variable management_vcn_id {
+  type        = string
+  description = "ocid of the management vcn"
+}
+
+variable management_subnet_id {
+  type        = string
+  description = "ocid of the management subnet"
+}
+
+variable access_subnet_id {
+  type        = string
+  description = "ocid of the access subnet"
+}
+
+variable management_nat_id {
+  type        = string
+  description = "ocid of the nat gateway"
+}
+
+variable management_igw_id {
+  type        = string
+  description = "ocid of the internet gateway"
+}
 
 variable routing_ip_ids {
   description = "ordered list of private ip address resource ocids for the routing instances"

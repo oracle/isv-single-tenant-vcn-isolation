@@ -1,8 +1,9 @@
 /*
-IP Route addition for all tenants traffic to the routing instance
+ * Adds IP routea to the target instance to route traffic via the seconardy vNIC
 */
 
 locals {
+  # generate an ip route provisioning command for each target network
   add_route_commands = var.peering_subnet_cidr == null ? [] : formatlist("sudo ip route add %s via ${cidrhost(var.peering_subnet_cidr, 1)}", var.tenant_vcn_cidrs)
 }
 
