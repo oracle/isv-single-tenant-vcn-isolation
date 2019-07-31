@@ -1,6 +1,6 @@
 variable root_compartment_id {
   type        = string
-  description = "root compartment for the individual tenant compartments"
+  description = "parent compartment for the new compartment to be created in"
 }
 
 variable compartment_name {

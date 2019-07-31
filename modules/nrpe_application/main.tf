@@ -1,3 +1,8 @@
+/*
+ * Example for deploying nagios agents on the tenant instances.
+ * Application provisioning is delegated to Chef running on the target instance
+ */
+
 resource null_resource nrpe_application {
 
   triggers = {

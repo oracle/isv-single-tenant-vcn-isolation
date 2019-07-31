@@ -1,3 +1,7 @@
+/*
+ * Createa a compartment.
+ * The oci provider for the home region must be configured using the `home` provider alias.
+ */
 
 provider oci {
   alias = "home"

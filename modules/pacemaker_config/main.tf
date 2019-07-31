@@ -1,11 +1,8 @@
-variable hostname {}
-variable instance_a_primary_vnic_id {}
-variable instance_a_secondary_vnic_id {}
-variable instance_b_primary_vnic_id {}
-variable instance_b_secondary_vnic_id {}
-variable floating_ip {}
-variable floating_secondary_ip {}
-
+/*
+ * Generate Pacemaker configuration file modifiction commands
+ * 
+ * TODO: module should support dynamic addition of extra secondary vNICs
+ */
 
 locals {
   pacemaker_config = [
@@ -31,8 +28,4 @@ locals {
     "sudo sed -i '620i\\                /root/bin/oci network vnic assign-private-ip --unassign-if-already-assigned --vnic-id $vrouter2vnicpod1  --ip-address $vnicippod1 --auth instance_principal\\' /usr/lib/ocf/resource.d/heartbeat/IPaddr2",
     "sudo sed -i '621i\\        fi \\' /usr/lib/ocf/resource.d/heartbeat/IPaddr2",
   ]
-}
-
-output config {
-  value = local.pacemaker_config
 }

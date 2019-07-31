@@ -1,4 +1,7 @@
-# Configure the main compartment
+/*
+ * Configure the management compartment
+ */
+
 module management_compartment {
   source = "../../../../modules/compartment"
 

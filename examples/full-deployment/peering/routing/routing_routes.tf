@@ -1,7 +1,10 @@
 
+/*
+ * Add the ip route rules to each routing instance.
+ */
+
 # Routing Instance 1
 # HA ROUTING INSTANCE
-
 module routing_instance_1_peering_1_routes {
   source = "../../../../modules/ip_route_add"
 
@@ -30,7 +33,6 @@ module routing_instance_1b_peering_1_routes {
 
 # Routing Instance 2
 # SINGLE ROUTING INSTANCE
-
 module routing_instance_2_peering_1_routes {
   source = "../../../../modules/ip_route_add"
 

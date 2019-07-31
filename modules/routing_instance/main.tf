@@ -1,3 +1,8 @@
+/*
+ * Create a single (non HA) routing instance used to route traffic between the management
+ * and tenant peering networks 
+ */
+
 resource oci_core_instance routing_server {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id

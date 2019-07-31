@@ -1,3 +1,7 @@
+/*
+ * Calculate the peering and tenant network cidr ranges for this deployment
+ */
+
 module network_topology {
   source = "../../../../modules/network_calculator"
 
@@ -14,5 +18,4 @@ module network_topology {
 
   peering_vcns_per_routing_instance             = 1
   local_peering_gateways_per_tenany_peering_vcn = 2
-
 }

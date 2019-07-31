@@ -1,4 +1,7 @@
-variable compartment_id {}
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
 
 variable display_name {
   type        = string
@@ -10,7 +13,10 @@ variable hostname_label {
   description = "hostname label to assign to the vnic, must be unique within the subnet"
 }
 
-variable bastion_host {}
+variable bastion_host {
+  type        = string
+  description = "host name or ip address of the bastion host for provisioning"
+}
 
 variable bastion_ssh_private_key_file {
   type        = string
@@ -18,7 +24,10 @@ variable bastion_ssh_private_key_file {
   default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_host {}
+variable ssh_host {
+  type        = string
+  description = "host name or ip address of the instance to configure"
+}
 
 variable ssh_private_key_file {
   type        = string
@@ -27,9 +36,11 @@ variable ssh_private_key_file {
 }
 
 variable subnet_id {
+  type        = string
   description = "the subnet to attach the vnic to"
 }
 variable instance_id {
+  type        = string
   description = "the instance to attach the vnic to"
 }
 

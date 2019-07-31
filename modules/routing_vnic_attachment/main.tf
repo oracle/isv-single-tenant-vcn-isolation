@@ -1,9 +1,7 @@
 /*
-TODO For failover: If your target instance is terminated before you can move the secondary 
-private IP to a standby, you must update the route rule to use the OCID of the new target 
-private IP on the standby. The rule uses the target's OCID and not the private IP address
-itself.
-*/
+ * Create a vNIC attachment and run the required vNIC configuration commands on the instance.
+ */
+
 resource oci_core_vnic_attachment routing_vnic_attachmment {
   instance_id = var.instance_id
 

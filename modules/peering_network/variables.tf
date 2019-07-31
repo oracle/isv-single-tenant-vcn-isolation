@@ -1,22 +1,22 @@
 variable compartment_id {
   type        = string
-  description = "compartment for the management resources"
+  description = "compartment for the peering network resources"
 }
 
 variable vcn_name {
   type        = string
-  description = "CIDR range for the management VCN"
+  description = "name of the peering vcn"
 }
 
 variable dns_label {
   type        = string
-  description = "CIDR range for the management VCN"
-  default     = ""
+  description = "dns label for the peering vcn"
+  default     = null
 }
 
 variable vcn_cidr_block {
   type        = string
-  description = "CIDR range for the management VCN"
+  description = "network cidr for the peering VCN"
 }
 
 variable freeform_tags {
@@ -33,36 +33,36 @@ variable defined_tags {
 
 variable peering_rte_name {
   type        = string
-  description = "Local Peering Routes to Tenant VCNs"
+  description = "display name for the peering route table"
   default     = "peering_rte"
 }
 
 variable peering_sec_list {
   type        = string
-  description = "seclist to open ports 80/443 to allow access to nagios server"
+  description = "display name for the peering network security list"
   default     = "peering_sec_list"
 }
 
 variable tenant_vcn_cidr_blocks {
   type        = list
-  description = "list of tenancy vcn cidr blocks, used for seclist to open ICMP ports"
+  description = "list of tenant vcn cidr blocks"
 }
 
 variable peering_subnet_name {
   type        = string
-  description = "peering Subnet display name"
+  description = "display name for the peering route table"
   default     = "peering subnet"
 }
 
 variable peering_subnet_dns_label {
   type        = string
-  description = "Peering Subnet display name"
+  description = "dns label for the peering subnet"
   default     = "peering"
 }
 
 variable peering_subnet_cidr {
   type        = string
-  description = "CIDR range for the peering subnet"
+  description = "network cidr range for the peering subnet"
 }
 
 variable local_peering_gateways_per_vcn {

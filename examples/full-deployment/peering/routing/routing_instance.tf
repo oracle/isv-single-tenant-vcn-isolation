@@ -1,7 +1,9 @@
+/*
+ * Create the routing instances to route throught peering networks
+ */
 
 # Routing Instance 1
 # HA ROUTING INSTANCE
-
 module routing_instance_1 {
   source = "../../../../modules/routing_instance_ha"
 
@@ -31,7 +33,6 @@ output "routing_instance_1_ip_id" {
 
 # Routing Instance 2
 # SINGLE ROUTING INSTANCE
-
 module routing_instance_2 {
   source = "../../../../modules/routing_instance"
 
@@ -43,9 +44,6 @@ module routing_instance_2 {
   subnet_id           = data.terraform_remote_state.management_network.outputs.peering_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = local.bastion_ip
-
-  tenancy_id = var.tenancy_ocid
-  region     = var.region
 
   shape = "VM.Standard2.1" # TODO
 }

@@ -1,7 +1,8 @@
 /*
- * Create a single VCN for resource deployments
+ * Create the ISV management VCN and related resources.
  */
-###### VCN #################
+
+# VCN
 resource oci_core_vcn isv_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -11,6 +12,7 @@ resource oci_core_vcn isv_vcn {
   freeform_tags  = var.freeform_tags
 }
 
+# Internet Gateway
 resource oci_core_internet_gateway management_igw {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -19,6 +21,7 @@ resource oci_core_internet_gateway management_igw {
   freeform_tags  = var.freeform_tags
 }
 
+# NAT Gateway
 resource oci_core_nat_gateway management_nat {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -27,8 +30,7 @@ resource oci_core_nat_gateway management_nat {
   freeform_tags  = var.freeform_tags
 }
 
-#### Route Tables ################################
-#
+# Default Route Table
 resource oci_core_default_route_table isv_default_rte_table {
   manage_default_resource_id = oci_core_vcn.isv_vcn.default_route_table_id
 
@@ -38,6 +40,7 @@ resource oci_core_default_route_table isv_default_rte_table {
   }
 }
 
+# Route Table for the private subnet with NAT
 resource oci_core_route_table private_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -49,8 +52,7 @@ resource oci_core_route_table private_route_table {
   }
 }
 
-#### Security Lists ####################################
-#
+# Network Security List for the Management Subnet
 resource oci_core_security_list management_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -87,6 +89,7 @@ resource oci_core_security_list management_security_list {
   }
 }
 
+# Network Security List for the Peering Subnet
 resource oci_core_security_list peering_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -115,6 +118,7 @@ resource oci_core_security_list peering_security_list {
   }
 }
 
+# Network Security List for the Access (bastion) Subnet
 resource oci_core_security_list access_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -151,8 +155,11 @@ resource oci_core_security_list access_security_list {
   }
 }
 
-####### SUBNETS #####################################################
-#
+/*
+ * SUBNETS
+ */
+
+# Access (bastion) Subnet
 resource oci_core_subnet access_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -167,6 +174,7 @@ resource oci_core_subnet access_subnet {
   freeform_tags = var.freeform_tags
 }
 
+# Peering Subnet
 resource oci_core_subnet peering_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -183,6 +191,7 @@ resource oci_core_subnet peering_subnet {
   freeform_tags              = var.freeform_tags
 }
 
+# Management Subnet
 resource oci_core_subnet management_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id

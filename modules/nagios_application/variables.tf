@@ -22,9 +22,22 @@ variable defined_tags {
   default     = {}
 }
 
-variable compartment_id {}
-variable bastion_host_ip {}
-variable management_host_ip {}
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
+
+# TODO rename to `bastion_host` for consistency
+variable bastion_host_ip {
+  type        = string
+  description = "host name or ip address of the bastion host for provisioning"
+}
+
+variable management_host_ip {
+  type        = string
+  description = "host name or ip address of the instance to provision the application on"
+}
+
 variable tenant_host_ips {
   type        = string
   description = "list of tenant host ips"

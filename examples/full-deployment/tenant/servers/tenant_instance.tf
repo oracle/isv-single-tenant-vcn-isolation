@@ -1,12 +1,10 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
-######### tenant 1 instance provisioning
-###
+/*
+ * Create the tenant server instances
+ */
+
+# Tenant 1
 module tenant_instance_1 {
   source = "../../../../modules/tenant_instance"
-
-  providers = {
-    oci.home = "oci.home"
-  }
 
   compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_1_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -19,14 +17,9 @@ output "tenant_1_private_ip" {
   value = module.tenant_instance_1.instance_ip
 }
 
-######### tenant 2 instance provisioning
-#
+# Tenant 2
 module tenant_instance_2 {
   source = "../../../../modules/tenant_instance"
-
-  providers = {
-    oci.home = "oci.home"
-  }
 
   compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_2_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -39,14 +32,9 @@ output "tenant_2_private_ip" {
   value = module.tenant_instance_2.instance_ip
 }
 
-######### tenant 3 instance provisioning
-#
+# Tenant 3
 module tenant_instance_3 {
   source = "../../../../modules/tenant_instance"
-
-  providers = {
-    oci.home = "oci.home"
-  }
 
   compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_3_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
@@ -60,14 +48,9 @@ output "tenant_3_private_ip" {
 }
 
 
-######### tenant 4 instance provisioning
-#
+# Tenant 4
 module tenant_instance_4 {
   source = "../../../../modules/tenant_instance"
-
-  providers = {
-    oci.home = "oci.home"
-  }
 
   compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_4_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id

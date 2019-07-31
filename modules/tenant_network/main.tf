@@ -1,7 +1,8 @@
 /*
- * Create a single VCN for resource deployments
+ * Create a VCN and related resources for tenant deployments
  */
-###### VCN #################
+
+# Tenant VCN
 resource oci_core_vcn tenant_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -11,6 +12,7 @@ resource oci_core_vcn tenant_vcn {
   freeform_tags  = var.freeform_tags
 }
 
+# Internet Gateway
 resource oci_core_internet_gateway tenant_igw {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -19,6 +21,7 @@ resource oci_core_internet_gateway tenant_igw {
   freeform_tags  = var.freeform_tags
 }
 
+# NAT Gateway
 resource oci_core_nat_gateway tenant_nat {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -27,9 +30,7 @@ resource oci_core_nat_gateway tenant_nat {
   freeform_tags  = var.freeform_tags
 }
 
-
-##### Local Peering Gateway ######################
-#
+# Local Peering Gateway
 resource oci_core_local_peering_gateway tenant_peering_gateway {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -39,35 +40,26 @@ resource oci_core_local_peering_gateway tenant_peering_gateway {
   freeform_tags  = var.freeform_tags
 }
 
-#### Route Tables ################################
-#
+# Public Subnet Route Table
 resource oci_core_route_table public_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
   display_name   = var.public_rte_name
 
+  // internet access through internet gateway
   route_rules {
     destination       = "0.0.0.0/0"
     network_entity_id = oci_core_internet_gateway.tenant_igw.id
   }
-}
 
-resource oci_core_route_table private_route_table {
-  compartment_id = var.compartment_id
-  vcn_id         = oci_core_vcn.tenant_vcn.id
-  display_name   = var.private_rte_name
-
-  route_rules {
-    destination       = "0.0.0.0/0"
-    network_entity_id = oci_core_nat_gateway.tenant_nat.id
-  }
-
+  // route to peering network
   route_rules {
     destination_type  = "CIDR_BLOCK"
     destination       = var.tenant_peering_subnet_cidr
     network_entity_id = oci_core_local_peering_gateway.tenant_peering_gateway.id
   }
 
+  // route to management network
   route_rules {
     destination_type  = "CIDR_BLOCK"
     destination       = var.management_peering_subnet_cidr
@@ -75,9 +67,34 @@ resource oci_core_route_table private_route_table {
   }
 }
 
+# Private Subnet Route Table
+resource oci_core_route_table private_route_table {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.tenant_vcn.id
+  display_name   = var.private_rte_name
 
-#### Security Lists ####################################
-#
+  // internet access through nat gateway
+  route_rules {
+    destination       = "0.0.0.0/0"
+    network_entity_id = oci_core_nat_gateway.tenant_nat.id
+  }
+
+  // route to peering network
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.tenant_peering_subnet_cidr
+    network_entity_id = oci_core_local_peering_gateway.tenant_peering_gateway.id
+  }
+
+  // route to management network
+  route_rules {
+    destination_type  = "CIDR_BLOCK"
+    destination       = var.management_peering_subnet_cidr
+    network_entity_id = oci_core_local_peering_gateway.tenant_peering_gateway.id
+  }
+}
+
+# Public Subnet Network Security List
 resource oci_core_security_list public_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -106,6 +123,7 @@ resource oci_core_security_list public_security_list {
   }
 }
 
+# Private Subnet Network Security List
 resource oci_core_security_list private_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -134,8 +152,11 @@ resource oci_core_security_list private_security_list {
   }
 }
 
-####### SUBNETS #####################################################
-#
+/*
+ * SUBNETS
+ */
+
+# Public Subnet
 resource oci_core_subnet public_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
@@ -151,6 +172,7 @@ resource oci_core_subnet public_subnet {
   freeform_tags = var.freeform_tags
 }
 
+# Private Subnet
 resource oci_core_subnet private_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id

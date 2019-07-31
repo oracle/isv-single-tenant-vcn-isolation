@@ -1,3 +1,7 @@
+/*
+ * Helper module to calculate the network CIDRs for the tenant and peering VCNs.
+ */
+
 locals {
 
   # calculate the total number of peering vcns needed for the number of tenants

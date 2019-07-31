@@ -6,10 +6,7 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "management_network" {
-  backend = "local"
-
-  config = {
-    path = "../state/management/network/terraform.tfstate"
-  }
+locals {
+  availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
 }
+

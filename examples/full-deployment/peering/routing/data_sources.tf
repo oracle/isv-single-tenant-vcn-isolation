@@ -18,6 +18,10 @@ data oci_core_images oraclelinux {
   }
 }
 
+/*
+ * Remote State Dependencies
+ */
+
 data "terraform_remote_state" "configuration" {
   backend = "local"
 

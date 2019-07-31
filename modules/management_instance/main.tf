@@ -1,3 +1,7 @@
+/*
+ * Create an example management server instance
+ */
+
 resource oci_core_instance management_server {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id

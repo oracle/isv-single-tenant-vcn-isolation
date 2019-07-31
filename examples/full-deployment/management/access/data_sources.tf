@@ -19,7 +19,14 @@ data oci_core_images oraclelinux {
   }
 }
 
-locals {
-  availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
-}
+/*
+ * Remote State Dependencies
+ */
 
+data "terraform_remote_state" "management_network" {
+  backend = "local"
+
+  config = {
+    path = "../state/management/network/terraform.tfstate"
+  }
+}

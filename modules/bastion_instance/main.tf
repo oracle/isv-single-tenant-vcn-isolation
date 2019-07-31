@@ -1,3 +1,7 @@
+/* 
+ * Creates a bastion host instance and copies the provided public and private ssh keys 
+ * to the instance to access to the remove instances through the bastion
+ */
 resource oci_core_instance bastion_server {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
