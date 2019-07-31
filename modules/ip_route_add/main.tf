@@ -4,7 +4,9 @@
 
 locals {
   # generate an ip route provisioning command for each target network
-  add_route_commands = var.peering_subnet_cidr == null ? [] : formatlist("sudo ip route add %s via ${cidrhost(var.peering_subnet_cidr, 1)}", var.tenant_vcn_cidrs)
+  route_command = var.peering_subnet_cidr == null ? [] : formatlist("%s via ${cidrhost(var.peering_subnet_cidr, 1)}", var.tenant_vcn_cidrs)
+  add_route_commands = var.peering_subnet_cidr == null ? [] : formatlist("sudo ip route add %s", local.route_command)
+  route_config_entry = var.peering_subnet_cidr == null ? [] : formatlist("echo %s | sudo tee -a /etc/sysconfig/network-scripts/route-spp", local.route_command)
 }
 
 resource null_resource ip_route_add {
@@ -28,6 +30,10 @@ resource null_resource ip_route_add {
     inline = flatten([[
       "set -x",
       "# add a route to the tenant network via the peer vnic",
-    ], local.add_route_commands])
+    ], local.add_route_commands,
+    local.route_config_entry,
+    "interface_name=`sudo /home/opc/secondary_vnic_all_configure.sh | grep \"${var.vnic_id}\" | tr -s \" \" | cut -d' ' -f8`",
+    "sudo mv /etc/sysconfig/network-scripts/route-spp /etc/sysconfig/network-scripts/route-$interface_name"
+    ])
   }
 }  
