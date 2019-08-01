@@ -16,3 +16,16 @@ variable "compartment_name" {
   description = "compartment name for peering resources"
   default     = "peering"
 }
+
+variable "bastion_ssh_private_key_file" {
+  type        = string
+  description = "path to private ssh key to access the bastion host"
+  default    = "~/.ssh/id_rsa"
+}
+
+variable "remote_ssh_private_key_file" {
+  type        = string
+  description = "path to private ssh key to acccess all instance in the deployed environment"
+  default    = "~/.ssh/id_rsa"
+}
+

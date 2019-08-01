@@ -11,6 +11,10 @@ module tenant_instance_1 {
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_1_private_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_1_private_ip" {
@@ -26,6 +30,10 @@ module tenant_instance_2 {
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_2_private_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_2_private_ip" {
@@ -41,6 +49,10 @@ module tenant_instance_3 {
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_3_private_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_3_private_ip" {
@@ -57,6 +69,10 @@ module tenant_instance_4 {
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_4_private_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_4_private_ip" {

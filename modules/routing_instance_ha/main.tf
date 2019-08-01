@@ -57,7 +57,7 @@ resource oci_core_instance routing_server_a {
   fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[0].name
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file)
+    ssh_authorized_keys = file(var.remote_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -75,7 +75,7 @@ resource oci_core_instance routing_server_a {
     type        = "ssh"
     host        = self.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"
@@ -108,7 +108,7 @@ resource oci_core_instance routing_server_b {
   fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[1].name
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file)
+    ssh_authorized_keys = file(var.remote_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -126,7 +126,7 @@ resource oci_core_instance routing_server_b {
     type        = "ssh"
     host        = self.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"

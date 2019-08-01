@@ -17,7 +17,7 @@ include_recipe 'apps::nagios_server'
 # This is just for this tutorial, otherwise use the databag 
 # to store this confidential info
 execute 'setup user/passwd for nagiosadmin site' do 
-	command 'sudo htpasswd -c -db /usr/local/nagios/etc/htpasswd.users nagiosadmin rasika'
+	command 'sudo htpasswd -c -db /usr/local/nagios/etc/htpasswd.users nagiosadmin ${nagios_pw}'
 	action :run
 end
 

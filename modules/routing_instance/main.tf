@@ -17,7 +17,7 @@ resource oci_core_instance routing_server {
   shape = var.shape
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file)
+    ssh_authorized_keys = file(var.remote_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -31,7 +31,7 @@ resource oci_core_instance routing_server {
     type        = "ssh"
     host        = oci_core_instance.routing_server.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"

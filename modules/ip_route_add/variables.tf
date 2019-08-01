@@ -25,14 +25,13 @@ variable bastion_ssh_private_key_file {
   default     = "~/.ssh/id_rsa"
 }
 
+variable remote_ssh_private_key_file {
+  type        = string
+  description = "the private ssh key to provision on the bastion host for access to remote instances"
+  default     = "~/.ssh/id_rsa"
+}
+
 variable ssh_host {
   type        = string
   description = "host name or ip address of the instance to provision the ip route on"
 }
-
-variable ssh_private_key_file {
-  type        = string
-  description = "the private ssh key to access the instance for provisioning"
-  default     = "~/.ssh/id_rsa"
-}
-
