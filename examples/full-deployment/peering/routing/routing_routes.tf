@@ -15,6 +15,9 @@ module routing_instance_1_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_1.instance.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 module routing_instance_1b_peering_1_routes {
@@ -27,6 +30,9 @@ module routing_instance_1b_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_1.instance_b.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 
@@ -43,6 +49,9 @@ module routing_instance_2_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_2.instance.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output ip_route_add_status {

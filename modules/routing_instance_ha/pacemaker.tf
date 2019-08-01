@@ -29,7 +29,7 @@ resource null_resource pacemaker_bootstrap {
     type        = "ssh"
     host        = oci_core_instance.routing_server_a.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"

@@ -19,7 +19,13 @@ module routing_instance_1 {
   tenancy_id = var.tenancy_ocid
   region     = var.region
 
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
   shape = "VM.Standard2.1" # TODO
+  
+  hacluster_password = var.hacluster_password
 }
 
 output "routing_instance_1_ip" {
@@ -45,7 +51,10 @@ module routing_instance_2 {
   availability_domain = local.availability_domain
   bastion_ip          = local.bastion_ip
 
-  shape = "VM.Standard2.1" # TODO
+  shape                        = "VM.Standard2.1" # TODO
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "routing_instance_2_ip" {

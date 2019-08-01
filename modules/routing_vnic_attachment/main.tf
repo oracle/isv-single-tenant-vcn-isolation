@@ -18,7 +18,7 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     type        = "ssh"
     host        = var.ssh_host
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host
     bastion_user        = "opc"

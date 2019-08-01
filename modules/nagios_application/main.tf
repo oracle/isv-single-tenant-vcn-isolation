@@ -13,7 +13,7 @@ resource null_resource nagios_application {
     type        = "ssh"
     host        = var.management_host_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host_ip
     bastion_user        = "opc"
@@ -32,6 +32,7 @@ resource null_resource nagios_application {
       "curl -LO https://www.chef.io/chef/install.sh && sudo bash ./install.sh",
       "cd /home/opc/chef && pwd",
       "echo 'tenant_host_ips=${var.tenant_host_ips}' | sudo tee /etc/environment",
+      "echo 'nagios_pw=${var.nagios_administrator_password}' | sudo tee -a /etc/environment",
       "source /etc/environment",
       "sudo chef-solo -c /home/opc/chef/appserver.rb -j /home/opc/chef/nagios_server.json --chef-license accept",
     ]

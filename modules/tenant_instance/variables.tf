@@ -60,14 +60,14 @@ variable bastion_ssh_private_key_file {
   default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_public_key_file {
+variable remote_ssh_private_key_file {
   type        = string
-  description = "the public ssh key file to be added to the instance ssh_authorized_keys"
-  default     = "~/.ssh/id_rsa.pub"
+  description = "the private ssh key to provision on the bastion host for access to remote instances"
+  default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_private_key_file {
+variable remote_ssh_public_key_file {
   type        = string
-  description = "the private ssh key to access the instance for provisioning"
-  default     = "~/.ssh/id_rsa"
+  description = "the public ssh key to provision on the bastion host for access to remote instances"
+  default     = "~/.ssh/id_rsa.pub"
 }

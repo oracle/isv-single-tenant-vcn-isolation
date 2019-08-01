@@ -8,10 +8,10 @@ module management_network {
   compartment_id         = module.management_compartment.compartment_id
   vcn_name               = "isv management"
   dns_label              = "isv"
-  vcn_cidr_block         = "10.254.0.0/16"
-  management_subnet_cidr = "10.254.100.0/24"
-  access_subnet_cidr     = "10.254.99.0/24"
-  peering_subnet_cidr    = "10.254.254.0/24"
+  vcn_cidr_block         = var.vcn_cidr_block
+  management_subnet_cidr = var.management_subnet_cidr
+  access_subnet_cidr     = var.access_subnet_cidr
+  peering_subnet_cidr    = var.peering_subnet_cidr
 }
 
 output "management_vcn_id" {

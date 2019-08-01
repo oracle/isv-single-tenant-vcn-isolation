@@ -9,6 +9,9 @@ module nrpe_application_1 {
   tenant_ip        = data.terraform_remote_state.tenant_servers.outputs.tenant_1_private_ip
   nagios_server_ip = data.terraform_remote_state.mgmt_servers.outputs.management_ip
   bastion_host_ip  = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_1_private_ip" {
@@ -22,6 +25,9 @@ module nrpe_application_2 {
   tenant_ip        = data.terraform_remote_state.tenant_servers.outputs.tenant_2_private_ip
   nagios_server_ip = data.terraform_remote_state.mgmt_servers.outputs.management_ip
   bastion_host_ip  = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_2_private_ip" {
@@ -35,6 +41,9 @@ module nrpe_application_3 {
   tenant_ip        = data.terraform_remote_state.tenant_servers.outputs.tenant_3_private_ip
   nagios_server_ip = data.terraform_remote_state.mgmt_servers.outputs.management_ip
   bastion_host_ip  = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_3_private_ip" {
@@ -49,6 +58,9 @@ module nrpe_application_4 {
   tenant_ip        = data.terraform_remote_state.tenant_servers.outputs.tenant_4_private_ip
   nagios_server_ip = data.terraform_remote_state.mgmt_servers.outputs.management_ip
   bastion_host_ip  = data.terraform_remote_state.access.outputs.bastion_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output "tenant_4_private_ip" {

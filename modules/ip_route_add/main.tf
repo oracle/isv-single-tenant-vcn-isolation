@@ -19,7 +19,7 @@ resource null_resource ip_route_add {
     type        = "ssh"
     host        = var.ssh_host
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host
     bastion_user        = "opc"

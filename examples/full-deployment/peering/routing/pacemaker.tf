@@ -42,11 +42,11 @@ resource null_resource pacemaker_config {
     type        = "ssh"
     host        = local.instances[count.index]
     user        = "opc"
-    private_key = file("~/.ssh/id_rsa") # TODO
+    private_key = file(var.remote_ssh_private_key_file) # TODO
 
     bastion_host        = local.bastion_ip
     bastion_user        = "opc"
-    bastion_private_key = file("~/.ssh/id_rsa") #TODO
+    bastion_private_key = file(var.bastion_ssh_private_key_file) #TODO
   }
 
   provisioner remote-exec {

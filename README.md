@@ -35,26 +35,35 @@ This layer contains the following resources:
 ## Quickstart Deployment
 
 1. Clone this repository to your local host. The `examples` directory contains the Terraform configurations for a sample topology based on the architecture described earlier. 
+
 2. Install Terraform. See https://learn.hashicorp.com/terraform/getting-started/install.html.
-3. Open `examples\terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file.
-4. In each subdirectory under the `examples` directory, run the command `terraform init`.
+
+3. Open `examples/full-deployment/terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file. 
+
+4. Set the deployment passwords and shared secrets.  The full deployment examples requires variables to be set for the shared secret for the routing HA cluster, and an initial Nagios administrator password. These can be set using environment variables, or added to the `terraform.tfvars` files in the `full-deployment/peering/routing` and `full-deployment/management/application` configurartion directories respectively. e.g.
+
+	```
+	$ export TF_VAR_hacluster_password="P@55_Word"
+	$ export TF_VAR_nagios_administrator_password="P@55_Word"
+	```
+
 5. Deploy the topology:
     
-You can deploy the entire topology with a single command by using `terragrunt`. Alternatively, deploy the configuration in each subdirectory using terraform.
+You can deploy the entire topology with a single command by using [Terragrunt](https://github.com/gruntwork-io/terragrunt). Alternatively, deploy the configuration in each subdirectory using Terraform.
 
 *(placeholder: explain the value of deploying using Terraform, considering that Terragrunt provides a simpler flow)*
 
 -   **Deploy Using Terraform**
 
-	1. Go to the `full-deployment/common/configuration` directory.
-	2. Run the following commands:
+	1. Copy the `examples/full-deployment/terraform.tfvars` into each Terraform configuration sub directory.
+	2. Go to the `full-deployment/common/configuration` directory.
+	3. Run the following commands:
     	```
     	terraform init
     	terraform plan
     	terraform apply
     	```
-	3. Run the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
-	    - `examples/full-deployment/common/configuration
+	4. Repeat runing the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
     	- `examples/full-deployment/management/network`
     	- `examples/full-deployment/management/access`
     	- `examples/full-deployment/peering/network`
@@ -75,7 +84,9 @@ You can deploy the entire topology with a single command by using `terragrunt`. 
     	make init
 	    terragrunt apply-all
 	    ```
-	All the resources defined in the configuration are deployed.
+
+		All the resources defined in the configuration are deployed.
+
 	3. (Optional) To remove all the resources, run the following command:
 	    ```
 	    terragrunt destroy-all
