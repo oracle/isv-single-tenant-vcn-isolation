@@ -18,7 +18,8 @@ locals {
 resource null_resource pacemaker_bootstrap {
 
   triggers = {
-    host_id            = oci_core_instance.routing_server_a.id
+    primary_host_id    = oci_core_instance.routing_server_a.id
+    secondary_host_id  = oci_core_instance.routing_server_b.id
     hostname_label     = var.hostname_label
     hacluster_password = var.hacluster_password
     ip_address         = oci_core_private_ip.floating_ip.ip_address
