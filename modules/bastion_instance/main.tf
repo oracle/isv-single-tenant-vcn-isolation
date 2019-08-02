@@ -5,8 +5,8 @@
 
 locals {
   # extract key name from the keypath
-  private_key   = element(reverse(split("/",var.remote_ssh_private_key_file)),0)
-  public_key    = element(reverse(split("/",var.remote_ssh_public_key_file)),0)
+  private_key = element(reverse(split("/", var.remote_ssh_private_key_file)), 0)
+  public_key  = element(reverse(split("/", var.remote_ssh_public_key_file)), 0)
 }
 
 resource oci_core_instance bastion_server {
