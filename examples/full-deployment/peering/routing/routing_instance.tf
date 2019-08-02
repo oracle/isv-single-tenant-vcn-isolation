@@ -24,7 +24,7 @@ module routing_instance_1 {
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 
   shape = "VM.Standard2.1" # TODO
-  
+
   hacluster_password = var.hacluster_password
 }
 

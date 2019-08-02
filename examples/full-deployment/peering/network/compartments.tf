@@ -29,7 +29,11 @@ resource "oci_identity_policy" "routing" {
   name           = "routing_instances"
   statements = [
     # only allow permission to modify vnics
-    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use vnic in compartment ${var.compartment_name}"
+    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use vnics in compartment ${var.compartment_name}",
+    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use private-ips in compartment ${var.compartment_name}",
+    # TODO remove the policies for management compartment - see Issue #
+    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use vnics in compartment management",
+    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use private-ips in compartment management",
   ]
 }
 
