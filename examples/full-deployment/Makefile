@@ -1,13 +1,14 @@
+
 TF_CONFIGS = common/configuration \
-			 management/access \
-			 management/application \
-			 management/network \
-			 management/server_attachment \
-			 management/servers \
-			 peering/network \
-			 peering/routing \
-			 tenant/application \
+       management/network \
+       peering/network \
 			 tenant/network \
+			 management/access \
+			 peering/routing \
+			 management/servers \
+			 management/server_attachment \
+			 management/application \
+			 tenant/application \
 			 tenant/servers
 
 
@@ -38,7 +39,7 @@ upgrade:
 	@for c in $(TF_CONFIGS); \
 	do \
 		echo $$c; \
-		(&& cd $$c && terraform init -upgrade); \
+		(cd $$c && terraform init -upgrade); \
 	done
 
 validate:
@@ -57,4 +58,12 @@ destroy: terraform.tfvars
 	# use terragrunt to destroy all configurations
 	@echo y | terragrunt destroy-all
 
-.PHONY: fmt init upgrade validate apply destroy
+clean:
+	# remove all .terraform config directories
+	@for c in $(TF_CONFIGS); \
+	do \
+		echo $$c; \
+		(cd $$c && rm -rf .terraform); \
+	done
+
+.PHONY: fmt init upgrade validate apply destroy clean

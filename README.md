@@ -34,11 +34,11 @@ This layer contains the following resources:
 
 ## Quickstart Deployment
 
-1. Clone this repository to your local host. The `examples` directory contains the Terraform configurations for a sample topology based on the architecture described earlier. 
+1. Clone this repository to your local host. The `examples` directory contains the Terraform configurations for a sample topology based on the architecture described earlier.
 
 2. Install Terraform. See https://learn.hashicorp.com/terraform/getting-started/install.html.
 
-3. Open `examples/full-deployment/terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file. 
+3. Open `examples/full-deployment/terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file.
 
 4. Set the deployment passwords and shared secrets.  The full deployment examples requires variables to be set for the shared secret for the routing HA cluster, and an initial Nagios administrator password. These can be set using environment variables, or added to the `terraform.tfvars` files in the `full-deployment/peering/routing` and `full-deployment/management/application` configurartion directories respectively. e.g.
 
@@ -48,7 +48,7 @@ This layer contains the following resources:
 	```
 
 5. Deploy the topology:
-    
+
 You can deploy the entire topology with a single command by using [Terragrunt](https://github.com/gruntwork-io/terragrunt). Alternatively, deploy the configuration in each subdirectory using Terraform.
 
 *(placeholder: explain the value of deploying using Terraform, considering that Terragrunt provides a simpler flow)*
@@ -65,15 +65,15 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	```
 	4. Repeat runing the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
     	- `examples/full-deployment/management/network`
-    	- `examples/full-deployment/management/access`
     	- `examples/full-deployment/peering/network`
-    	- `examples/full-deployment/peering/routing`
     	- `examples/full-deployment/tenant/network`
+    	- `examples/full-deployment/management/access`
+    	- `examples/full-deployment/peering/routing`
     	- `examples/full-deployment/management/servers`
     	- `examples/full-deployment/management/server_attachment`
+    	- `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
     	- `examples/full-deployment/tenant/servers`
-    	- `examples/full-deployment/management/application`
-    	- `examples/full-deployment/tenant/application`
+    	- `examples/full-deployment/tenant/application` (optional, to deploy example app and Nagios agents)
 
 -   **Deploy Using Terragrunt**
 
