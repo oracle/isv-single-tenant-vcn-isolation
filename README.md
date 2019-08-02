@@ -95,3 +95,23 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 ## Test the Sample Topology
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
+
+
+## Troubleshooting
+
+### Cleaning up a after a failed or partial deployment
+
+If the full deployment of the solution fails due to an error and you want to un-deploy the partially provisioned configuration using the `terragrunt destroy-all` option can return an error like:
+
+```
+Error: Unsupported attribute
+
+  on management_rte_attachment.tf line 8, in module "management_rte_attachement":
+   8:     data.terraform_remote_state.peering_servers.outputs.routing_instance_1_ip_id,
+    |----------------
+    | data.terraform_remote_state.peering_servers.outputs is object with 3 attributes
+
+This object does not have an attribute named "routing_instance_1_ip_id".
+```
+
+If this occurs you will need to manually run `terraform destroy` in each terraform configuration directory in the reverse order of the folders listed in the **Deploy Using Terraform** section above.
