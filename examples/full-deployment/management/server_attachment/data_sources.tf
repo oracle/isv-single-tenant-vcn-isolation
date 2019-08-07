@@ -34,6 +34,14 @@ data oci_core_images oraclelinux {
  * Remote State Dependencies
  */
 
+data "terraform_remote_state" "compartments" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/compartments/terraform.tfstate"
+  }
+}
+
 data "terraform_remote_state" "configuration" {
   backend = "local"
 

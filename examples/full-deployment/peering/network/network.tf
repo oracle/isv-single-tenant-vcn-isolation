@@ -12,7 +12,7 @@
 module peering_1_network {
   source = "../../../../modules/peering_network"
 
-  compartment_id = module.peering_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.peering_compartment_id
   vcn_name       = "peering01"
   dns_label      = "peering01"
 
@@ -31,7 +31,7 @@ output "peering_1_network" {
 module peering_2_network {
   source = "../../../../modules/peering_network"
 
-  compartment_id = module.peering_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.peering_compartment_id
   vcn_name       = "peering02"
   dns_label      = "peering02"
 

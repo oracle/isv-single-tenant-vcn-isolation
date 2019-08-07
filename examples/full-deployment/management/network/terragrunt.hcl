@@ -3,5 +3,8 @@ include {
 }
 
 dependencies {
-  paths = ["../../common/configuration"]
+  paths = [
+  	"../../common/configuration",
+  	"../../common/compartments"
+  ]
 }

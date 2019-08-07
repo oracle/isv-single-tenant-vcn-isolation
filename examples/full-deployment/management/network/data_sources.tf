@@ -29,3 +29,23 @@ data oci_core_images oraclelinux {
     regex  = true
   }
 }
+
+/*
+ * Remote State Dependencies
+ */
+
+data "terraform_remote_state" "configuration" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/configuration/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "compartments" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/compartments/terraform.tfstate"
+  }
+}

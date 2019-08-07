@@ -8,7 +8,8 @@
 module management_network {
   source = "../../../../modules/management_network"
 
-  compartment_id         = module.management_compartment.compartment_id
+  compartment_id         = data.terraform_remote_state.compartments.outputs.management_compartment_id
+  peering_compartment_id = data.terraform_remote_state.compartments.outputs.peering_compartment_id
   vcn_name               = "isv management"
   dns_label              = "isv"
   vcn_cidr_block         = var.vcn_cidr_block

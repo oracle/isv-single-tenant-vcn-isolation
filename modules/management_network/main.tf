@@ -70,7 +70,7 @@ resource oci_core_security_list management_security_list {
   // allow inbound icmp traffic of a specific type
   ingress_security_rules {
     protocol = 1
-    source   = "0.0.0.0/0"
+    source   = var.access_subnet_cidr
   }
 
   // allow inbound http traffic
@@ -82,19 +82,11 @@ resource oci_core_security_list management_security_list {
     protocol = "6"
     source   = var.access_subnet_cidr
   }
-  ingress_security_rules {
-    tcp_options {
-      min = "443"
-      max = "443"
-    }
-    protocol = "6"
-    source   = var.access_subnet_cidr
-  }
 }
 
 # Network Security List for the Peering Subnet
 resource oci_core_security_list peering_security_list {
-  compartment_id = var.compartment_id
+  compartment_id = var.peering_compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.peering_sec_list
 
@@ -138,24 +130,6 @@ resource oci_core_security_list access_security_list {
     protocol = 1
     source   = "0.0.0.0/0"
   }
-
-  // allow inbound http traffic
-  ingress_security_rules {
-    tcp_options {
-      min = "80"
-      max = "80"
-    }
-    protocol = "6"
-    source   = "0.0.0.0/0"
-  }
-  ingress_security_rules {
-    tcp_options {
-      min = "443"
-      max = "443"
-    }
-    protocol = "6"
-    source   = "0.0.0.0/0"
-  }
 }
 
 /*
@@ -179,7 +153,7 @@ resource oci_core_subnet access_subnet {
 
 # Peering Subnet
 resource oci_core_subnet peering_subnet {
-  compartment_id = var.compartment_id
+  compartment_id = var.peering_compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.peering_subnet_name
   dns_label      = var.peering_subnet_dns_label

@@ -64,8 +64,9 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	terraform apply
     	```
 	4. Repeat runing the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
-    	- `examples/full-deployment/management/network`
+		- `examples/full-deployment/common/compartments`
     	- `examples/full-deployment/peering/network`
+    	- `examples/full-deployment/management/network`
     	- `examples/full-deployment/tenant/network`
     	- `examples/full-deployment/management/access`
     	- `examples/full-deployment/peering/routing`
@@ -96,6 +97,9 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
 
+The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url. 
+
+Once logged in with the credentials then the user can navigate to the nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
 
 ## Troubleshooting
 
@@ -115,3 +119,122 @@ This object does not have an attribute named "routing_instance_1_ip_id".
 ```
 
 If this occurs you will need to manually run `terraform destroy` in each terraform configuration directory in the reverse order of the folders listed in the **Deploy Using Terraform** section above.
+
+## Solutions Overview
+
+This solution is logically partitioned in 3 networks such as Management, Peering & Tenant network to showcase the architecture demonstration of single tenant application deployment in multitenant environment.
+
+### Network setup
+
+1. **Management Network**
+	This partition helps give a single pane of window to manage the access, deployment & maintenance of the complete architecture
+
+	1.1 **Bastion**
+	This server helps in connecting to other resources in ISV tenancy
+	-	OL image deployed in public subnet
+	-	only point of ingress to resources in ISV tenancy from Internet
+	-	`ssh -i keypair.pem opc@bastion_ip`
+
+	1.2 ****Management Server**** 
+	This server has monitoring s/w NAGIOS installed on it and configured to listen to all the server's deployed in each tenant VCN's.
+	-	OL image deployed in private subnet
+	-	NAGIOS (v 4.3.4) is installed on this server
+	-	configured with ip addresses of all the server's deployed in different tenant VCN's.
+	-	upon deployment the nagios monitoring application can be accessed thru bastion tunnel 		
+	-	tunneling --	`ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
+	-	access thru browser -- `http://localhost/nagios`
+	-	credentials			-- 
+	-	`user_id	--	nagiosadmin`
+	-	`password 	--	[token set thru export TF_VAR_nagios_administrator_password]`
+
+
+	1.3 **Routing Server's**
+	These servers meant to act as a bridge between ISV vcn and the tenant VCN by routing traffic.
+	-	OL image deployed in private subnet
+	-	PACEMAKER/Corosync is installed on these servers for high availability across 2 server's deployed which can be used to demonstrate failover
+	-	secondary vnic deployed in peering vcn to establish connectivity over LPG with tenant VCN's
+	-	secondary_vnic_all_configure.sh script is used to attach secondary vnic to persist vnic attachment `/etc/sysconfig/network-scripts/ifcfg-ens5` file is created
+	-	routes to tenant vcn's are setup on this server
+	-	to persist routes across reboots `/etc/sysconfig/network-scripts/route-ens5` file is created
+	-	number of secondary vnics creation allowed is based on the shape of the instance [higher the shape is greater number of secondary vnics allowed]
+
+2. **Peering Network**
+This partition provides a bridging mechanism in the form of secondary vnic's made available to routing servers in management network for the purpose of achieving fan-out architecture for peering the VCN's.
+
+	2.1 **Secondary VNIC's**
+	-	LPG is created in this vcn for peering with 10 different tenant vcn's.
+	-	cidr block of this VCN can be correlated to the number of vnic's that is required to be created by the routing server in the peering subnet of the ISV vcn.
+	
+3. **Tenant Network**
+	This partition has tenant resources to demonstrate the end-to-end connectivity of the architecture.
+
+	3.1 **Tenant Network** (1-n) [ VCN's, Subnet, IGW, NAT, LPG ]
+
+	3.2 **Tenant Servers** (1-n) [NRPE agent installed and configured with Nagios server IP address to send monitorong metrics to]
+	-	OL image deployed in private subnet
+	-	NRPE (nagios remote agent) is deployed on this server and it listens on port 5666
+	-	nrpe configuration is updated with the ip address of the nagios management server deployed in the management subnet of the ISV vcn.
+
+
+## Routing Instance Configuration 
+
+1. Enable IP forwarding in the kernel and ensure configuration is persistent upon reboots on both router intenance by adding the following to `/etc/sysctl.d/98-ip-forward.conf`
+
+	```
+	net.ipv4.ip_forward=1
+	```
+
+2. Attach secondary vnics with skip source/destination checked. To ensure  the vNIC attachement is maintained after reboot create a configuration file for each vNIC e.g
+
+	e.g. `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 1
+
+	```
+	DEVICE=ens5
+	BOOTPROTO=static
+	IPADDR=10.253.0.2
+	NETMASK=255.255.255.248
+	ONBOOT=yes
+	```
+
+	e.g. `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 2
+
+	```
+	DEVICE=ens5
+	BOOTPROTO=static
+	IPADDR=10.253.0.10
+	NETMASK=255.255.255.248
+	ONBOOT=yes
+	```
+3. add static routes for the each Tenant VCN accessable via the routing instance pointing to the default gateway of the peering subnet the Tenant VCN is peered with
+
+	Router 1 configuration
+
+	```
+	sudo ip route add 10.1.0.0/16 via 10.253.0.1 dev ens5
+	sudo ip route add 10.2.0.0/16 via 10.253.0.1 dev ens5
+	```
+
+	Router 2 configuration
+
+	```
+	sudo ip route add 10.3.0.0/16 via 10.253.0.9 dev ens5
+	sudo ip route add 10.4.0.0/16 via 10.253.0.9 dev ens5
+	```
+
+
+4. Persist attached routes upon reboot creating file for each vnic
+
+	e.g. `/etc/sysconfig/network-scripts/route-ens5` on Router 1
+
+	```
+	10.1.0.0/16 via 10.253.0.1
+	10.2.0.0/16 via 10.253.0.1
+	```
+
+	e.g. `/etc/sysconfig/network-scripts/route-ens5` on Router 2
+
+	```
+	10.3.0.0/16 via 10.253.0.9
+	10.4.0.0/16 via 10.253.0.9
+	```
+

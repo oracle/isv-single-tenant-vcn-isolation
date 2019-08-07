@@ -2,19 +2,8 @@
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 /*
- * Configure the peering compartment, and enable instance principles to modify routing rules
+ * Configure and enable instance principles to modify routing rules
  */
-
-module peering_compartment {
-  source = "../../../../modules/compartment"
-
-  providers = {
-    oci.home = "oci.home"
-  }
-
-  root_compartment_id = local.root_compartment_id
-  compartment_name    = var.compartment_name
-}
 
 resource "oci_identity_dynamic_group" "routing" {
   provider       = "oci.home"
@@ -22,7 +11,8 @@ resource "oci_identity_dynamic_group" "routing" {
   name           = "routing_instances"
   description    = "Dynamic Group for Routing Instance Principles"
   # include all instances in the peering compartment
-  matching_rule = "ANY {instance.compartment.id = '${module.peering_compartment.compartment_id}'}"
+  matching_rule = "ANY {instance.compartment.id = '${data.terraform_remote_state.compartments.outputs.peering_compartment_id}'}"
+
 }
 
 resource "oci_identity_policy" "routing" {
@@ -34,13 +24,5 @@ resource "oci_identity_policy" "routing" {
     # only allow permission to modify vnics
     "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use vnics in compartment ${var.compartment_name}",
     "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use private-ips in compartment ${var.compartment_name}",
-    # TODO remove the policies for management compartment - see Issue #
-    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use vnics in compartment management",
-    "Allow dynamic-group ${oci_identity_dynamic_group.routing.name} to use private-ips in compartment management",
   ]
 }
-
-output "peering_compartment_id" {
-  value = module.peering_compartment.compartment_id
-}
-

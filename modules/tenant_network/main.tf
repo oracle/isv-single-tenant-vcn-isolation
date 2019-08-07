@@ -114,16 +114,6 @@ resource oci_core_security_list public_security_list {
     protocol = 1
     source   = "0.0.0.0/0"
   }
-
-  // allow inbound http traffic
-  ingress_security_rules {
-    tcp_options {
-      min = "80"
-      max = "80"
-    }
-    protocol = "6"
-    source   = "0.0.0.0/0"
-  }
 }
 
 # Private Subnet Network Security List

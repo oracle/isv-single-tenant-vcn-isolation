@@ -12,7 +12,7 @@ terraform {
 locals {
   availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
 
-  compartment_id = data.terraform_remote_state.peering_network.outputs.peering_compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.peering_compartment_id
 
   bastion_ip = data.terraform_remote_state.access.outputs.bastion_ip
 } 

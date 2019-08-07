@@ -8,7 +8,7 @@
 module nagios_application {
   source = "../../../../modules/nagios_application"
 
-  compartment_id               = data.terraform_remote_state.management_network.outputs.management_compartment_id
+  compartment_id               = data.terraform_remote_state.compartments.outputs.management_compartment_id
   management_host_ip           = data.terraform_remote_state.management_servers.outputs.management_ip
   bastion_host_ip              = data.terraform_remote_state.access.outputs.bastion_ip
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
