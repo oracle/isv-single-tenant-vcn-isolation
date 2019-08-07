@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
  * Create new route tables for access fo the tenant VCNs and attach the new route
  * tables to the management and access subnets for connectivity through to the tenant
