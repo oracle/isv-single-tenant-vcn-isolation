@@ -8,7 +8,7 @@
 module management_rte_attachement {
   source = "../../../../modules/management_rte_attachement"
 
-  compartment_id = data.terraform_remote_state.management_network.outputs.management_compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.management_compartment_id
 
   routing_ip_ids = [
     data.terraform_remote_state.peering_servers.outputs.routing_instance_1_ip_id,

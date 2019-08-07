@@ -6,6 +6,11 @@ variable compartment_id {
   description = "compartment for the management resources"
 }
 
+variable peering_compartment_id {
+  type        = string
+  description = "compartment for the peering subnet"
+}
+
 variable vcn_name {
   type        = string
   description = "CIDR range for the management VCN"

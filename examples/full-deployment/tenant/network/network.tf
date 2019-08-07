@@ -9,7 +9,7 @@
 module tenant_1_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_1_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
   vcn_name       = "tenant1"
   dns_label      = "tenant1"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[0]
@@ -44,7 +44,7 @@ output "tenant_1_private_subnet_cidr" {
 module tenant_2_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_2_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
   vcn_name       = "tenant2"
   dns_label      = "tenant2"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[1]
@@ -79,7 +79,7 @@ output "tenant_2_private_subnet_cidr" {
 module tenant_3_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_3_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
   vcn_name       = "tenant3"
   dns_label      = "tenant3"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[2]
@@ -114,7 +114,7 @@ output "tenant_3_private_subnet_cidr" {
 module tenant_4_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_4_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
   vcn_name       = "tenant4"
   dns_label      = "tenant4"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[3]

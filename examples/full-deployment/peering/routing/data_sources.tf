@@ -33,6 +33,14 @@ data "terraform_remote_state" "configuration" {
   }
 }
 
+data "terraform_remote_state" "compartments" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/compartments/terraform.tfstate"
+  }
+}
+
 data "terraform_remote_state" "management_network" {
   backend = "local"
 

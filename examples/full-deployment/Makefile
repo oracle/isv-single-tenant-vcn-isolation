@@ -1,5 +1,6 @@
 
 TF_CONFIGS = common/configuration \
+		common/compartments \
        management/network \
        peering/network \
 			 tenant/network \

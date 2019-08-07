@@ -9,7 +9,7 @@
 module tenant_instance_1 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_1_compartment_id
+  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_1_private_subnet_id
   availability_domain = local.availability_domain
@@ -28,7 +28,7 @@ output "tenant_1_private_ip" {
 module tenant_instance_2 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_2_compartment_id
+  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_2_private_subnet_id
   availability_domain = local.availability_domain
@@ -47,7 +47,7 @@ output "tenant_2_private_ip" {
 module tenant_instance_3 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_3_compartment_id
+  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_3_private_subnet_id
   availability_domain = local.availability_domain
@@ -67,7 +67,7 @@ output "tenant_3_private_ip" {
 module tenant_instance_4 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.tenant_network.outputs.tenant_4_compartment_id
+  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_4_private_subnet_id
   availability_domain = local.availability_domain

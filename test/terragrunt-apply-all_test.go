@@ -304,3 +304,4 @@ func testRoutingPathContains(t *testing.T, bastionHost ssh.Host, toHost, contain
 	response := ssh.CheckSshCommand(t, bastionHost, command)
 	assert.Contains(t, response, containsHost)
 }
+
