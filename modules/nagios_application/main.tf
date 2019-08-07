@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
  * Example for deploying Nagios Core on the management instance.
  * Application provisioning is delegated to Chef running on the target instance

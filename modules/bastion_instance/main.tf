@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /* 
  * Creates a bastion host instance and copies the provided public and private ssh keys 
  * to the instance to access to the remove instances through the bastion

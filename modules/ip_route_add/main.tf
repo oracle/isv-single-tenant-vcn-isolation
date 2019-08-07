@@ -1,6 +1,9 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
  * Adds IP routea to the target instance to route traffic via the seconardy vNIC
-*/
+ */
 
 locals {
   # generate an ip route provisioning command for each target network
