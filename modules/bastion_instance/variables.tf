@@ -45,11 +45,6 @@ variable availability_domain {
   description = "the availability downmain to provision the bastion instance in"
 }
 
-variable bastion_security_group_id_list {
-  type        = list
-  description = "security group id containing sec rules"
-}
-
 variable bastion_ssh_private_key_file {
   type        = string
   description = "the private ssh key file to access the bastion instance"

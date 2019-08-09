@@ -14,7 +14,6 @@ module management_instance {
   availability_domain = local.availability_domain
   bastion_ip          = local.bastion_ip
   management_security_group_id_list = [
-    data.terraform_remote_state.management_network.outputs.icmp_security_group_id,
     data.terraform_remote_state.management_network.outputs.http_security_group_id
   ]
 

@@ -33,7 +33,6 @@ resource oci_core_instance bastion_server {
     subnet_id        = var.subnet_id
     assign_public_ip = true
     hostname_label   = var.hostname_label
-    nsg_ids          = var.bastion_security_group_id_list
   }
 
   connection {

@@ -97,6 +97,19 @@ resource oci_core_route_table private_route_table {
   }
 }
 
+# Subnet Network Security List
+resource oci_core_security_list tenant_security_list {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.tenant_vcn.id
+  display_name   = var.tenant_sec_list
+
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol = 1
+    source   = "0.0.0.0/0"
+  }
+}
+
 /*
  * Security Group
  */
@@ -106,15 +119,6 @@ resource "oci_core_network_security_group" "nrpe_network_security_group" {
   vcn_id         = oci_core_vcn.tenant_vcn.id
 
   display_name = var.nrpe_security_group_name
-}
-
-# adding egress security rule to security group
-resource "oci_core_network_security_group_security_rule" "nrpe_network_security_group_security_rule_0" {
-  network_security_group_id = oci_core_network_security_group.nrpe_network_security_group.id
-
-  direction   = "EGRESS"
-  protocol    = "all"
-  destination = "0.0.0.0/0"
 }
 
 # adding ingress security rule to security group
@@ -132,14 +136,6 @@ resource "oci_core_network_security_group_security_rule" "nrpe_network_security_
   }
 }
 
-# adding ingress security rule for ICMP
-resource "oci_core_network_security_group_security_rule" "peering_network_security_group_security_rule_2" {
-  network_security_group_id = oci_core_network_security_group.nrpe_network_security_group.id
-  protocol                  = "1"
-  direction                 = "INGRESS"
-  source                    = "0.0.0.0/0"
-}
-
 /*
  * SUBNETS
  */
@@ -152,6 +148,10 @@ resource oci_core_subnet public_subnet {
   dns_label      = var.tenant_public_subnet_dns_label
   cidr_block     = var.tenant_public_subnet_cidr
   route_table_id = oci_core_route_table.public_route_table.id
+  security_list_ids = [
+    oci_core_vcn.tenant_vcn.default_security_list_id,
+    oci_core_security_list.tenant_security_list.id
+  ]
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }
@@ -164,6 +164,10 @@ resource oci_core_subnet private_subnet {
   dns_label                  = var.tenant_private_subnet_dns_label
   cidr_block                 = var.tenant_private_subnet_cidr
   route_table_id             = oci_core_route_table.private_route_table.id
+  security_list_ids = [
+    oci_core_vcn.tenant_vcn.default_security_list_id,
+    oci_core_security_list.tenant_security_list.id
+  ]
   prohibit_public_ip_on_vnic = true
   defined_tags               = var.defined_tags
   freeform_tags              = var.freeform_tags

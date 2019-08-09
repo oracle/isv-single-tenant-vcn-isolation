@@ -55,32 +55,30 @@ resource oci_core_route_table private_route_table {
   }
 }
 
-/*
- * Security Group for ICMP
- */
-# Security Group creation
-resource "oci_core_network_security_group" "icmp_network_security_group" {
+# Network Security List for management & access subnet
+resource oci_core_security_list management_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
+  display_name   = "management_security_list"
 
-  display_name = var.icmp_security_group_name
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol = 1
+    source   = "0.0.0.0/0"
+  }
 }
 
-# adding egress security rule to security group
-resource "oci_core_network_security_group_security_rule" "icmp_network_security_group_rule_0" {
-  network_security_group_id = oci_core_network_security_group.icmp_network_security_group.id
+# Network Security List for peering subnet
+resource oci_core_security_list peering_security_list {
+  compartment_id = var.peering_compartment_id
+  vcn_id         = oci_core_vcn.isv_vcn.id
+  display_name   = "peering_security_list"
 
-  direction   = "EGRESS"
-  protocol    = "all"
-  destination = "0.0.0.0/0"
-}
-
-# adding ingress security rule for ICMP
-resource "oci_core_network_security_group_security_rule" "icmp_network_security_group_security_rule_1" {
-  network_security_group_id = oci_core_network_security_group.icmp_network_security_group.id
-  protocol                  = "1"
-  direction                 = "INGRESS"
-  source                    = "0.0.0.0/0"
+  // allow inbound icmp traffic of a specific type
+  ingress_security_rules {
+    protocol = 1
+    source   = "0.0.0.0/0"
+  }
 }
 
 /*
@@ -92,15 +90,6 @@ resource "oci_core_network_security_group" "http_network_security_group" {
   vcn_id         = oci_core_vcn.isv_vcn.id
 
   display_name = var.http_security_group_name
-}
-
-# adding egress security rule to security group
-resource "oci_core_network_security_group_security_rule" "http_network_security_group_rule_0" {
-  network_security_group_id = oci_core_network_security_group.http_network_security_group.id
-
-  direction   = "EGRESS"
-  protocol    = "all"
-  destination = "0.0.0.0/0"
 }
 
 # adding ingress security rule for HTTP
@@ -129,15 +118,6 @@ resource "oci_core_network_security_group" "peering_network_security_group" {
   display_name = var.peering_security_group_name
 }
 
-# adding egress security rule to security group
-resource "oci_core_network_security_group_security_rule" "peering_network_security_group_rule_0" {
-  network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
-
-  direction   = "EGRESS"
-  protocol    = "all"
-  destination = "0.0.0.0/0"
-}
-
 # adding ingress security rule for port 5666
 resource "oci_core_network_security_group_security_rule" "peering_network_security_group_security_rule_1" {
   network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
@@ -153,14 +133,6 @@ resource "oci_core_network_security_group_security_rule" "peering_network_securi
   }
 }
 
-# adding ingress security rule for ICMP
-resource "oci_core_network_security_group_security_rule" "peering_network_security_group_security_rule_2" {
-  network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
-  protocol                  = "1"
-  direction                 = "INGRESS"
-  source                    = "0.0.0.0/0"
-}
-
 /*
  * SUBNETS
  */
@@ -172,6 +144,10 @@ resource oci_core_subnet access_subnet {
   display_name   = var.access_subnet_name
   dns_label      = var.access_subnet_dns_label
   cidr_block     = var.access_subnet_cidr
+  security_list_ids = [
+    oci_core_vcn.isv_vcn.default_security_list_id,
+    oci_core_security_list.management_security_list.id
+  ]
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }
@@ -184,6 +160,10 @@ resource oci_core_subnet peering_subnet {
   dns_label                  = var.peering_subnet_dns_label
   cidr_block                 = var.peering_subnet_cidr
   route_table_id             = oci_core_route_table.private_route_table.id
+  security_list_ids = [
+    oci_core_vcn.isv_vcn.default_security_list_id,
+    oci_core_security_list.peering_security_list.id
+  ]
   prohibit_public_ip_on_vnic = true
   defined_tags               = var.defined_tags
   freeform_tags              = var.freeform_tags
@@ -196,6 +176,10 @@ resource oci_core_subnet management_subnet {
   display_name               = var.management_subnet_name
   dns_label                  = var.management_subnet_dns_label
   cidr_block                 = var.management_subnet_cidr
+  security_list_ids = [
+    oci_core_vcn.isv_vcn.default_security_list_id,
+    oci_core_security_list.management_security_list.id
+  ]
   prohibit_public_ip_on_vnic = true
   defined_tags               = var.defined_tags
   freeform_tags              = var.freeform_tags

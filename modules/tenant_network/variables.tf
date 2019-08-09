@@ -74,10 +74,10 @@ variable tenant_public_sec_list {
   default     = "tenant_public_sec_list"
 }
 
-variable tenant_private_sec_list {
+variable tenant_sec_list {
   type        = string
   description = "display name for the public subnet security list"
-  default     = "tenant_private_sec_list"
+  default     = "tenant_sec_list"
 }
 
 variable tenant_public_subnet_name {
