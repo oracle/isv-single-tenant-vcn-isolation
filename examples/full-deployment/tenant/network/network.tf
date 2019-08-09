@@ -40,6 +40,10 @@ output "tenant_1_private_subnet_cidr" {
   value = module.tenant_1_network.tenant_private_subnet.cidr_block
 }
 
+output tenant_1_nrpe_security_group_id {
+  value = module.tenant_1_network.tenant_nrpe_security_group.id
+}
+
 # Tenant 2
 module tenant_2_network {
   source = "../../../../modules/tenant_network"
@@ -73,6 +77,10 @@ output "tenant_2_vcn_cidr" {
 
 output "tenant_2_private_subnet_cidr" {
   value = module.tenant_2_network.tenant_private_subnet.cidr_block
+}
+
+output tenant_2_nrpe_security_group_id {
+  value = module.tenant_2_network.tenant_nrpe_security_group.id
 }
 
 # Tenant 3
@@ -110,6 +118,10 @@ output "tenant_3_private_subnet_cidr" {
   value = module.tenant_3_network.tenant_private_subnet.cidr_block
 }
 
+output tenant_3_nrpe_security_group_id {
+  value = module.tenant_3_network.tenant_nrpe_security_group.id
+}
+
 # Tenant 4
 module tenant_4_network {
   source = "../../../../modules/tenant_network"
@@ -143,4 +155,8 @@ output "tenant_4_vcn_cidr" {
 
 output "tenant_4_private_subnet_cidr" {
   value = module.tenant_4_network.tenant_private_subnet.cidr_block
+}
+
+output tenant_4_nrpe_security_group_id {
+  value = module.tenant_4_network.tenant_nrpe_security_group.id
 }

@@ -40,6 +40,12 @@ variable peering_rte_name {
   default     = "peering_rte"
 }
 
+variable peering_security_group_name {
+  type        = string
+  description = "display name for the public subnet security list"
+  default     = "peering_security_group"
+}
+
 variable peering_sec_list {
   type        = string
   description = "display name for the peering network security list"

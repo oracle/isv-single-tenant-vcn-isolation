@@ -53,6 +53,11 @@ variable availability_domain {
   description = "the availability downmain to provision the routing instance in"
 }
 
+variable routing_security_group_id {
+  type        = string
+  description = "security group id containing sec rules"
+}
+
 # TODO rename to `bastion_host` for consistency
 variable bastion_ip {
   type        = string

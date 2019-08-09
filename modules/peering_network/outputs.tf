@@ -15,3 +15,8 @@ output peering_gateway_ids {
   description = "list of local peering gateway ocids"
   value       = [for lpg in oci_core_local_peering_gateway.peering_gateways : lpg.id]
 }
+
+output peering_security_group {
+  description = "peering security group `oci_core_network_security_group` resource"
+  value       = oci_core_network_security_group.peering_network_security_group
+}

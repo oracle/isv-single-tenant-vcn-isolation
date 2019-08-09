@@ -21,6 +21,11 @@ output peering_subnet {
   value       = oci_core_subnet.peering_subnet
 }
 
+output peering_network_security_group {
+  description = "the peering security group `oci_core_network_security_group` resource"
+  value       = oci_core_network_security_group.peering_network_security_group
+}
+
 output nat_id {
   description = "ocid of the nat gateway"
   value       = oci_core_nat_gateway.management_nat.id

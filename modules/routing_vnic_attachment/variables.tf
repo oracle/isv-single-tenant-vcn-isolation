@@ -42,6 +42,12 @@ variable subnet_id {
   type        = string
   description = "the subnet to attach the vnic to"
 }
+
+variable security_group_id_list {
+  type        = list
+  description = "security group id containing sec rules"
+}
+
 variable instance_id {
   type        = string
   description = "the instance to attach the vnic to"

@@ -38,6 +38,11 @@ variable subnet_id {
   description = "ocid of the subnet to provision the routing instance in"
 }
 
+variable peering_security_group_id_list {
+  type        = list
+  description = "security group id containing sec rules"
+}
+
 variable availability_domain {
   type        = string
   description = "the availability downmain to provision the routing instance in"

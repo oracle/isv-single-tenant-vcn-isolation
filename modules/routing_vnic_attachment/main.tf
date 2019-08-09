@@ -10,6 +10,7 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
 
   create_vnic_details {
     subnet_id      = var.subnet_id
+    nsg_ids        = var.security_group_id_list
     display_name   = var.display_name
     hostname_label = var.hostname_label
 

@@ -62,6 +62,12 @@ variable private_rte_name {
   default     = "private_rte"
 }
 
+variable nrpe_security_group_name {
+  type        = string
+  description = "display name for the public subnet security list"
+  default     = "nrpe_security_group"
+}
+
 variable tenant_public_sec_list {
   type        = string
   description = "display name for the public subnet security list"

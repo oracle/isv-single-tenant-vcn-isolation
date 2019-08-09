@@ -40,6 +40,11 @@ variable subnet_id {
   description = "ocid of the subnet to provision the tenant instance in"
 }
 
+variable nrpe_security_group_id_list {
+  type        = list
+  description = "security group id containing sec rules for nrpe port 5666"
+}
+
 variable availability_domain {
   type        = string
   description = "the availability downmain to provision the tenant instance in"

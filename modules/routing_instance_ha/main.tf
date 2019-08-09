@@ -70,7 +70,8 @@ resource oci_core_instance routing_server_a {
     skip_source_dest_check = true
 
     nsg_ids = [
-      oci_core_network_security_group.pacemaker.id
+      oci_core_network_security_group.pacemaker.id,
+      var.routing_security_group_id
     ]
   }
 
@@ -121,7 +122,8 @@ resource oci_core_instance routing_server_b {
     skip_source_dest_check = true
 
     nsg_ids = [
-      oci_core_network_security_group.pacemaker.id
+      oci_core_network_security_group.pacemaker.id,
+      var.routing_security_group_id
     ]
   }
 

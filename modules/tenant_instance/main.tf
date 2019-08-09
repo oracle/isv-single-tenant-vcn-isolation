@@ -26,6 +26,7 @@ resource oci_core_instance tenant_appserver {
     subnet_id        = var.subnet_id
     assign_public_ip = false
     hostname_label   = var.hostname_label
+    nsg_ids          = var.nrpe_security_group_id_list
   }
 
   connection {

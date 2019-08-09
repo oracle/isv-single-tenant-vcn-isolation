@@ -12,6 +12,7 @@ module tenant_instance_1 {
   compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_1_private_subnet_id
+  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_1_nrpe_security_group_id ]
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
 
@@ -31,6 +32,7 @@ module tenant_instance_2 {
   compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_2_private_subnet_id
+  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_2_nrpe_security_group_id ]
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
 
@@ -50,6 +52,7 @@ module tenant_instance_3 {
   compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_3_private_subnet_id
+  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_3_nrpe_security_group_id ]
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
 
@@ -70,6 +73,7 @@ module tenant_instance_4 {
   compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
   source_id           = data.oci_core_images.oraclelinux.images.0.id
   subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_4_private_subnet_id
+  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_4_nrpe_security_group_id ]
   availability_domain = local.availability_domain
   bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
 

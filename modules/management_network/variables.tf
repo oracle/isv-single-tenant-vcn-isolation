@@ -115,6 +115,12 @@ variable peering_subnet_cidr {
   description = "CIDR range for the peering subnet"
 }
 
+variable peering_security_group_name {
+  type        = string
+  description = "display name for the public subnet security list"
+  default     = "peering_security_group"
+}
+
 variable management_subnet_name {
   type        = string
   description = "Management Subnet display name"

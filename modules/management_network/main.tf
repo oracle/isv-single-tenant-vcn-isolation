@@ -84,33 +84,47 @@ resource oci_core_security_list management_security_list {
   }
 }
 
-# Network Security List for the Peering Subnet
-resource oci_core_security_list peering_security_list {
-  compartment_id = var.peering_compartment_id
-  vcn_id         = oci_core_vcn.isv_vcn.id
-  display_name   = var.peering_sec_list
+/*
+ * Security Group for the Peering Subnet
+ */
+# Security Group creation
+resource "oci_core_network_security_group" "peering_network_security_group" {
+    compartment_id = var.peering_compartment_id
+    vcn_id = oci_core_vcn.isv_vcn.id
 
-  // allow outbound tcp traffic on all ports
-  egress_security_rules {
-    destination = "0.0.0.0/0"
-    protocol    = "6"
-  }
+    display_name = var.peering_security_group_name
+}
 
-  // allow inbound icmp traffic of a specific type
-  ingress_security_rules {
-    protocol = 1
-    source   = "0.0.0.0/0"
-  }
+# adding egress security rule to security group
+resource "oci_core_network_security_group_security_rule" "peering_network_security_group_rule_0" {
+  network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
 
-  // allow inbound NRPE traffic
-  ingress_security_rules {
-    tcp_options {
-      min = "5666"
-      max = "5666"
+  direction   = "EGRESS"
+  protocol    = "all"
+  destination = "0.0.0.0/0"
+}
+
+# adding ingress security rule for port 5666
+resource "oci_core_network_security_group_security_rule" "peering_network_security_group_security_rule_1" {
+  network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
+  protocol                  = "6"
+  direction                 = "INGRESS"
+  source                    = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 5666
+      max = 5666
     }
-    protocol = "6"
-    source   = "0.0.0.0/0"
   }
+}
+
+# adding ingress security rule for ICMP
+resource "oci_core_network_security_group_security_rule" "peering_network_security_group_security_rule_2" {
+  network_security_group_id = oci_core_network_security_group.peering_network_security_group.id
+  protocol                  = "1"
+  direction                 = "INGRESS"
+  source                    = "0.0.0.0/0"
 }
 
 # Network Security List for the Access (bastion) Subnet
@@ -159,10 +173,6 @@ resource oci_core_subnet peering_subnet {
   dns_label      = var.peering_subnet_dns_label
   cidr_block     = var.peering_subnet_cidr
   route_table_id = oci_core_route_table.private_route_table.id
-  security_list_ids = [
-    oci_core_vcn.isv_vcn.default_security_list_id,
-    oci_core_security_list.peering_security_list.id
-  ]
   prohibit_public_ip_on_vnic = true
   defined_tags               = var.defined_tags
   freeform_tags              = var.freeform_tags

@@ -15,3 +15,8 @@ output tenant_public_subnet {
   description = "tenant public subnet `oci_core_subnet` resource"
   value       = oci_core_subnet.public_subnet
 }
+
+output tenant_nrpe_security_group {
+  description = "tenant security group `oci_core_network_security_group` resource"
+  value       = oci_core_network_security_group.nrpe_network_security_group
+}

@@ -28,6 +28,7 @@ resource oci_core_instance routing_server {
     assign_public_ip       = false
     hostname_label         = var.hostname_label
     skip_source_dest_check = true
+    nsg_ids                = var.peering_security_group_id_list
   }
 
   connection {
