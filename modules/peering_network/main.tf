@@ -103,6 +103,6 @@ resource oci_core_subnet peering_subnet {
     oci_core_vcn.peering_vcn.default_security_list_id,
     oci_core_security_list.peering_security_list.id
   ]
-  defined_tags   = var.defined_tags
-  freeform_tags  = var.freeform_tags
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 }

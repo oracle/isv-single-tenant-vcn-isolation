@@ -152,18 +152,18 @@ resource oci_core_subnet public_subnet {
     oci_core_vcn.tenant_vcn.default_security_list_id,
     oci_core_security_list.tenant_security_list.id
   ]
-  defined_tags   = var.defined_tags
-  freeform_tags  = var.freeform_tags
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 }
 
 # Private Subnet
 resource oci_core_subnet private_subnet {
-  compartment_id             = var.compartment_id
-  vcn_id                     = oci_core_vcn.tenant_vcn.id
-  display_name               = var.tenant_private_subnet_name
-  dns_label                  = var.tenant_private_subnet_dns_label
-  cidr_block                 = var.tenant_private_subnet_cidr
-  route_table_id             = oci_core_route_table.private_route_table.id
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.tenant_vcn.id
+  display_name   = var.tenant_private_subnet_name
+  dns_label      = var.tenant_private_subnet_dns_label
+  cidr_block     = var.tenant_private_subnet_cidr
+  route_table_id = oci_core_route_table.private_route_table.id
   security_list_ids = [
     oci_core_vcn.tenant_vcn.default_security_list_id,
     oci_core_security_list.tenant_security_list.id

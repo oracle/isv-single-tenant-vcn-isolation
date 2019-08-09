@@ -148,18 +148,18 @@ resource oci_core_subnet access_subnet {
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.management_security_list.id
   ]
-  defined_tags   = var.defined_tags
-  freeform_tags  = var.freeform_tags
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 }
 
 # Peering Subnet
 resource oci_core_subnet peering_subnet {
-  compartment_id             = var.peering_compartment_id
-  vcn_id                     = oci_core_vcn.isv_vcn.id
-  display_name               = var.peering_subnet_name
-  dns_label                  = var.peering_subnet_dns_label
-  cidr_block                 = var.peering_subnet_cidr
-  route_table_id             = oci_core_route_table.private_route_table.id
+  compartment_id = var.peering_compartment_id
+  vcn_id         = oci_core_vcn.isv_vcn.id
+  display_name   = var.peering_subnet_name
+  dns_label      = var.peering_subnet_dns_label
+  cidr_block     = var.peering_subnet_cidr
+  route_table_id = oci_core_route_table.private_route_table.id
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.peering_security_list.id
@@ -171,11 +171,11 @@ resource oci_core_subnet peering_subnet {
 
 # Management Subnet
 resource oci_core_subnet management_subnet {
-  compartment_id             = var.compartment_id
-  vcn_id                     = oci_core_vcn.isv_vcn.id
-  display_name               = var.management_subnet_name
-  dns_label                  = var.management_subnet_dns_label
-  cidr_block                 = var.management_subnet_cidr
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.isv_vcn.id
+  display_name   = var.management_subnet_name
+  dns_label      = var.management_subnet_dns_label
+  cidr_block     = var.management_subnet_cidr
   security_list_ids = [
     oci_core_vcn.isv_vcn.default_security_list_id,
     oci_core_security_list.management_security_list.id
