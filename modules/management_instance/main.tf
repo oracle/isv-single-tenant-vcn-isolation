@@ -26,6 +26,7 @@ resource oci_core_instance management_server {
     subnet_id        = var.subnet_id
     assign_public_ip = false
     hostname_label   = var.hostname_label
+    nsg_ids          = var.management_security_group_id_list
   }
 
   connection {

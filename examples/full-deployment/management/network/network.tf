@@ -49,6 +49,16 @@ output "peering_subnet_cidr" {
 output "peering_security_group_id" {
   value = module.management_network.peering_network_security_group.id
 }
+
 output "management_subnet_cidr" {
   value = module.management_network.management_subnet.cidr_block
 }
+
+output "icmp_security_group_id" {
+  value = module.management_network.icmp_security_group.id
+}
+
+output "http_security_group_id" {
+  value = module.management_network.http_security_group.id
+}
+

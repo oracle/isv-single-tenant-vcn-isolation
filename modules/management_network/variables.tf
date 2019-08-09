@@ -115,9 +115,21 @@ variable peering_subnet_cidr {
   description = "CIDR range for the peering subnet"
 }
 
+variable http_security_group_name {
+  type        = string
+  description = "display name for the http security list"
+  default     = "http_security_group"
+}
+
+variable icmp_security_group_name {
+  type        = string
+  description = "display name for the icmp security list"
+  default     = "icmp_security_group"
+}
+
 variable peering_security_group_name {
   type        = string
-  description = "display name for the public subnet security list"
+  description = "display name for the peering security group"
   default     = "peering_security_group"
 }
 

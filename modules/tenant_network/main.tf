@@ -102,10 +102,10 @@ resource oci_core_route_table private_route_table {
  */
 # Security Group creation
 resource "oci_core_network_security_group" "nrpe_network_security_group" {
-    compartment_id = var.compartment_id
-    vcn_id = oci_core_vcn.tenant_vcn.id
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.tenant_vcn.id
 
-    display_name = var.nrpe_security_group_name
+  display_name = var.nrpe_security_group_name
 }
 
 # adding egress security rule to security group
@@ -152,18 +152,18 @@ resource oci_core_subnet public_subnet {
   dns_label      = var.tenant_public_subnet_dns_label
   cidr_block     = var.tenant_public_subnet_cidr
   route_table_id = oci_core_route_table.public_route_table.id
-  defined_tags  = var.defined_tags
-  freeform_tags = var.freeform_tags
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 }
 
 # Private Subnet
 resource oci_core_subnet private_subnet {
-  compartment_id = var.compartment_id
-  vcn_id         = oci_core_vcn.tenant_vcn.id
-  display_name   = var.tenant_private_subnet_name
-  dns_label      = var.tenant_private_subnet_dns_label
-  cidr_block     = var.tenant_private_subnet_cidr
-  route_table_id = oci_core_route_table.private_route_table.id
+  compartment_id             = var.compartment_id
+  vcn_id                     = oci_core_vcn.tenant_vcn.id
+  display_name               = var.tenant_private_subnet_name
+  dns_label                  = var.tenant_private_subnet_dns_label
+  cidr_block                 = var.tenant_private_subnet_cidr
+  route_table_id             = oci_core_route_table.private_route_table.id
   prohibit_public_ip_on_vnic = true
   defined_tags               = var.defined_tags
   freeform_tags              = var.freeform_tags

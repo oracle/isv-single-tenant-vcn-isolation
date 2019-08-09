@@ -13,6 +13,10 @@ module management_instance {
   subnet_id           = data.terraform_remote_state.management_network.outputs.management_subnet_id
   availability_domain = local.availability_domain
   bastion_ip          = local.bastion_ip
+  management_security_group_id_list = [
+    data.terraform_remote_state.management_network.outputs.icmp_security_group_id,
+    data.terraform_remote_state.management_network.outputs.http_security_group_id
+  ]
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file

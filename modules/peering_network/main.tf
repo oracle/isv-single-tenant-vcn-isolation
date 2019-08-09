@@ -52,10 +52,10 @@ resource oci_core_route_table peering_route_table {
 
 # Security Group creation
 resource "oci_core_network_security_group" "peering_network_security_group" {
-    compartment_id = var.compartment_id
-    vcn_id = oci_core_vcn.peering_vcn.id
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.peering_vcn.id
 
-    display_name = var.peering_security_group_name
+  display_name = var.peering_security_group_name
 }
 
 # adding egress security rule to security group
@@ -102,6 +102,6 @@ resource oci_core_subnet peering_subnet {
   dns_label      = var.peering_subnet_dns_label
   cidr_block     = var.peering_subnet_cidr
   route_table_id = oci_core_route_table.peering_route_table.id
-  defined_tags  = var.defined_tags
-  freeform_tags = var.freeform_tags
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 }

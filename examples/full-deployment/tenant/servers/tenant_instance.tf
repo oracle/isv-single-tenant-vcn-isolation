@@ -9,12 +9,12 @@
 module tenant_instance_1 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
-  source_id           = data.oci_core_images.oraclelinux.images.0.id
-  subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_1_private_subnet_id
-  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_1_nrpe_security_group_id ]
-  availability_domain = local.availability_domain
-  bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+  compartment_id              = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
+  source_id                   = data.oci_core_images.oraclelinux.images.0.id
+  subnet_id                   = data.terraform_remote_state.tenant_network.outputs.tenant_1_private_subnet_id
+  nrpe_security_group_id_list = [data.terraform_remote_state.tenant_network.outputs.tenant_1_nrpe_security_group_id]
+  availability_domain         = local.availability_domain
+  bastion_ip                  = data.terraform_remote_state.access.outputs.bastion_ip
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
@@ -29,12 +29,12 @@ output "tenant_1_private_ip" {
 module tenant_instance_2 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
-  source_id           = data.oci_core_images.oraclelinux.images.0.id
-  subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_2_private_subnet_id
-  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_2_nrpe_security_group_id ]
-  availability_domain = local.availability_domain
-  bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+  compartment_id              = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
+  source_id                   = data.oci_core_images.oraclelinux.images.0.id
+  subnet_id                   = data.terraform_remote_state.tenant_network.outputs.tenant_2_private_subnet_id
+  nrpe_security_group_id_list = [data.terraform_remote_state.tenant_network.outputs.tenant_2_nrpe_security_group_id]
+  availability_domain         = local.availability_domain
+  bastion_ip                  = data.terraform_remote_state.access.outputs.bastion_ip
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
@@ -49,12 +49,12 @@ output "tenant_2_private_ip" {
 module tenant_instance_3 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
-  source_id           = data.oci_core_images.oraclelinux.images.0.id
-  subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_3_private_subnet_id
-  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_3_nrpe_security_group_id ]
-  availability_domain = local.availability_domain
-  bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+  compartment_id              = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
+  source_id                   = data.oci_core_images.oraclelinux.images.0.id
+  subnet_id                   = data.terraform_remote_state.tenant_network.outputs.tenant_3_private_subnet_id
+  nrpe_security_group_id_list = [data.terraform_remote_state.tenant_network.outputs.tenant_3_nrpe_security_group_id]
+  availability_domain         = local.availability_domain
+  bastion_ip                  = data.terraform_remote_state.access.outputs.bastion_ip
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
@@ -70,12 +70,12 @@ output "tenant_3_private_ip" {
 module tenant_instance_4 {
   source = "../../../../modules/tenant_instance"
 
-  compartment_id      = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
-  source_id           = data.oci_core_images.oraclelinux.images.0.id
-  subnet_id           = data.terraform_remote_state.tenant_network.outputs.tenant_4_private_subnet_id
-  nrpe_security_group_id_list  = [ data.terraform_remote_state.tenant_network.outputs.tenant_4_nrpe_security_group_id ]
-  availability_domain = local.availability_domain
-  bastion_ip          = data.terraform_remote_state.access.outputs.bastion_ip
+  compartment_id              = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
+  source_id                   = data.oci_core_images.oraclelinux.images.0.id
+  subnet_id                   = data.terraform_remote_state.tenant_network.outputs.tenant_4_private_subnet_id
+  nrpe_security_group_id_list = [data.terraform_remote_state.tenant_network.outputs.tenant_4_nrpe_security_group_id]
+  availability_domain         = local.availability_domain
+  bastion_ip                  = data.terraform_remote_state.access.outputs.bastion_ip
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file

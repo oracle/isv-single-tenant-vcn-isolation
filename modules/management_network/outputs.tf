@@ -35,3 +35,13 @@ output igw_id {
   description = "ocid of the internet gateway"
   value       = oci_core_internet_gateway.management_igw.id
 }
+
+output icmp_security_group {
+  description = "peering security group `oci_core_network_security_group` resource"
+  value       = oci_core_network_security_group.icmp_network_security_group
+}
+
+output http_security_group {
+  description = "peering security group `oci_core_network_security_group` resource"
+  value       = oci_core_network_security_group.http_network_security_group
+}

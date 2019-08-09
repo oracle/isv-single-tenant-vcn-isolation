@@ -45,6 +45,11 @@ variable availability_domain {
   description = "the availability downmain to provision the management instance in"
 }
 
+variable management_security_group_id_list {
+  type        = list
+  description = "security group id containing sec rules"
+}
+
 # TODO rename to `bastion_host` for consistency
 variable bastion_ip {
   type        = string
