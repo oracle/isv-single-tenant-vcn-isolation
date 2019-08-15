@@ -13,7 +13,7 @@ This solution provides a network architecture that isolates an ISV's customers i
 
 The following diagram shows the target topology:
 
-*(placeholder for diagram)*
+![architecture diagram](saas-isv-multitenant-architecture.png "Architecture diagram")
 
 ### Management Layer
 This layer in the topology includes the following resources:
