@@ -53,3 +53,15 @@ variable secondary_vnic_configuration_script_url {
   default     = "https://docs.cloud.oracle.com/iaas/Content/Resources/Assets/secondary_vnic_all_configure.sh"
   # see https://docs.cloud.oracle.com/iaas/Content/Network/Tasks/managingVNICs.htm#linux
 }
+
+variable freeform_tags {
+  type        = map
+  description = "map of freeform tags to apply to all resources created by this module"
+  default     = {}
+}
+
+variable defined_tags {
+  type        = map
+  description = "map of defined tags to apply to all resources created by this module"
+  default     = {}
+}

@@ -5,10 +5,10 @@
  * Create new route tables for access fo the tenant VCNs and attach the new route
  * tables to the management and access subnets for connectivity through to the tenant
  * networks.
- * 
+ *
  * NOTE: route table attachment replaces the use of the default route table configured
  * for the access and management subets on initial creation.
- * 
+ *
  * TODO: addition of new tenants currently requires manual update to the route table config below.
  * could be more dynamic.
  */
@@ -18,6 +18,8 @@ resource oci_core_route_table management_private_rt_table {
   compartment_id = var.compartment_id
   vcn_id         = var.management_vcn_id
   display_name   = var.display_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -60,6 +62,8 @@ resource oci_core_route_table access_public_rt_table {
   compartment_id = var.compartment_id
   vcn_id         = var.management_vcn_id
   display_name   = var.display_name_public
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"

@@ -1,8 +1,8 @@
 // Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
 // Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
-/* 
- * Creates a bastion host instance and copies the provided public and private ssh keys 
+/*
+ * Creates a bastion host instance and copies the provided public and private ssh keys
  * to the instance to access to the remove instances through the bastion
  */
 
@@ -33,7 +33,12 @@ resource oci_core_instance bastion_server {
     subnet_id        = var.subnet_id
     assign_public_ip = true
     hostname_label   = var.hostname_label
+    defined_tags   = var.defined_tags
+    freeform_tags  = var.freeform_tags
   }
+
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   connection {
     type        = "ssh"

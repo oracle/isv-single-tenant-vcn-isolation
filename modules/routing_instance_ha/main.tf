@@ -3,9 +3,9 @@
 
 /*
  * Create a highly available routing instance cluster used to route traffic between the management
- * and tenant peering networks with two instances and a floating ip. Pacemaker and Corosync are 
+ * and tenant peering networks with two instances and a floating ip. Pacemaker and Corosync are
  * used for clustering and failover.
- * 
+ *
  * The instance requires instance principles policy to enable routes to be updated using the oci cli
  */
 
@@ -72,7 +72,13 @@ resource oci_core_instance routing_server_a {
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
+
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
   }
+
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 
   connection {
     type        = "ssh"
@@ -119,11 +125,16 @@ resource oci_core_instance routing_server_b {
     assign_public_ip       = false
     hostname_label         = "${var.hostname_label}b"
     skip_source_dest_check = true
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
 
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
   }
+
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 
   connection {
     type        = "ssh"

@@ -36,6 +36,8 @@ resource oci_core_nat_gateway management_nat {
 # Default Route Table
 resource oci_core_default_route_table isv_default_rte_table {
   manage_default_resource_id = oci_core_vcn.isv_vcn.default_route_table_id
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -48,6 +50,8 @@ resource oci_core_route_table private_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.private_rte_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -60,6 +64,8 @@ resource oci_core_security_list management_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.management_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -89,6 +95,8 @@ resource oci_core_security_list peering_security_list {
   compartment_id = var.peering_compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.peering_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -118,6 +126,8 @@ resource oci_core_security_list access_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = "access_security_list"
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {

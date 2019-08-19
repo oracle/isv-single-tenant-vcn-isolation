@@ -13,6 +13,9 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     display_name   = var.display_name
     hostname_label = var.hostname_label
 
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
+
     assign_public_ip       = false
     skip_source_dest_check = true
   }

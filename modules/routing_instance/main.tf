@@ -3,7 +3,7 @@
 
 /*
  * Create a single (non HA) routing instance used to route traffic between the management
- * and tenant peering networks 
+ * and tenant peering networks
  */
 
 resource oci_core_instance routing_server {
@@ -28,7 +28,12 @@ resource oci_core_instance routing_server {
     assign_public_ip       = false
     hostname_label         = var.hostname_label
     skip_source_dest_check = true
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
   }
+
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 
   connection {
     type        = "ssh"
@@ -45,4 +50,4 @@ resource oci_core_instance routing_server {
 data "oci_core_private_ips" "routing_ip" {
   ip_address = oci_core_instance.routing_server.private_ip
   subnet_id  = var.subnet_id
-} 
+}
