@@ -36,3 +36,17 @@ variable hacluster_password {
   type        = string
   description = "password for the routing instance HA cluster (must be at least 8 characters containing uppercase, lowercase, digits, and non-alphanumeric characters)"
 }
+
+variable "freeform_tags" {
+  type        = map
+  description = "map of freeform tags to apply to all resources"
+  default     = {
+    "Environment" =  "Management"
+  }
+}
+
+variable "defined_tags" {
+  type        = map
+  description = "map of defined tags to apply to all resources"
+  default     = {}
+}

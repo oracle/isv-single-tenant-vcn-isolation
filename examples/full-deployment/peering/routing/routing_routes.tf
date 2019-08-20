@@ -20,6 +20,8 @@ module routing_instance_1_peering_1_routes {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 module routing_instance_1b_peering_1_routes {
@@ -35,6 +37,8 @@ module routing_instance_1b_peering_1_routes {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 
@@ -54,6 +58,8 @@ module routing_instance_2_peering_1_routes {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output ip_route_add_status {

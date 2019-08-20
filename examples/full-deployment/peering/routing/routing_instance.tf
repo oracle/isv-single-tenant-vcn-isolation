@@ -29,6 +29,9 @@ module routing_instance_1 {
   shape = "VM.Standard2.1" # TODO
 
   hacluster_password = var.hacluster_password
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "routing_instance_1_ip" {
@@ -58,6 +61,9 @@ module routing_instance_2 {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "routing_instance_2_ip" {

@@ -43,3 +43,17 @@ variable "peering_subnet_cidr" {
   description = "ISV peering subnet idr block"
   default     = "10.254.254.0/24"
 }
+
+variable "freeform_tags" {
+  type        = map
+  description = "map of freeform tags to apply to all resources"
+  default     = {
+    "Environment" =  "Management"
+  }
+}
+
+variable "defined_tags" {
+  type        = map
+  description = "map of defined tags to apply to all resources"
+  default     = {}
+}

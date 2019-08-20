@@ -17,6 +17,9 @@ module management_instance {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "management_ip" {

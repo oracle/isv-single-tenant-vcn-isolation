@@ -49,3 +49,17 @@ variable "tenant4_compartment_name" {
   description = "compartment name for tenant4 resources"
   default     = "tenant4"
 }
+
+variable "freeform_tags" {
+  type        = map
+  description = "map of freeform tags to apply to all resources"
+  default     = {
+    "Environment" =  "Management"
+  }
+}
+
+variable "defined_tags" {
+  type        = map
+  description = "map of defined tags to apply to all resources"
+  default     = {}
+}

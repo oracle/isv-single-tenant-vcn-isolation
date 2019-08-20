@@ -18,6 +18,8 @@ module tenant_instance_1 {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_1_private_ip" {
@@ -37,6 +39,8 @@ module tenant_instance_2 {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_2_private_ip" {
@@ -56,6 +60,8 @@ module tenant_instance_3 {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_3_private_ip" {
@@ -76,6 +82,8 @@ module tenant_instance_4 {
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_public_key_file   = var.remote_ssh_public_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_4_private_ip" {

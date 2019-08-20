@@ -26,3 +26,16 @@ variable "remote_ssh_private_key_file" {
   default     = "~/.ssh/id_rsa"
 }
 
+variable "freeform_tags" {
+  type        = map
+  description = "map of freeform tags to apply to all resources"
+  default     = {
+    "Environment" =  "Management"
+  }
+}
+
+variable "defined_tags" {
+  type        = map
+  description = "map of defined tags to apply to all resources"
+  default     = {}
+}

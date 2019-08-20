@@ -21,6 +21,9 @@ module peering_1_network {
   vcn_cidr_block         = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
   peering_subnet_cidr    = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
   tenant_vcn_cidr_blocks = data.terraform_remote_state.configuration.outputs.tenant_vcns_per_peering_vcn[0]
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "peering_1_network" {
@@ -40,6 +43,9 @@ module peering_2_network {
   vcn_cidr_block         = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
   peering_subnet_cidr    = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
   tenant_vcn_cidr_blocks = data.terraform_remote_state.configuration.outputs.tenant_vcns_per_peering_vcn[1]
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "peering_2_network" {
