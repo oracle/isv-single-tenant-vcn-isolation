@@ -23,7 +23,7 @@ func TestTerragruntApplyAll(t *testing.T) {
 	terraformDirectory := "../examples/full-deployment"
 
 	// start an SSH agent
-	keyPair := getSSHKeyPair()
+	keyPair := getSSHKeyPair(terraformDirectory)
 	sshAgent := ssh.SshAgentWithKeyPair(t, keyPair)
 	defer sshAgent.Stop()
 
@@ -304,4 +304,3 @@ func testRoutingPathContains(t *testing.T, bastionHost ssh.Host, toHost, contain
 	response := ssh.CheckSshCommand(t, bastionHost, command)
 	assert.Contains(t, response, containsHost)
 }
-
