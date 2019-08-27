@@ -16,6 +16,8 @@ module management_network {
   management_subnet_cidr = var.management_subnet_cidr
   access_subnet_cidr     = var.access_subnet_cidr
   peering_subnet_cidr    = var.peering_subnet_cidr
+  freeform_tags          = var.freeform_tags
+  defined_tags           = var.defined_tags
 }
 
 output "management_vcn_id" {

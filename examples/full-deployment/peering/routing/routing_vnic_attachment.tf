@@ -21,6 +21,9 @@ module routing_instance_1_peering_1_vnic_attachement {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 module routing_instance_1b_peering_1_vnic_attachement {
@@ -37,6 +40,9 @@ module routing_instance_1b_peering_1_vnic_attachement {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 resource oci_core_private_ip routing_instance_1_peering_1_floating_ip {
@@ -71,7 +77,7 @@ module routing_instance_2_peering_1_vnic_attachement {
 
   bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
   remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
-
-
-

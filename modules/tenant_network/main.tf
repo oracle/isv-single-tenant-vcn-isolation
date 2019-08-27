@@ -48,6 +48,8 @@ resource oci_core_route_table public_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
   display_name   = var.public_rte_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // internet access through internet gateway
   route_rules {
@@ -75,7 +77,8 @@ resource oci_core_route_table private_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
   display_name   = var.private_rte_name
-
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
   // internet access through nat gateway
   route_rules {
     destination       = "0.0.0.0/0"
@@ -102,6 +105,8 @@ resource oci_core_security_list public_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
   display_name   = var.tenant_public_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -121,7 +126,8 @@ resource oci_core_security_list private_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.tenant_vcn.id
   display_name   = var.tenant_private_sec_list
-
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
   // allow outbound tcp traffic on all ports
   egress_security_rules {
     destination = "0.0.0.0/0"

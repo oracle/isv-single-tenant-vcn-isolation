@@ -72,4 +72,3 @@ variable remote_ssh_public_key_file {
   description = "the public ssh key to provision on the bastion host for access to remote instances"
   default     = "~/.ssh/id_rsa.pub"
 }
-

@@ -31,6 +31,8 @@ resource oci_core_route_table peering_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.peering_rte_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   # TODO use dynamic nested block with for_each to create route_rules
   route_rules {
@@ -51,6 +53,8 @@ resource oci_core_security_list peering_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.peering_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
