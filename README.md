@@ -13,7 +13,7 @@ This solution provides a network architecture that isolates an ISV's customers i
 
 The following diagram shows the target topology:
 
-![architecture diagram](saas-isv-multitenant-architecture.png "Architecture diagram")
+![architecture diagram](saas-isv-multitenant-architecture-derivative2.png "Architecture diagram")
 
 ### Management Layer
 This layer in the topology includes the following resources:
@@ -70,8 +70,8 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	- `examples/full-deployment/peering/routing`
     	- `examples/full-deployment/management/servers`
     	- `examples/full-deployment/management/server_attachment`
-    	- `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
-    	- `examples/full-deployment/tenant/servers`
+        - `examples/full-deployment/tenant/servers`    	
+        - `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
     	- `examples/full-deployment/tenant/application` (optional, to deploy example app and Nagios agents)
 
 -   **Deploy Using Terragrunt**
