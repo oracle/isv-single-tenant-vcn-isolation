@@ -3,8 +3,6 @@ ISV Single-Tenant VCN Isolation solution
 
 This solution provides a network architecture that isolates an ISV's customers in separate VCNs in a single OCI tenancy. It includes a central management network through which the ISV can connect to and manage all the customer environments.
 
-*(placeholder for toc)*
-
 ## Terminology
 
 * **SaaS ISV**: An independent software vendor that provides software as a service.
@@ -15,7 +13,7 @@ This solution provides a network architecture that isolates an ISV's customers i
 
 The following diagram shows the target topology:
 
-*(placeholder for diagram)*
+![architecture diagram](saas-isv-multitenant-architecture-derivative2.png "Architecture diagram")
 
 ### Management Layer
 This layer in the topology includes the following resources:
@@ -79,7 +77,7 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 -   **Deploy Using Terragrunt**
 
 	1. Install Terragrunt. See https://github.com/gruntwork-io/terragrunt#install-terragrunt.
-	2. Go to the `examples` directory, and run the following commands:
+	2. Go to the `examples/full-deployment` directory, and run the following commands:
 
 	    ```
     	make init
@@ -237,4 +235,3 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 	10.3.0.0/16 via 10.253.0.9
 	10.4.0.0/16 via 10.253.0.9
 	```
-
