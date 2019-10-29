@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 variable display_name {
   type        = string
   description = "name of routing instance"
@@ -20,13 +23,41 @@ variable defined_tags {
   default     = {}
 }
 
-variable tenancy_id {}
-variable region {}
-variable compartment_id {}
-variable source_id {}
-variable subnet_id {}
-variable availability_domain {}
-variable bastion_ip {}
+variable tenancy_id {
+  type        = string
+  description = "oci tenancy ocid"
+}
+
+variable region {
+  type        = string
+  description = "oci region"
+}
+
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
+
+variable source_id {
+  type        = string
+  description = "ocid of the image to provision the routing instance with"
+}
+
+variable subnet_id {
+  type        = string
+  description = "ocid of the subnet to provision the routing instance in"
+}
+
+variable availability_domain {
+  type        = string
+  description = "the availability downmain to provision the routing instance in"
+}
+
+# TODO rename to `bastion_host` for consistency
+variable bastion_ip {
+  type        = string
+  description = "host name or ip address of the bastion host for provisioning"
+}
 
 variable shape {
   type        = string
@@ -40,16 +71,16 @@ variable bastion_ssh_private_key_file {
   default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_public_key_file {
+variable remote_ssh_private_key_file {
   type        = string
-  description = "the public ssh key file to be added to the instance ssh_authorized_keys"
-  default     = "~/.ssh/id_rsa.pub"
+  description = "the private ssh key to provision on the bastion host for access to remote instances"
+  default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_private_key_file {
+variable remote_ssh_public_key_file {
   type        = string
-  description = "the private ssh key to access the instance for provisioning"
-  default     = "~/.ssh/id_rsa"
+  description = "the public ssh key to provision on the bastion host for access to remote instances"
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 variable hacluster_password {
@@ -57,7 +88,6 @@ variable hacluster_password {
   description = "password for the HA cluster (must be at least 8 characters containing uppercase, lowercase, digits, and non-alphanumeric characters)"
   # values that do not meet the required password criteria will generate the following error during provisioning:
   # `passwd: Have exhausted maximum number of retries for service`
-  default = "^Ch@ngem3" // TODO REMOVE
 }
 
 variable monitor_interval {

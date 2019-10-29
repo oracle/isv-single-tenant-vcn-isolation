@@ -2,5 +2,11 @@ tenancy_ocid = ""
 user_ocid = ""
 fingerprint = ""
 private_key_path = ""
-compartment_ocid = ""
 region = ""
+
+compartment_ocid = ""
+
+bastion_ssh_public_key_file = "~/.ssh/ida_rsa.pub"
+bastion_ssh_private_key_file = "~/.ssh/ida_rsa"
+remote_ssh_public_key_file = "~/.ssh/ida_rsa.pub"
+remote_ssh_private_key_file = "~/.ssh/ida_rsa"

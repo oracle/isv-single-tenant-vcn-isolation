@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 # COMMON DATA SOURCES
 
 data oci_identity_tenancy tenancy {
@@ -26,3 +29,32 @@ data oci_core_images oraclelinux {
     regex  = true
   }
 }
+
+/*
+ * Remote State Dependencies
+ */
+
+data "terraform_remote_state" "compartments" {
+  backend = "local"
+
+  config = {
+    path = "../../common/state/common/compartments/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "management_network" {
+  backend = "local"
+
+  config = {
+    path = "../state/management/network/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "access" {
+  backend = "local"
+
+  config = {
+    path = "../state/management/access/terraform.tfstate"
+  }
+}
+

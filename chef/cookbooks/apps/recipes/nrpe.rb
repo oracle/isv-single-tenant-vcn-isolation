@@ -1,3 +1,5 @@
+# Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 #
 # Cookbook Name:: nrpe-cookbook
 # Recipe:: nagios remtoe client
@@ -14,7 +16,7 @@ end
 
 # open port for 5666 for nrpe service
 execute 'firewalld_open_port_5666' do
-  command 'firewall-cmd --zone=public --add-port=5666/tcp'
+  command 'firewall-cmd --zone=public --permanent --add-port=5666/tcp'
 end
 
 # update nrpe.cfg file with nagios server ip

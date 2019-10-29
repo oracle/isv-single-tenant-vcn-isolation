@@ -1,3 +1,6 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 variable display_name {
   type        = string
   description = "root compartment for the individual tenant compartments"
@@ -22,9 +25,22 @@ variable defined_tags {
   default     = {}
 }
 
-variable compartment_id {}
-variable bastion_host_ip {}
-variable management_host_ip {}
+variable compartment_id {
+  type        = string
+  description = "ocid of the compartment to provision the resources in"
+}
+
+# TODO rename to `bastion_host` for consistency
+variable bastion_host_ip {
+  type        = string
+  description = "host name or ip address of the bastion host for provisioning"
+}
+
+variable management_host_ip {
+  type        = string
+  description = "host name or ip address of the instance to provision the application on"
+}
+
 variable tenant_host_ips {
   type        = string
   description = "list of tenant host ips"
@@ -36,8 +52,13 @@ variable bastion_ssh_private_key_file {
   default     = "~/.ssh/id_rsa"
 }
 
-variable ssh_private_key_file {
+variable remote_ssh_private_key_file {
   type        = string
-  description = "the private ssh key to access the instance for provisioning"
+  description = "the private ssh key to provision on the bastion host for access to remote instances"
   default     = "~/.ssh/id_rsa"
+}
+
+variable nagios_administrator_password {
+  type        = string
+  description = "initial password for nagios application login"
 }

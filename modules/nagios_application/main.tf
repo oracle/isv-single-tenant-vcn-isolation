@@ -1,3 +1,11 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+/*
+ * Example for deploying Nagios Core on the management instance.
+ * Application provisioning is delegated to Chef running on the target instance
+ */
+
 resource null_resource nagios_application {
 
   triggers = {
@@ -8,7 +16,7 @@ resource null_resource nagios_application {
     type        = "ssh"
     host        = var.management_host_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host_ip
     bastion_user        = "opc"
@@ -27,6 +35,7 @@ resource null_resource nagios_application {
       "curl -LO https://www.chef.io/chef/install.sh && sudo bash ./install.sh",
       "cd /home/opc/chef && pwd",
       "echo 'tenant_host_ips=${var.tenant_host_ips}' | sudo tee /etc/environment",
+      "echo 'nagios_pw=${var.nagios_administrator_password}' | sudo tee -a /etc/environment",
       "source /etc/environment",
       "sudo chef-solo -c /home/opc/chef/appserver.rb -j /home/opc/chef/nagios_server.json --chef-license accept",
     ]

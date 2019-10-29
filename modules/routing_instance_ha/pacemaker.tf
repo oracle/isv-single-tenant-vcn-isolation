@@ -1,3 +1,5 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 locals {
   # commands to be run on all nodes in the cluster
@@ -18,7 +20,8 @@ locals {
 resource null_resource pacemaker_bootstrap {
 
   triggers = {
-    host_id            = oci_core_instance.routing_server_a.id
+    primary_host_id    = oci_core_instance.routing_server_a.id
+    secondary_host_id  = oci_core_instance.routing_server_b.id
     hostname_label     = var.hostname_label
     hacluster_password = var.hacluster_password
     ip_address         = oci_core_private_ip.floating_ip.ip_address
@@ -29,7 +32,7 @@ resource null_resource pacemaker_bootstrap {
     type        = "ssh"
     host        = oci_core_instance.routing_server_a.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"

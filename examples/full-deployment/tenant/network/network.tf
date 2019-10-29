@@ -1,10 +1,15 @@
-# Configure the main netowrk including VPC, Subnet, Seclist
-###
-### Network for tenant 1 ##########################################
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+/*
+ * Configure the tenant networks
+ */
+
+# Tenant 1
 module tenant_1_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_1_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_1_compartment_id
   vcn_name       = "tenant1"
   dns_label      = "tenant1"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[0]
@@ -15,8 +20,10 @@ module tenant_1_network {
   tenant_peering_subnet_cidr     = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  # TODO calculate index 
-  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null :  data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[0])
+  # TODO calculate index
+  peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[0])
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_1_vcn_id" {
@@ -35,12 +42,11 @@ output "tenant_1_private_subnet_cidr" {
   value = module.tenant_1_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 2 ##########################################
+# Tenant 2
 module tenant_2_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_2_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_2_compartment_id
   vcn_name       = "tenant2"
   dns_label      = "tenant2"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[1]
@@ -51,8 +57,10 @@ module tenant_2_network {
   tenant_peering_subnet_cidr     = data.terraform_remote_state.configuration.outputs.peering_vcns[0]
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  # TODO calculate index 
+  # TODO calculate index
   peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_1_network.peering_gateway_ids[1])
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_2_vcn_id" {
@@ -71,12 +79,11 @@ output "tenant_2_private_subnet_cidr" {
   value = module.tenant_2_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 3 ##########################################
+# Tenant 3
 module tenant_3_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_3_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_3_compartment_id
   vcn_name       = "tenant3"
   dns_label      = "tenant3"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[2]
@@ -87,8 +94,10 @@ module tenant_3_network {
   tenant_peering_subnet_cidr     = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  # TODO calculate index 
+  # TODO calculate index
   peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_gateway_ids[0])
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_3_vcn_id" {
@@ -107,12 +116,11 @@ output "tenant_3_private_subnet_cidr" {
   value = module.tenant_3_network.tenant_private_subnet.cidr_block
 }
 
-###
-### Network for tenant 4 ##########################################
+# Tenant 4
 module tenant_4_network {
   source = "../../../../modules/tenant_network"
 
-  compartment_id = module.tenant_4_compartment.compartment_id
+  compartment_id = data.terraform_remote_state.compartments.outputs.tenant_4_compartment_id
   vcn_name       = "tenant4"
   dns_label      = "tenant4"
   vcn_cidr_block = data.terraform_remote_state.configuration.outputs.tenant_vcns[3]
@@ -123,8 +131,10 @@ module tenant_4_network {
   tenant_peering_subnet_cidr     = data.terraform_remote_state.configuration.outputs.peering_vcns[1]
   management_peering_subnet_cidr = data.terraform_remote_state.mgmt_network.outputs.management_subnet_cidr
 
-  # TODO calculate index 
+  # TODO calculate index
   peering_lpg_id = (length(data.terraform_remote_state.peering_network.outputs) == 0 ? null : data.terraform_remote_state.peering_network.outputs.peering_2_network.peering_gateway_ids[1])
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "tenant_4_vcn_id" {

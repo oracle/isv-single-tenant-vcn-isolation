@@ -1,7 +1,11 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
- * Create a single VCN for resource deployments
+ * Create the ISV management VCN and related resources.
  */
-###### VCN #################
+
+# VCN
 resource oci_core_vcn isv_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -11,6 +15,7 @@ resource oci_core_vcn isv_vcn {
   freeform_tags  = var.freeform_tags
 }
 
+# Internet Gateway
 resource oci_core_internet_gateway management_igw {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -19,6 +24,7 @@ resource oci_core_internet_gateway management_igw {
   freeform_tags  = var.freeform_tags
 }
 
+# NAT Gateway
 resource oci_core_nat_gateway management_nat {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -27,10 +33,11 @@ resource oci_core_nat_gateway management_nat {
   freeform_tags  = var.freeform_tags
 }
 
-#### Route Tables ################################
-#
+# Default Route Table
 resource oci_core_default_route_table isv_default_rte_table {
   manage_default_resource_id = oci_core_vcn.isv_vcn.default_route_table_id
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -38,10 +45,13 @@ resource oci_core_default_route_table isv_default_rte_table {
   }
 }
 
+# Route Table for the private subnet with NAT
 resource oci_core_route_table private_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.private_rte_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -49,12 +59,13 @@ resource oci_core_route_table private_route_table {
   }
 }
 
-#### Security Lists ####################################
-#
+# Network Security List for the Management Subnet
 resource oci_core_security_list management_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.management_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -65,7 +76,7 @@ resource oci_core_security_list management_security_list {
   // allow inbound icmp traffic of a specific type
   ingress_security_rules {
     protocol = 1
-    source   = "0.0.0.0/0"
+    source   = var.access_subnet_cidr
   }
 
   // allow inbound http traffic
@@ -77,20 +88,15 @@ resource oci_core_security_list management_security_list {
     protocol = "6"
     source   = var.access_subnet_cidr
   }
-  ingress_security_rules {
-    tcp_options {
-      min = "443"
-      max = "443"
-    }
-    protocol = "6"
-    source   = var.access_subnet_cidr
-  }
 }
 
+# Network Security List for the Peering Subnet
 resource oci_core_security_list peering_security_list {
-  compartment_id = var.compartment_id
+  compartment_id = var.peering_compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.peering_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -115,10 +121,13 @@ resource oci_core_security_list peering_security_list {
   }
 }
 
+# Network Security List for the Access (bastion) Subnet
 resource oci_core_security_list access_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = "access_security_list"
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -131,28 +140,13 @@ resource oci_core_security_list access_security_list {
     protocol = 1
     source   = "0.0.0.0/0"
   }
-
-  // allow inbound http traffic
-  ingress_security_rules {
-    tcp_options {
-      min = "80"
-      max = "80"
-    }
-    protocol = "6"
-    source   = "0.0.0.0/0"
-  }
-  ingress_security_rules {
-    tcp_options {
-      min = "443"
-      max = "443"
-    }
-    protocol = "6"
-    source   = "0.0.0.0/0"
-  }
 }
 
-####### SUBNETS #####################################################
-#
+/*
+ * SUBNETS
+ */
+
+# Access (bastion) Subnet
 resource oci_core_subnet access_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
@@ -167,8 +161,9 @@ resource oci_core_subnet access_subnet {
   freeform_tags = var.freeform_tags
 }
 
+# Peering Subnet
 resource oci_core_subnet peering_subnet {
-  compartment_id = var.compartment_id
+  compartment_id = var.peering_compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id
   display_name   = var.peering_subnet_name
   dns_label      = var.peering_subnet_dns_label
@@ -183,6 +178,7 @@ resource oci_core_subnet peering_subnet {
   freeform_tags              = var.freeform_tags
 }
 
+# Management Subnet
 resource oci_core_subnet management_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.isv_vcn.id

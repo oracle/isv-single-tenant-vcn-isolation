@@ -1,9 +1,10 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
-TODO For failover: If your target instance is terminated before you can move the secondary 
-private IP to a standby, you must update the route rule to use the OCID of the new target 
-private IP on the standby. The rule uses the target's OCID and not the private IP address
-itself.
-*/
+ * Create a vNIC attachment and run the required vNIC configuration commands on the instance.
+ */
+
 resource oci_core_vnic_attachment routing_vnic_attachmment {
   instance_id = var.instance_id
 
@@ -11,6 +12,9 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     subnet_id      = var.subnet_id
     display_name   = var.display_name
     hostname_label = var.hostname_label
+
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
 
     assign_public_ip       = false
     skip_source_dest_check = true
@@ -20,7 +24,7 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
     type        = "ssh"
     host        = var.ssh_host
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host
     bastion_user        = "opc"
@@ -42,6 +46,11 @@ resource oci_core_vnic_attachment routing_vnic_attachmment {
       "# ENABLE IP FORWARDING",
       "echo 'net.ipv4.ip_forward = 1' | sudo tee /etc/sysctl.d/98-ip-forward.conf",
       "sudo sysctl -p /etc/sysctl.d/98-ip-forward.conf",
+      "#configure for persisting on reboot",
+      "ifacename=`sudo /home/opc/secondary_vnic_all_configure.sh | grep \"${self.vnic_id}\" | tr -s \" \" | cut -d' ' -f8`",
+      "var.secondary_iface_name=$ifacename",
+      "ifaceipaddr=`sudo /home/opc/secondary_vnic_all_configure.sh | grep \"${self.vnic_id}\" | tr -s \" \" | cut -d' ' -f2`",
+      "echo -e \"DEVICE=$ifacename\nBOOTPROTO=static\nIPADDR=$ifaceipaddr\nNETMASK=255.255.255.248\nONBOOT=yes\n\" | sudo tee /etc/sysconfig/network-scripts/ifcfg-$ifacename",
       "# ENABLE NAT",
       "sudo firewall-offline-cmd --add-masquerade",
       "sudo systemctl restart firewalld",

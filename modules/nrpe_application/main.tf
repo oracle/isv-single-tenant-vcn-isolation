@@ -1,3 +1,11 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+/*
+ * Example for deploying nagios agents on the tenant instances.
+ * Application provisioning is delegated to Chef running on the target instance
+ */
+
 resource null_resource nrpe_application {
 
   triggers = {
@@ -9,7 +17,7 @@ resource null_resource nrpe_application {
     type        = "ssh"
     host        = var.tenant_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_host_ip
     bastion_user        = "opc"

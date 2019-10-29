@@ -1,18 +1,21 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 module network_topology {
   source = "../../modules/network_calculator"
 
-  number_of_tenants = 4
+  number_of_tenants = var.number_of_tenants
 
-  routing_instances_subnet_cidr = "10.254.100.0/24"
+  routing_instances_subnet_cidr = var.routing_instances_subnet_cidr
 
-  tenant_peering_vcn_meta_cidr = "10.253.0.0/16"
-  tenant_peering_vcn_mask      = 29
+  tenant_peering_vcn_meta_cidr = var.tenant_peering_vcn_meta_cidr
+  tenant_peering_vcn_mask      = var.tenant_peering_vcn_mask
 
-  tenant_vcn_meta_cidr = "10.1.0.0/16"
-  tenant_vcn_mask      = 24
+  tenant_vcn_meta_cidr = var.tenant_vcn_meta_cidr
+  tenant_vcn_mask      = var.tenant_vcn_mask
 
-  peering_vcns_per_routing_instance             = 1
-  local_peering_gateways_per_tenany_peering_vcn = 2
+  peering_vcns_per_routing_instance             = var.peering_vcns_per_routing_instance
+  local_peering_gateways_per_tenany_peering_vcn = var.local_peering_gateways_per_tenany_peering_vcn
 
 }
 

@@ -1,7 +1,12 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 /*
- * Create a single VCN for resource deployments
+ * Create a tenant peering network used for routing between the management VCN and
+ * the locally peering tenant VCNs
  */
-###### VCN #################
+
+# Peering VCN
 resource oci_core_vcn peering_vcn {
   compartment_id = var.compartment_id
   display_name   = var.vcn_name
@@ -11,23 +16,23 @@ resource oci_core_vcn peering_vcn {
   freeform_tags  = var.freeform_tags
 }
 
-##### Local Peering Gateway ######################
-#
+# Local Peering Gateways (one per peering Tenant VCN)
 resource oci_core_local_peering_gateway peering_gateways {
   count          = var.local_peering_gateways_per_vcn
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
-  display_name   = "${var.vcn_name} local peering gateway ${count.index+1}" 
+  display_name   = "${var.vcn_name} local peering gateway ${count.index + 1}"
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
 }
 
-#### Route Tables ################################
-#
+# Peering Route Table
 resource oci_core_route_table peering_route_table {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.peering_rte_name
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   # TODO use dynamic nested block with for_each to create route_rules
   route_rules {
@@ -43,12 +48,13 @@ resource oci_core_route_table peering_route_table {
   }
 }
 
-#### Security Lists ####################################
-#
+# Peering Network Security List
 resource oci_core_security_list peering_security_list {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id
   display_name   = var.peering_sec_list
+  defined_tags   = var.defined_tags
+  freeform_tags  = var.freeform_tags
 
   // allow outbound tcp traffic on all ports
   egress_security_rules {
@@ -74,9 +80,11 @@ resource oci_core_security_list peering_security_list {
   }
 }
 
+/*
+ * SUBNETS
+ */
 
-####### SUBNETS #####################################################
-#
+# Peering Subnet
 resource oci_core_subnet peering_subnet {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.peering_vcn.id

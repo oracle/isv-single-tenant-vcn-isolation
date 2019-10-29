@@ -1,6 +1,9 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 variable root_compartment_id {
   type        = string
-  description = "root compartment for the individual tenant compartments"
+  description = "parent compartment for the new compartment to be created in"
 }
 
 variable compartment_name {

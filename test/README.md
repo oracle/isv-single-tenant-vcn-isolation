@@ -15,7 +15,7 @@ $ cd $GOPATH/src
 $ git clone <project_uri>
 ```
 
-Run `dep` to install the terratest go modules and other dependnecies
+Run `dep` to install the terratest go modules and other dependencies
 
 ```
 $ cd $GOPATH/src/<project>/test
@@ -41,5 +41,12 @@ Individual test stages can be skipped using the `SKIP_<stage_name>` environment 
 ```
 $ SKIP_teardown=true go test -v -timeout 90m -run=TestTerragruntApplyAll
 ```
+
+The included `Makefile` contains include some make targets the run some useful subsets of the complete test suite, e.g.
+
+- `make test-no-teardown` deploys the full configuration but does not tear down the resources with the destroy stage.
+
+- `make test-validate-only` only runs the validation stages of the tests. Usefull for re-running tests against an anyready deployed environment.
+
 
 

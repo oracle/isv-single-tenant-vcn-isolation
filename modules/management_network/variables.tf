@@ -1,6 +1,14 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
 variable compartment_id {
   type        = string
   description = "compartment for the management resources"
+}
+
+variable peering_compartment_id {
+  type        = string
+  description = "compartment for the peering subnet"
 }
 
 variable vcn_name {

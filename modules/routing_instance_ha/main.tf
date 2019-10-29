@@ -1,10 +1,16 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 /*
-TODO
-[-] use secrets server to generate password?
-*/
+ * Create a highly available routing instance cluster used to route traffic between the management
+ * and tenant peering networks with two instances and a floating ip. Pacemaker and Corosync are
+ * used for clustering and failover.
+ *
+ * The instance requires instance principles policy to enable routes to be updated using the oci cli
+ */
 
 locals {
+  # commands to install and configure the OCI cli on the instances
   oci_cli_install = [
     "curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh | bash -s -- --accept-all-defaults",
     "sudo ln ~/bin/oci /usr/local/bin/oci",
@@ -26,6 +32,7 @@ data "oci_core_private_ips" "routing_server_b_private_ip" {
   subnet_id  = oci_core_instance.routing_server_b.create_vnic_details[0].subnet_id
 }
 
+# floating ip assigned to the cluster
 resource "oci_core_private_ip" "floating_ip" {
   vnic_id        = data.oci_core_private_ips.routing_server_a_private_ip.private_ips[0].vnic_id
   hostname_label = var.hostname_label
@@ -38,6 +45,7 @@ resource "oci_core_private_ip" "floating_ip" {
   }
 }
 
+# the first instance in the HA cluster
 resource oci_core_instance routing_server_a {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
@@ -52,7 +60,7 @@ resource oci_core_instance routing_server_a {
   fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[0].name
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file)
+    ssh_authorized_keys = file(var.remote_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -64,13 +72,19 @@ resource oci_core_instance routing_server_a {
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
+
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
   }
+
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
 
   connection {
     type        = "ssh"
     host        = self.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"
@@ -88,6 +102,7 @@ resource oci_core_instance routing_server_a {
   }
 }
 
+# the second instance in the HA cluster
 resource oci_core_instance routing_server_b {
   availability_domain = var.availability_domain
   compartment_id      = var.compartment_id
@@ -102,7 +117,7 @@ resource oci_core_instance routing_server_b {
   fault_domain = data.oci_identity_fault_domains.fault_domains.fault_domains[1].name
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file)
+    ssh_authorized_keys = file(var.remote_ssh_public_key_file)
   }
 
   create_vnic_details {
@@ -110,17 +125,22 @@ resource oci_core_instance routing_server_b {
     assign_public_ip       = false
     hostname_label         = "${var.hostname_label}b"
     skip_source_dest_check = true
+    defined_tags  = var.defined_tags
+    freeform_tags = var.freeform_tags
 
     nsg_ids = [
       oci_core_network_security_group.pacemaker.id
     ]
   }
 
+  defined_tags  = var.defined_tags
+  freeform_tags = var.freeform_tags
+
   connection {
     type        = "ssh"
     host        = self.private_ip
     user        = "opc"
-    private_key = file(var.ssh_private_key_file)
+    private_key = file(var.remote_ssh_private_key_file)
 
     bastion_host        = var.bastion_ip
     bastion_user        = "opc"

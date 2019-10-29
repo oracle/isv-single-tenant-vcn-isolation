@@ -9,5 +9,13 @@ test:
 test-no-teardown:
 	SKIP_teardown=true go test -v -timeout 90m .
 
+test-fmt:
+	go test -v -timeout 30s . -run="TestTerraformFmt"
 
-.PHONY: all dep test test-no-teardown
+test-validate-only:
+	SKIP_deploy=true SKIP_plan=true SKIP_teardown=true go test -v -timeout 90m . --run="TestTerragruntApplyAll"
+
+test-copyright:
+	go test -v -timeout 30s . -run="TestCopyrightLicense"
+
+.PHONY: all dep test test-no-teardown test-fmt test-validate-only test-copyright

@@ -1,7 +1,12 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+/*
+ * Create the routing instances to route throught peering networks
+ */
 
 # Routing Instance 1
 # HA ROUTING INSTANCE
-
 module routing_instance_1 {
   source = "../../../../modules/routing_instance_ha"
 
@@ -17,7 +22,16 @@ module routing_instance_1 {
   tenancy_id = var.tenancy_ocid
   region     = var.region
 
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
+
   shape = "VM.Standard2.1" # TODO
+
+  hacluster_password = var.hacluster_password
+
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "routing_instance_1_ip" {
@@ -31,7 +45,6 @@ output "routing_instance_1_ip_id" {
 
 # Routing Instance 2
 # SINGLE ROUTING INSTANCE
-
 module routing_instance_2 {
   source = "../../../../modules/routing_instance"
 
@@ -44,10 +57,13 @@ module routing_instance_2 {
   availability_domain = local.availability_domain
   bastion_ip          = local.bastion_ip
 
-  tenancy_id = var.tenancy_ocid
-  region     = var.region
+  shape                        = "VM.Standard2.1" # TODO
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_public_key_file   = var.remote_ssh_public_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 
-  shape = "VM.Standard2.1"  # TODO
+  freeform_tags       = var.freeform_tags
+  defined_tags        = var.defined_tags
 }
 
 output "routing_instance_2_ip" {

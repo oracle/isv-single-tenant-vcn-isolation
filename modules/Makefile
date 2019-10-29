@@ -1,7 +1,7 @@
 fmt:
 	@for module in ./*; \
     do \
-	  (cd $$module && terraform fmt); \
+	  (cd $$module && pwd && terraform fmt); \
 	done
 
 .PHONY: fmt

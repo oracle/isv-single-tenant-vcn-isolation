@@ -1,7 +1,12 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+/*
+ * Add the ip route rules to each routing instance.
+ */
 
 # Routing Instance 1
 # HA ROUTING INSTANCE
-
 module routing_instance_1_peering_1_routes {
   source = "../../../../modules/ip_route_add"
 
@@ -12,6 +17,9 @@ module routing_instance_1_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_1.instance.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 module routing_instance_1b_peering_1_routes {
@@ -24,13 +32,15 @@ module routing_instance_1b_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_1.instance_b.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 
 
 # Routing Instance 2
 # SINGLE ROUTING INSTANCE
-
 module routing_instance_2_peering_1_routes {
   source = "../../../../modules/ip_route_add"
 
@@ -41,6 +51,9 @@ module routing_instance_2_peering_1_routes {
 
   bastion_host = local.bastion_ip
   ssh_host     = module.routing_instance_2.instance.private_ip
+
+  bastion_ssh_private_key_file = var.bastion_ssh_private_key_file
+  remote_ssh_private_key_file  = var.remote_ssh_private_key_file
 }
 
 output ip_route_add_status {

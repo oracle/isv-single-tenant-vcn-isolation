@@ -61,7 +61,7 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	terraform plan
     	terraform apply
     	```
-	4. Run the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
+	4. Repeat runing the `terraform init`, `terraform plan`, and `terraform apply` commands in the following directories, in the given order:
 		- `examples/full-deployment/common/compartments`
     	- `examples/full-deployment/peering/network`
     	- `examples/full-deployment/management/network`
@@ -70,8 +70,8 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	- `examples/full-deployment/peering/routing`
     	- `examples/full-deployment/management/servers`
     	- `examples/full-deployment/management/server_attachment`
-        - `examples/full-deployment/tenant/servers`    	
-        - `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
+    	- `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
+    	- `examples/full-deployment/tenant/servers`
     	- `examples/full-deployment/tenant/application` (optional, to deploy example app and Nagios agents)
 
 -   **Deploy Using Terragrunt**
@@ -95,15 +95,15 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
 
-The entire topology, when deployed, can be tested by either executing the tests or through the Nagios management server. 
+The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url. 
 
-After logging in to the Nagios management server, you can navigate to the Nagios management portal and verify that all the provisioned tenant servers exist and are in a healthy state.
+Once logged in with the credentials then the user can navigate to the nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
 
 ## Troubleshooting
 
-### Cleaning up after a failed or partial deployment
+### Cleaning up a after a failed or partial deployment
 
-If the full deployment of the solution fails due to an error and you want to un-deploy the partially provisioned configuration, the `terragrunt destroy-all` option can return the following error:
+If the full deployment of the solution fails due to an error and you want to un-deploy the partially provisioned configuration using the `terragrunt destroy-all` option can return an error like:
 
 ```
 Error: Unsupported attribute
@@ -116,7 +116,7 @@ Error: Unsupported attribute
 This object does not have an attribute named "routing_instance_1_ip_id".
 ```
 
-If this error occurs, run `terraform destroy` manually in each configuration directory in the reverse order of the directories listed in the **Deploy Using Terraform** section.
+If this occurs you will need to manually run `terraform destroy` in each terraform configuration directory in the reverse order of the folders listed in the **Deploy Using Terraform** section above.
 
 ## Solutions Overview
 
@@ -125,65 +125,66 @@ This solution is logically partitioned in 3 networks such as Management, Peering
 ### Network setup
 
 1. **Management Network**
-	This partition helps provide a single pane of window to manage the access, deployment, and maintenance of the complete topology.
+	This partition helps give a single pane of window to manage the access, deployment & maintenance of the complete architecture
 
 	1.1 **Bastion**
-	This server enables you to connect to the other resources in ISV tenancy.
-	-	The server is a compute instance running an Oracle Linux image and deployed in a public subnet.
-	-	This server is the only point of ingress to the resources in the ISV tenancy from the public internet.
-	-	To connect to the bastion server, run: `ssh -i keypair.pem opc@bastion_ip`
+	This server helps in connecting to other resources in ISV tenancy
+	-	OL image deployed in public subnet
+	-	only point of ingress to resources in ISV tenancy from Internet
+	-	`ssh -i keypair.pem opc@bastion_ip`
 
 	1.2 ****Management Server**** 
-	This server runs the monitoring application Nagios. It is configured to listen to all the servers deployed in the tenant VCNs.
-	-	The server is a compute instance running an Oracle Linux image and deployed in a private subnet
-	-	Nagios v4.3.4 is installed on this server.
-	-	It is configured with IP  addresses of all the servers deployed in the tenant VCNs.
-	-	After deploying the topology, you can access the Nagios monitoring application through an SSH tunnel to the bastion server.
-	    -	To create the tunnel, run: `ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
-	    -	To access the management portal, browse to `http://localhost/nagios`
-	        user_id: `nagiosadmin`
-	        password: The password that you set using the `TF_VAR_nagios_administrator_password` variable.
+	This server has monitoring s/w NAGIOS installed on it and configured to listen to all the server's deployed in each tenant VCN's.
+	-	OL image deployed in private subnet
+	-	NAGIOS (v 4.3.4) is installed on this server
+	-	configured with ip addresses of all the server's deployed in different tenant VCN's.
+	-	upon deployment the nagios monitoring application can be accessed thru bastion tunnel 		
+	-	tunneling --	`ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
+	-	access thru browser -- `http://localhost/nagios`
+	-	credentials			-- 
+	-	`user_id	--	nagiosadmin`
+	-	`password 	--	[token set thru export TF_VAR_nagios_administrator_password]`
 
 
 	1.3 **Routing Server's**
-	These servers route traffic between the ISV VCN and the tenant VCNs.
-	-   The server is a compute instance running an Oracle Linux image and deployed in a private subnet
-	-	PACEMAKER/Corosync is installed, and can be used for failover across an HA pair of routing servers.
-	-	The secondary VNIC deployed in a peering VCN to establish connectivity through ther LPG with the tenant VCNs.
-	-	The `secondary_vnic_all_configure.sh` script is used to attach the secondary VNIC. To make the VNIC attachment persistent, the `/etc/sysconfig/network-scripts/ifcfg-ens5` file is created.
-	-	The required routes to the tenant VCNs are set up on this server.
-	-	To ensure that the routes persist across reboots, the `/etc/sysconfig/network-scripts/route-ens5` file is created.
-	-	The number of secondary VNICs that can be created is based on the shape of the instance. Larger shapes support more secondary VNICs.
+	These servers meant to act as a bridge between ISV vcn and the tenant VCN by routing traffic.
+	-	OL image deployed in private subnet
+	-	PACEMAKER/Corosync is installed on these servers for high availability across 2 server's deployed which can be used to demonstrate failover
+	-	secondary vnic deployed in peering vcn to establish connectivity over LPG with tenant VCN's
+	-	secondary_vnic_all_configure.sh script is used to attach secondary vnic to persist vnic attachment `/etc/sysconfig/network-scripts/ifcfg-ens5` file is created
+	-	routes to tenant vcn's are setup on this server
+	-	to persist routes across reboots `/etc/sysconfig/network-scripts/route-ens5` file is created
+	-	number of secondary vnics creation allowed is based on the shape of the instance [higher the shape is greater number of secondary vnics allowed]
 
 2. **Peering Network**
-This partition provides bridges, in the form of secondary VNICs, to the routing servers in the management network for achieving the "fan-out" architecture for peering the VCNs.
+This partition provides a bridging mechanism in the form of secondary vnic's made available to routing servers in management network for the purpose of achieving fan-out architecture for peering the VCN's.
 
-	2.1 **Secondary VNICs**
-	-	LPGs are created in this VCN for peering with 10 different tenant VCNs.
-	-	The CIDR block of this VCN can be correlated to the number of VNICs required to be created by the routing server in the peering subnet of the ISV VCN.
+	2.1 **Secondary VNIC's**
+	-	LPG is created in this vcn for peering with 10 different tenant vcn's.
+	-	cidr block of this VCN can be correlated to the number of vnic's that is required to be created by the routing server in the peering subnet of the ISV vcn.
 	
 3. **Tenant Network**
 	This partition has tenant resources to demonstrate the end-to-end connectivity of the architecture.
 
-	3.1 **Tenant Network** (1-n) [VCNs, subnet, internet gateway, NAT gateway, LPG]
+	3.1 **Tenant Network** (1-n) [ VCN's, Subnet, IGW, NAT, LPG ]
 
-	3.2 **Tenant Servers** (1-n) [NRPE agent installed and configured with Nagios server's IP address to send monitoring metrics to]
-	-	The server is a compute instance running an Oracle Linux image and deployed in a private subnet.
-	-	The NRPE (Nagios remote agent) is deployed on this server, and it listens on port 5666.
-	-	The NRPE configuration is updated with the IP address of the Nagios management server deployed in the management subnet of the ISV VCN.
+	3.2 **Tenant Servers** (1-n) [NRPE agent installed and configured with Nagios server IP address to send monitorong metrics to]
+	-	OL image deployed in private subnet
+	-	NRPE (nagios remote agent) is deployed on this server and it listens on port 5666
+	-	nrpe configuration is updated with the ip address of the nagios management server deployed in the management subnet of the ISV vcn.
 
 
 ## Routing Instance Configuration 
 
-1. Enable IP forwarding in the kernel, and ensure that the configuration is persistent upon reboots on both router instances by adding the following to `/etc/sysctl.d/98-ip-forward.conf`:
+1. Enable IP forwarding in the kernel and ensure configuration is persistent upon reboots on both router intenance by adding the following to `/etc/sysctl.d/98-ip-forward.conf`
 
 	```
 	net.ipv4.ip_forward=1
 	```
 
-2. Attach secondary VNICs with `skip source/destination` selected. To ensure that the vNIC attachment is maintained after reboot, create a configuration file for each VNIC.
+2. Attach secondary vnics with skip source/destination checked. To ensure  the vNIC attachement is maintained after reboot create a configuration file for each vNIC e.g
 
-	Example: `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 1
+	e.g. `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 1
 
 	```
 	DEVICE=ens5
@@ -193,7 +194,7 @@ This partition provides bridges, in the form of secondary VNICs, to the routing 
 	ONBOOT=yes
 	```
 
-	Example: `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 2
+	e.g. `/etc/sysconfig/network-scripts/ifcfg-ens5` on Router 2
 
 	```
 	DEVICE=ens5
@@ -202,32 +203,33 @@ This partition provides bridges, in the form of secondary VNICs, to the routing 
 	NETMASK=255.255.255.248
 	ONBOOT=yes
 	```
-3. Add static routes for each tenant VCN that can be accessed through the routing instance, pointing to the default gateway of the peering subnet that the tenant VCN is peered with.
+3. add static routes for the each Tenant VCN accessable via the routing instance pointing to the default gateway of the peering subnet the Tenant VCN is peered with
 
-	Router 1 configuration:
+	Router 1 configuration
 
 	```
 	sudo ip route add 10.1.0.0/16 via 10.253.0.1 dev ens5
 	sudo ip route add 10.2.0.0/16 via 10.253.0.1 dev ens5
 	```
 
-	Router 2 configuration:
+	Router 2 configuration
 
 	```
 	sudo ip route add 10.3.0.0/16 via 10.253.0.9 dev ens5
 	sudo ip route add 10.4.0.0/16 via 10.253.0.9 dev ens5
 	```
 
-4. Make sure that the attached routes persist upon reboot, by creating the following file for each VNIC:
 
-	Example: `/etc/sysconfig/network-scripts/route-ens5` on Router 1
+4. Persist attached routes upon reboot creating file for each vnic
+
+	e.g. `/etc/sysconfig/network-scripts/route-ens5` on Router 1
 
 	```
 	10.1.0.0/16 via 10.253.0.1
 	10.2.0.0/16 via 10.253.0.1
 	```
 
-	Example: `/etc/sysconfig/network-scripts/route-ens5` on Router 2
+	e.g. `/etc/sysconfig/network-scripts/route-ens5` on Router 2
 
 	```
 	10.3.0.0/16 via 10.253.0.9

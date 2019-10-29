@@ -1,24 +1,27 @@
+// Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
+// Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+# OCI Provider variables
 variable "tenancy_ocid" {}
 variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "region" {}
-variable "compartment_ocid" {}
 
-variable "compartment_name" {
+# Deployment variables
+variable "compartment_ocid" {
   type        = string
-  description = "Compartment name for Management layer"
-  default     = "tenant1"
+  description = "ocid of the compartment to deploy the resources in"
 }
 
-locals {
-  region_map = {
-    for r in data.oci_identity_regions.regions.regions :
-    r.key => r.name
-  }
+variable "bastion_ssh_private_key_file" {
+  type        = string
+  description = "path to private ssh key to access the bastion host"
+  default     = "~/.ssh/id_rsa"
+}
 
-  home_region         = lookup(local.region_map, data.oci_identity_tenancy.tenancy.home_region_key)
-  availability_domain = lookup(data.oci_identity_availability_domains.ADs.availability_domains[0], "name")
-
-  root_compartment_id = var.compartment_ocid
+variable "remote_ssh_private_key_file" {
+  type        = string
+  description = "path to private ssh key to acccess all instance in the deployed environment"
+  default     = "~/.ssh/id_rsa"
 }
