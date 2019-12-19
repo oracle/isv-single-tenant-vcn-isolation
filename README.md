@@ -239,39 +239,6 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 Connect to the management server with ssh as user opc and execute the following commands:
 
 	```
-    * sudo yum install httpd php gcc glibc glibc-common make gd gd-devel net-snmp
-    * 	sudo groupadd nagcmd
-    * 	sudo useradd -G nagcmd nagios
-    * 	sudo usermod -a -G nagcmd apache
-    * 	cd ~
-    * 	mkdir nagios
-    * 	cd nagios
-    * 	wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz
-    * 	tar xvf nagios-4.4.3.tar.gz
-    * 	cd nagios-4.4.3/
-    * 	 ./configure --with-command-group=nagcmd
-    * 	make all
-    * 	sudo make install && sudo make install-commandmode
-    * 	sudo make install-init
-    * 	sudo make install-config && sudo make install-webconf
-    * 	 sudo htpasswd -c -db /usr/local/nagios/etc/htpasswd.users nagiosadmin Ora123
-    * 	sudo firewall-cmd --zone=public --permanent --add-service=http
-    * 	echo "<html>This is a placeholder for the home page.</html>"| sudo tee /var/www/html/index.html
-    * 	sudo systemctl restart httpd.service
-    * 	sudo systemctl restart firewalld.service
-    * 	wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
-    * 	 tar xvf nagios-plugins-*.tar.gz
-    * 	cd nagios-plugins-2.2.1/
-    * 	./configure --with-nagios-user=nagios --with-nagios-group=nagcmd --with-openssl
-    * 	make
-    * 	sudo make install
-    * 	sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
-    * 	sudo chkconfig nagios on
-    * 	sudo sed -i "s@#cfg_dir=/usr/local/nagios/etc/servers@cfg_dir=/usr/local/nagios/etc/servers@" /usr/local/nagios/etc/nagios.cfg
-    * 	sudo mkdir /usr/local/nagios/etc/servers
-    * 	sudo chmod 0755 /usr/local/nagios/etc/servers
-    * 	sudo touch /usr/local/nagios/etc/servers/hosts.cfg
-    * 	sudo chmod 0755 /usr/local/nagios/etc/servers/hosts.cfg
-    * 	sudo vi /usr/local/nagios/etc/servers/hosts.cfg
-    *     Paste the following into hosts.cfg making sure the ip addresses match the respective tenant appserver
-    ```
+	ssh to management server
+    sudo yum install httpd php gcc glibc glibc-common make gd gd-devel net-snmp
+	```
