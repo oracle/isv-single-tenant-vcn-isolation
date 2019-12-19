@@ -233,7 +233,7 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 	10.3.0.0/16 via 10.253.0.9
 	10.4.0.0/16 via 10.253.0.9
 	```
-## Nagios Sample Installation
+## Nagios Server Sample Installation
 
 
 Connect to the management server with ssh as user opc and execute the following commands:
