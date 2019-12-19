@@ -51,3 +51,4 @@ variable "defined_tags" {
   description = "map of defined tags to apply to all resources"
   default     = {}
 }
+

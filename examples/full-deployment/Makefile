@@ -8,8 +8,6 @@ TF_CONFIGS = common/configuration \
 			 peering/routing \
 			 management/servers \
 			 management/server_attachment \
-			 management/application \
-			 tenant/application \
 			 tenant/servers
 
 
