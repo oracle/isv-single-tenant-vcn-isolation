@@ -18,7 +18,7 @@ The following diagram shows the target topology:
 ### Management Layer
 This layer in the topology includes the following resources:
 -  **Bastion server**:	This server is deployed in a public subnet. It is used by the Terraform script to provision applications on the tenant VCNs. It can also be used to access resources in private subnets in the management VCN and the tenant VCNs.
--  **Monitoring server**: This server hosts a Nagios management server, which monitors all the applications deployed across the tenant VCNs.
+-  **Monitoring server**: This is used to monitor all the applications deployed across the tenant VCNs.  A Nagios Management server can be installed as a monitoring example, see instructions below.
 -  **Gateway cluster**: The gateway is deployed with a Pacemaker/Corosync cluster. The cluster includes multiple virtual routers to provide high availability when there are issues with the configuration or the OS. The cluster uses a secondary IP address, which can *float* between two virtual routers. This enables high availability with minimal to zero downtime.
 
 ### Peering Network
@@ -27,7 +27,7 @@ The VCNs in this network serve as a bridge between the single management network
 ### Tenant Layer
 This layer contains the following resources:
 - **Tenant VCNs**: Each tenant (that is, the end customer of the ISV) is isolated in a separate VCN with no connectivity between the tenants. Each tenant VCN has backward connectivity to the ISV's management network.
-- **Tenant server**: A Nagios Remote Plugin Executor (NRPE) is installed on a server in each tenant VCN. The NRPE reports the health of the server to the Nagios monitoring server in the management layer. This installation is solely for the purpose of demonstrating the direct connectivity from the management network to the tenant networks with a scale-out architecture.
+- **Tenant server**: A Nagios Remote Plugin Executor (NRPE) can be installed on a server in each tenant VCN, see instructions below. The NRPE reports the health of the server to the Nagios monitoring server in the management layer. This installation is solely for the purpose of demonstrating the direct connectivity from the management network to the tenant networks with a scale-out architecture.
 
 
 ## Quickstart Deployment
@@ -93,7 +93,7 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
 
-The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url. 
+The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url.  See Nagios example installation below.
 
 Once logged in with the credentials then the user can navigate to the nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
 
@@ -132,9 +132,9 @@ This solution is logically partitioned in 3 networks such as Management, Peering
 	-	`ssh -i keypair.pem opc@bastion_ip`
 
 	1.2 ****Management Server**** 
-	This server has monitoring s/w NAGIOS installed on it and configured to listen to all the server's deployed in each tenant VCN's.
+	The onitoring s/w NAGIOS can be installed on it and configured to listen to all the server's deployed in each tenant VCN's.
 	-	OL image deployed in private subnet
-	-	NAGIOS (v 4.3.4) is installed on this server
+	-	NAGIOS (v 4.3.4) installation instructions below.
 	-	configured with ip addresses of all the server's deployed in different tenant VCN's.
 	-	upon deployment the nagios monitoring application can be accessed thru bastion tunnel 		
 	-	tunneling --	`ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
@@ -166,9 +166,9 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 
 	3.1 **Tenant Network** (1-n) [ VCN's, Subnet, IGW, NAT, LPG ]
 
-	3.2 **Tenant Servers** (1-n) [NRPE agent installed and configured with Nagios server IP address to send monitorong metrics to]
+	3.2 **Tenant Servers** (1-n) [NRPE agent can be installed and configured with Nagios server IP address to send monitorong metrics to]
 	-	OL image deployed in private subnet
-	-	NRPE (nagios remote agent) is deployed on this server and it listens on port 5666
+	-	NRPE (nagios remote agent) can be deployed on this server and it listens on port 5666.  See instructions below
 	-	nrpe configuration is updated with the ip address of the nagios management server deployed in the management subnet of the ISV vcn.
 
 
