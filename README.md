@@ -233,7 +233,7 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 	10.3.0.0/16 via 10.253.0.9
 	10.4.0.0/16 via 10.253.0.9
 	```
-## Nagios Sample Installation
+## Nagios Server Sample Installation
 
 
 Connect to the management server with ssh as user opc and execute the following commands:
@@ -302,3 +302,15 @@ Connect to the management server with ssh as user opc and execute the following 
 
     
 * sudo systemctl restart nagios.service 
+
+## Nagios Remote Plugin Executor (NRPE) Sample Installation
+
+Connect to each tenant server and execute the following commands:
+
+* 	sudo yum install nagios nagios-plugins-all nrpe
+* 	sudo firewall-cmd --zone=public --permanent --add-port=5666/tcp
+* 	Execute the following command making sure the ip address matches the management server's:
+
+	    sudo sed -i "s/.*allowed_hosts=.*/allowed_hosts=10.254.100.2/" /etc/nagios/nrpe.cfg
+    
+*  sudo systemctl start nrpe.service
