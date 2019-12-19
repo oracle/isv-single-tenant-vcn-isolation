@@ -300,11 +300,10 @@ Connect to the management server with ssh as user opc and execute the following 
 		        }
     36. sudo systemctl restart nagios.service 
     
-    ## Nagios Sample Installation
 
 ## Nagios Remote Plugin Executor (NRPE) Sample Installation
 
-Connect to each of the tenant servers and execute the following commands:
+Connect to each of the tenant servers with ssh as user opc and execute the following commands:
 
 	1. sudo yum install nagios nagios-plugins-all nrpe
 	2. sudo firewall-cmd --zone=public --permanent --add-port=5666/tcp
