@@ -1,10 +1,10 @@
 This document contains license texts for the following third-party components, and their fourth-party dependencies:
 
-* Corosync, Version 2.4.3-4.el7       (line 5553)
-* Pacemaker, Version 1.1.19-8.el7_6.4 (line 5974)
-* Terraform, Version: 0.12.4          (line 7339)
-* Terragrunt, Version 0.19.11         (line 8834)
-* Terratest, Version 0.18.0           (line 8859)
+* Corosync, Version 2.4.3-4.el7       (line 18)
+* Pacemaker, Version 1.1.19-8.el7_6.4 (line 85)
+* Terraform, Version: 0.12.4          (line 1450)
+* Terragrunt, Version 0.19.11         (line 2945)
+* Terratest, Version 0.18.0           (line 2970)
 
 Note:
 
