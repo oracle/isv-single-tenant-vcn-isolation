@@ -18,7 +18,7 @@ The following diagram shows the target topology:
 ### Management Layer
 This layer in the topology includes the following resources:
 -  **Bastion server**:	This server is deployed in a public subnet. It is used by the Terraform script to provision applications on the tenant VCNs. It can also be used to access resources in private subnets in the management VCN and the tenant VCNs.
--  **Monitoring server**: This server hosts a Nagios management server, which monitors all the applications deployed across the tenant VCNs.
+-  **Monitoring server**: This is used to monitor all the applications deployed across the tenant VCNs.  A Nagios Management server can be installed as a monitoring example, see instructions below.
 -  **Gateway cluster**: The gateway is deployed with a Pacemaker/Corosync cluster. The cluster includes multiple virtual routers to provide high availability when there are issues with the configuration or the OS. The cluster uses a secondary IP address, which can *float* between two virtual routers. This enables high availability with minimal to zero downtime.
 
 ### Peering Network
@@ -27,7 +27,7 @@ The VCNs in this network serve as a bridge between the single management network
 ### Tenant Layer
 This layer contains the following resources:
 - **Tenant VCNs**: Each tenant (that is, the end customer of the ISV) is isolated in a separate VCN with no connectivity between the tenants. Each tenant VCN has backward connectivity to the ISV's management network.
-- **Tenant server**: A Nagios Remote Plugin Executor (NRPE) is installed on a server in each tenant VCN. The NRPE reports the health of the server to the Nagios monitoring server in the management layer. This installation is solely for the purpose of demonstrating the direct connectivity from the management network to the tenant networks with a scale-out architecture.
+- **Tenant server**: A Nagios Remote Plugin Executor (NRPE) can be installed on a server in each tenant VCN, see instructions below. The NRPE reports the health of the server to the Nagios monitoring server in the management layer. This installation is solely for the purpose of demonstrating the direct connectivity from the management network to the tenant networks with a scale-out architecture.
 
 
 ## Quickstart Deployment
@@ -38,11 +38,10 @@ This layer contains the following resources:
 
 3. Open `examples/full-deployment/terraform.tfvars` in a plain-text editor, and enter the values of the variables in that file.
 
-4. Set the deployment passwords and shared secrets.  The full deployment examples requires variables to be set for the shared secret for the routing HA cluster, and an initial Nagios administrator password. These can be set using environment variables, or added to the `terraform.tfvars` files in the `full-deployment/peering/routing` and `full-deployment/management/application` configurartion directories respectively. e.g.
+4. Set the deployment passwords and shared secrets.  The full deployment examples requires variables to be set for the shared secret for the routing HA cluster. This can be set using environment variables, or added to the `terraform.tfvars` files in the `full-deployment/peering/routing` configuration directory. e.g.
 
 	```
 	$ export TF_VAR_hacluster_password="P@55_Word"
-	$ export TF_VAR_nagios_administrator_password="P@55_Word"
 	```
 
 5. Deploy the topology:
@@ -70,9 +69,8 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
     	- `examples/full-deployment/peering/routing`
     	- `examples/full-deployment/management/servers`
     	- `examples/full-deployment/management/server_attachment`
-    	- `examples/full-deployment/management/application` (optional, to deploy example Nagios installation)
     	- `examples/full-deployment/tenant/servers`
-    	- `examples/full-deployment/tenant/application` (optional, to deploy example app and Nagios agents)
+
 
 -   **Deploy Using Terragrunt**
 
@@ -95,7 +93,7 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
 
-The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url. 
+The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url.  See Nagios example installation below.
 
 Once logged in with the credentials then the user can navigate to the nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
 
@@ -134,9 +132,9 @@ This solution is logically partitioned in 3 networks such as Management, Peering
 	-	`ssh -i keypair.pem opc@bastion_ip`
 
 	1.2 ****Management Server**** 
-	This server has monitoring s/w NAGIOS installed on it and configured to listen to all the server's deployed in each tenant VCN's.
+	The onitoring s/w NAGIOS can be installed on it and configured to listen to all the server's deployed in each tenant VCN's.
 	-	OL image deployed in private subnet
-	-	NAGIOS (v 4.3.4) is installed on this server
+	-	NAGIOS (v 4.3.4) installation instructions below.
 	-	configured with ip addresses of all the server's deployed in different tenant VCN's.
 	-	upon deployment the nagios monitoring application can be accessed thru bastion tunnel 		
 	-	tunneling --	`ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
@@ -168,9 +166,9 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 
 	3.1 **Tenant Network** (1-n) [ VCN's, Subnet, IGW, NAT, LPG ]
 
-	3.2 **Tenant Servers** (1-n) [NRPE agent installed and configured with Nagios server IP address to send monitorong metrics to]
+	3.2 **Tenant Servers** (1-n) [NRPE agent can be installed and configured with Nagios server IP address to send monitorong metrics to]
 	-	OL image deployed in private subnet
-	-	NRPE (nagios remote agent) is deployed on this server and it listens on port 5666
+	-	NRPE (nagios remote agent) can be deployed on this server and it listens on port 5666.  See instructions below
 	-	nrpe configuration is updated with the ip address of the nagios management server deployed in the management subnet of the ISV vcn.
 
 
@@ -235,3 +233,80 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 	10.3.0.0/16 via 10.253.0.9
 	10.4.0.0/16 via 10.253.0.9
 	```
+## Nagios Server Sample Installation
+
+
+Connect to the management server with ssh as user opc and execute the following commands:
+
+	1. sudo yum install httpd php gcc glibc glibc-common make gd gd-devel net-snmp
+	2. sudo groupadd nagcmd
+	3. sudo useradd -G nagcmd nagios
+	4. sudo usermod -a -G nagcmd apache
+	5. cd ~
+	6. mkdir nagios
+	7. cd nagios
+	8. wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz
+	9. tar xvf nagios-4.4.3.tar.gz
+	10. cd nagios-4.4.3/
+	11.  ./configure --with-command-group=nagcmd
+	12. make all
+	13. sudo make install && sudo make install-commandmode
+	14. sudo make install-init
+	15. sudo make install-config && sudo make install-webconf
+	16.  sudo htpasswd -c -db /usr/local/nagios/etc/htpasswd.users nagiosadmin Ora123
+	17. sudo firewall-cmd --zone=public --permanent --add-service=http
+	18. echo "<html>This is a placeholder for the home page.</html>"| sudo tee /var/www/html/index.html
+	19. sudo systemctl restart httpd.service
+	20. sudo systemctl restart firewalld.service
+	21. wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+	22.  tar xvf nagios-plugins-*.tar.gz
+	23. cd nagios-plugins-2.2.1/
+	24../configure --with-nagios-user=nagios --with-nagios-group=nagcmd --with-openssl
+	25. make
+	26. sudo make install
+	27. sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+	28. sudo chkconfig nagios on
+	29. sudo sed -i "s@#cfg_dir=/usr/local/nagios/etc/servers@cfg_dir=/usr/local/nagios/etc/servers@" /usr/local/nagios/etc/nagios.cfg
+	30. sudo mkdir /usr/local/nagios/etc/servers
+	31. sudo chmod 0755 /usr/local/nagios/etc/servers
+	32. sudo touch /usr/local/nagios/etc/servers/hosts.cfg
+	33. sudo chmod 0755 /usr/local/nagios/etc/servers/hosts.cfg
+	34. sudo vi /usr/local/nagios/etc/servers/hosts.cfg
+    35. Paste the following into hosts.cfg making sure the ip addresses match the respective tenant appserver
+
+	        define host{	
+		        use linux-server
+		        host_name appserver1
+		        alias appserver1
+		        address 10.1.1.2
+		        }
+	        define host{	
+		        use linux-server
+		        host_name appserver2
+		        alias appserver2
+		        address 10.2.1.2
+		        }
+	        define host{	
+		        use linux-server
+		        host_name appserver3
+		        alias appserver3
+		        address 10.3.1.2
+		        }
+	        define host{	
+	   	        use linux-server
+		        host_name appserver4
+		        alias appserver4
+		        address 10.4.1.2
+		        }
+    36. sudo systemctl restart nagios.service 
+    
+
+## Nagios Remote Plugin Executor (NRPE) Sample Installation
+
+Connect to each of the tenant servers with ssh as user opc and execute the following commands:
+
+	1. sudo yum install nagios nagios-plugins-all nrpe
+	2. sudo firewall-cmd --zone=public --permanent --add-port=5666/tcp
+	3. Execute the following command making sure the ip address matches the management server's
+	        sudo sed -i "s/.*allowed_hosts=.*/allowed_hosts=10.254.100.2/" /etc/nagios/nrpe.cfg
+    4. sudo systemctl start nrpe.service

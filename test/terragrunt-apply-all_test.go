@@ -117,11 +117,11 @@ func TestTerragruntApplyAll(t *testing.T) {
 		testRoutingPathContains(t, bastionHost, tenantIP, "gateway1a")
 		// move the floating IP to the secondary routing instance and check routing now goes through gateway1b
 		testRoutingInstanceMoveVIP(t, bastionHost, "gateway1a.peering.isv.oraclevcn.com", keyPair, "gateway1b")
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 		testRoutingPathContains(t, bastionHost, tenantIP, "gateway1b")
 		// move the floating IP back to the primary routing instance and check routing now is back to gateway1a
 		testRoutingInstanceMoveVIP(t, bastionHost, "gateway1a.peering.isv.oraclevcn.com", keyPair, "gateway1a")
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 		testRoutingPathContains(t, bastionHost, tenantIP, "gateway1a")
 
 		// Non-HA Routing Instance
@@ -271,7 +271,7 @@ func testNagiosServerURL(t *testing.T, bastionHost ssh.Host, ipAddress string) {
 	logger.Logf(t, "TEST - Curl to Nagios Server URL is working thru bastion")
 
 	command := fmt.Sprintf("curl -s http://%s", ipAddress)
-	expectedText := "<html>This is a placeholder for the home page.</html>"
+	expectedText := "<html>This is a placeholder for the home page.</html>\n"
 	maxRetries := 30
 	timeBetweenRetries := 5 * time.Second
 	description := fmt.Sprintf("Curl to Nagios website on management host %s", ipAddress)

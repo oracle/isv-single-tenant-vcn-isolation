@@ -68,5 +68,5 @@ variable remote_ssh_public_key_file {
 variable shape {
   type        = string
   description = "oci instance shape for the bastion instance"
-  default     = "VM.Standard2.1"
+  default     = "VM.Standard1.4"
 }

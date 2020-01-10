@@ -13,6 +13,9 @@ test-fmt:
 	go test -v -timeout 30s . -run="TestTerraformFmt"
 
 test-validate-only:
+	SKIP_deploy=true SKIP_plan=true SKIP_teardown=true SKIP_validate_nagios=true go test -v -timeout 90m . --run="TestTerragruntApplyAll"
+
+test-validate-only-with-nagios:
 	SKIP_deploy=true SKIP_plan=true SKIP_teardown=true go test -v -timeout 90m . --run="TestTerragruntApplyAll"
 
 test-copyright:
