@@ -93,9 +93,9 @@ You can deploy the entire topology with a single command by using [Terragrunt](h
 
 Automated tests are provided in the `test` directory. See [`test/README`](test/README.md).
 
-The whole setup once deployed can be tested thru either executing the tests and/or viewing the nagios management host url.  See Nagios example installation below.
+The whole setup once deployed can be tested thru either executing the tests and/or viewing the Nagios management host url.  See Nagios example installation below.
 
-Once logged in with the credentials then the user can navigate to the nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
+Once logged in with the credentials then the user can navigate to the Nagios management portal and verify that all the provisioned tenant servers can be seen and in healthy state.
 
 ## Troubleshooting
 
@@ -127,16 +127,16 @@ This solution is logically partitioned in 3 networks such as Management, Peering
 
 	1.1 **Bastion**
 	This server helps in connecting to other resources in ISV tenancy
-	-	OL image deployed in public subnet
+	-	Oracle Linux 7 image deployed in public subnet
 	-	only point of ingress to resources in ISV tenancy from Internet
 	-	`ssh -i keypair.pem opc@bastion_ip`
 
 	1.2 ****Management Server**** 
-	The onitoring s/w NAGIOS can be installed on it and configured to listen to all the server's deployed in each tenant VCN's.
-	-	OL image deployed in private subnet
-	-	NAGIOS (v 4.3.4) installation instructions below.
-	-	configured with ip addresses of all the server's deployed in different tenant VCN's.
-	-	upon deployment the nagios monitoring application can be accessed thru bastion tunnel 		
+	The monitoring s/w Nagios can be installed on it and configured to listen to all the server's deployed in each tenant VCN's.
+	-	Oracle Linux 7 image deployed in private subnet
+	-	Nagios (v 4.3.4) installation instructions below.
+	-	configured with IP addresses of all the server's deployed in different tenant VCN's.
+	-	upon deployment the Nagios monitoring application can be accessed thru bastion tunnel 		
 	-	tunneling --	`ssh -L 80:management_host_ip:80 -i bastion_key.pem opc@bastion_host_ip` 
 	-	access thru browser -- `http://localhost/nagios`
 	-	credentials			-- 
@@ -146,8 +146,8 @@ This solution is logically partitioned in 3 networks such as Management, Peering
 
 	1.3 **Routing Server's**
 	These servers meant to act as a bridge between ISV vcn and the tenant VCN by routing traffic.
-	-	OL image deployed in private subnet
-	-	PACEMAKER/Corosync is installed on these servers for high availability across 2 server's deployed which can be used to demonstrate failover
+	-	Oracle Linux 7 image deployed in private subnet
+	-	Pacemaker/Corosync is installed on these servers for high availability across 2 server's deployed which can be used to demonstrate failover
 	-	secondary vnic deployed in peering vcn to establish connectivity over LPG with tenant VCN's
 	-	secondary_vnic_all_configure.sh script is used to attach secondary vnic to persist vnic attachment `/etc/sysconfig/network-scripts/ifcfg-ens5` file is created
 	-	routes to tenant vcn's are setup on this server
@@ -167,9 +167,9 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 	3.1 **Tenant Network** (1-n) [ VCN's, Subnet, IGW, NAT, LPG ]
 
 	3.2 **Tenant Servers** (1-n) [NRPE agent can be installed and configured with Nagios server IP address to send monitorong metrics to]
-	-	OL image deployed in private subnet
-	-	NRPE (nagios remote agent) can be deployed on this server and it listens on port 5666.  See instructions below
-	-	nrpe configuration is updated with the ip address of the nagios management server deployed in the management subnet of the ISV vcn.
+	-	Oracle Linux 7 image deployed in private subnet
+	-	NRPE (Nagios remote agent) can be deployed on this server and it listens on port 5666.  See instructions below
+	-   NRPE configuration is updated with the IP address of the Nagios management server deployed in the management subnet of the ISV vcn.
 
 
 ## Routing Instance Configuration 
@@ -272,7 +272,7 @@ Connect to the management server with ssh as user opc and execute the following 
 	32. sudo touch /usr/local/nagios/etc/servers/hosts.cfg
 	33. sudo chmod 0755 /usr/local/nagios/etc/servers/hosts.cfg
 	34. sudo vi /usr/local/nagios/etc/servers/hosts.cfg
-    35. Paste the following into hosts.cfg making sure the ip addresses match the respective tenant appserver
+    35. Paste the following into hosts.cfg making sure the IP addresses match the respective tenant appserver
 
 	        define host{	
 		        use linux-server
@@ -307,44 +307,7 @@ Connect to each of the tenant servers with ssh as user opc and execute the follo
 
 	1. sudo yum install nagios nagios-plugins-all nrpe
 	2. sudo firewall-cmd --zone=public --permanent --add-port=5666/tcp
-	3. Execute the following command making sure the ip address matches the management server's
+	3. Execute the following command making sure the IP address matches the management server's
 	        sudo sed -i "s/.*allowed_hosts=.*/allowed_hosts=10.254.100.2/" /etc/nagios/nrpe.cfg
     4. sudo systemctl start nrpe.service
 
-## License
-
-Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.
-
-The Universal Permissive License (UPL), Version 1.0
-
-Subject to the condition set forth below, permission is hereby granted to any
-person obtaining a copy of this software, associated documentation and/or data
-(collectively the "Software"), free of charge and under any and all copyright
-rights in the Software, and any and all patent rights owned or freely
-licensable by each licensor hereunder covering either (i) the unmodified
-Software as contributed to or provided by such licensor, or (ii) the Larger
-Works (as defined below), to deal in both
-
-(a) the Software, and
-(b) any piece of software and/or hardware listed in the lrgrwrks.txt file if
-one is included with the Software (each a "Larger Work" to which the Software
-is contributed by such licensors),
-
-without restriction, including without limitation the rights to copy, create
-derivative works of, display, perform, and distribute the Software and make,
-use, sell, offer for sale, import, export, have made, and have sold the
-Software and the Larger Work(s), and to sublicense the foregoing rights on
-either these or other terms.
-
-This license is subject to the following condition:
-The above copyright notice and either this complete permission notice or at
-a minimum a reference to the UPL must be included in all copies or
-substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
