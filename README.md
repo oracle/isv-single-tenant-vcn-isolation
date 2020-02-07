@@ -304,3 +304,5 @@ Connect to each of the tenant servers with ssh as user opc and execute the follo
 	        sudo sed -i "s/.*allowed_hosts=.*/allowed_hosts=10.254.100.2/" /etc/nagios/nrpe.cfg
     4. sudo systemctl start nrpe.service
 
+## Help
+* The [Issues](https://github.com/oracle/isv-single-tenant-vcn-isolation/issues) page of this GitHub repository.
