@@ -1,11 +1,11 @@
-# [Contributing](http://github.com/oracle/cloud.asset.oci-msfailovercluster/CONTRIBUTING.md)
+# [Contributing](http://github.com/oracle/isv-single-tenant-vcn-isolation/CONTRIBUTING.md)
 Oracle welcomes contributions to this repository from anyone.  
 
 If you want to submit a pull request to fix a bug or enhance an existing feature, please first open an issue and link to that issue when you submit your pull request.  
 
 If you have any questions about a possible submission, feel free to open an issue too.
 
-## [Contributing to the OCI Windows Failover Cluster repository](http://github.com/oracle/cloud.asset.oci-msfailovercluster/blob/master/CONTRIBUTING.md)
+## [Contributing to the ISV Single-Tenant VCN Isolation solution repository](http://github.com/oracle/isv-single-tenant-vcn-isolation/blob/master/CONTRIBUTING.md)
 Pull requests can be made under [The Oracle Contributor Agreement](https://www.oracle.com/technetwork/community/oca-486395.html) (OCA).
 
 For pull requests to be accepted, the bottom of your commit message must have the following line using your name and e-mail address as it appears in the OCA Signatories list.
@@ -18,7 +18,7 @@ This can be automatically added to pull requests by committing with:
 
 Only pull requests from committers that can be verified as having signed the OCA can be accepted.
 
-### [Pull request process](http://github.com/oracle/cloud.asset.oci-msfailovercluster/blob/master/CONTRIBUTING.md)
+### [Pull request process](http://github.com/oracle/isv-single-tenant-vcn-isolation/blob/master/CONTRIBUTING.md)
 
 1. Fork this repository
 2. Create a branch in your fork to implement the changes. We recommend using the issue number as part of your branch name, e.g. 1234-fixes
