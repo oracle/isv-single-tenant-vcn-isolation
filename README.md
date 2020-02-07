@@ -238,41 +238,32 @@ This partition provides a bridging mechanism in the form of secondary vnic's mad
 
 Connect to the management server with ssh as user opc and execute the following commands:
 
-	1. sudo yum install httpd php gcc glibc glibc-common make gd gd-devel net-snmp
-	2. sudo groupadd nagcmd
-	3. sudo useradd -G nagcmd nagios
-	4. sudo usermod -a -G nagcmd apache
-	5. cd ~
-	6. mkdir nagios
-	7. cd nagios
-	8. wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.3.tar.gz
-	9. tar xvf nagios-4.4.3.tar.gz
-	10. cd nagios-4.4.3/
-	11.  ./configure --with-command-group=nagcmd
-	12. make all
-	13. sudo make install && sudo make install-commandmode
-	14. sudo make install-init
-	15. sudo make install-config && sudo make install-webconf
-	16.  sudo htpasswd -c -db /usr/local/nagios/etc/htpasswd.users nagiosadmin Ora123
-	17. sudo firewall-cmd --zone=public --permanent --add-service=http
-	18. echo "<html>This is a placeholder for the home page.</html>"| sudo tee /var/www/html/index.html
-	19. sudo systemctl restart httpd.service
-	20. sudo systemctl restart firewalld.service
-	21. wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
-	22.  tar xvf nagios-plugins-*.tar.gz
-	23. cd nagios-plugins-2.2.1/
-	24../configure --with-nagios-user=nagios --with-nagios-group=nagcmd --with-openssl
-	25. make
-	26. sudo make install
-	27. sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
-	28. sudo chkconfig nagios on
-	29. sudo sed -i "s@#cfg_dir=/usr/local/nagios/etc/servers@cfg_dir=/usr/local/nagios/etc/servers@" /usr/local/nagios/etc/nagios.cfg
-	30. sudo mkdir /usr/local/nagios/etc/servers
-	31. sudo chmod 0755 /usr/local/nagios/etc/servers
-	32. sudo touch /usr/local/nagios/etc/servers/hosts.cfg
-	33. sudo chmod 0755 /usr/local/nagios/etc/servers/hosts.cfg
-	34. sudo vi /usr/local/nagios/etc/servers/hosts.cfg
-    35. Paste the following into hosts.cfg making sure the IP addresses match the respective tenant appserver
+```
+1.  Install Apache:
+   sudo yum install httpd
+2.  Install Nagios from default repository:
+   sudo yum install nagios nagios-common nagios-plugins-all
+3.  Set admin password for user nagiosadmin (use these credentials to login on Nagios Web UI):
+   sudo htpasswd -c /etc/nagios/passwd nagiosadmin
+4.  Setup default html page for nagios testing:
+   echo "<html>This is a placeholder for the home page.</html>"| sudo ssh /var/www/html/index.html
+5.  Enable httpd service:
+   sudo systemctl start httpd
+   sudo systemctl enable httpd
+6.  Enable nagios service:
+   sudo systemctl start nagios
+   sudo systemctl enable nagios
+7.  Configure firewall:
+   sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+   sudo firewall-cmd --reload
+8.  Define hosts configuration file:
+   sudo sed -i "s@#cfg_dir=/etc/nagios/servers@cfg_dir=/etc/nagios/servers@" /etc/nagios/nagios.cfg
+   sudo mkdir /etc/nagios/servers
+   sudo chmod 0755 /etc/nagios/servers
+   sudo touch /etc/nagios/hosts.cfg
+   sudo chmod 0755 /etc/nagios/hosts.cfg
+   sudo vi /etc/nagios/servers/hosts.cfg
+9.  Paste the following into hosts.cfg making sure the ip addresses match the respective tenant appserver
 
 	        define host{	
 		        use linux-server
@@ -298,8 +289,10 @@ Connect to the management server with ssh as user opc and execute the following 
 		        alias appserver4
 		        address 10.4.1.2
 		        }
-    36. sudo systemctl restart nagios.service 
-    
+
+10.  Restart nagios service:
+   sudo systemctl restart nagios.service    
+```
 
 ## Nagios Remote Plugin Executor (NRPE) Sample Installation
 
